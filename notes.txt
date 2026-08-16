@@ -1,0 +1,5 @@
+raw
+→ 原始知识文档
+
+processed
+→ 经过清洗、Chunking等处理的数据
