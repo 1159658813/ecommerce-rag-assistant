@@ -4,8 +4,7 @@ from src.cloud_llm import (
 
 
 generator = DashScopeQwenGenerator(
-    model_name="qwen-plus-2025-07-28",
-    enable_thinking=False
+
 )
 
 
