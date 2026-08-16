@@ -2,6 +2,7 @@ import json
 import sys
 from pathlib import Path
 
+
 # ============================================================
 # Project Path
 # ============================================================
@@ -9,7 +10,10 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 if str(PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(PROJECT_ROOT))
+    sys.path.insert(
+        0,
+        str(PROJECT_ROOT)
+    )
 
 
 from src.retriever import Retriever
@@ -66,6 +70,7 @@ print(
 
 print("正在加载 Retriever...")
 
+
 retriever = Retriever(
     index_path=INDEX_PATH,
     metadata_path=METADATA_PATH
@@ -73,6 +78,7 @@ retriever = Retriever(
 
 
 print("正在加载 Qwen 1.5B...")
+
 
 generator = QwenGenerator(
     model_name=(
@@ -135,13 +141,9 @@ for item in questions:
 
         result = results[0]
 
-        document = (
-            result["document"]
-        )
+        document = result["document"]
 
-        score = (
-            result["score"]
-        )
+        score = result["score"]
 
         top1_section = (
             document["section"]
@@ -172,20 +174,24 @@ for item in questions:
     # --------------------------------------------------------
 
     if truth and predicted:
+
         tp += 1
 
     elif not truth and not predicted:
+
         tn += 1
 
     elif not truth and predicted:
+
         fp += 1
 
     elif truth and not predicted:
+
         fn += 1
 
 
     # --------------------------------------------------------
-    # Print
+    # Print Case
     # --------------------------------------------------------
 
     print(
@@ -217,6 +223,7 @@ for item in questions:
         top1_section
     )
 
+
     if score is not None:
 
         print(
@@ -229,7 +236,12 @@ for item in questions:
 # Metrics
 # ============================================================
 
-total = tp + tn + fp + fn
+total = (
+    tp
+    + tn
+    + fp
+    + fn
+)
 
 
 accuracy = (
@@ -254,7 +266,9 @@ recall = (
 
 
 f1 = (
-    2 * precision * recall
+    2
+    * precision
+    * recall
     / (precision + recall)
     if precision + recall
     else 0
@@ -264,8 +278,13 @@ f1 = (
 print("\n\n")
 
 print("=" * 100)
-print("Evidence Sufficiency Evaluation")
+
+print(
+    "Evidence Sufficiency Evaluation"
+)
+
 print("=" * 100)
+
 
 print(
     f"TP: {tp}"

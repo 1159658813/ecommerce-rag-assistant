@@ -2,6 +2,7 @@ import json
 import sys
 from pathlib import Path
 
+
 # ============================================================
 # Project Path
 # ============================================================
@@ -9,7 +10,11 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 if str(PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(PROJECT_ROOT))
+    sys.path.insert(
+        0,
+        str(PROJECT_ROOT)
+    )
+
 
 from src.retriever import Retriever
 
@@ -45,8 +50,8 @@ METADATA_PATH = (
 
 TOP_K = 3
 
-# 这是上一轮 15 条数据得到的候选阈值
-# 这一轮先固定它，用 45 条数据验证
+# 15 条开发集阶段得到的候选阈值。
+# 现在保留它作为实验 baseline。
 MIN_RETRIEVAL_SCORE = 0.72
 
 
@@ -58,10 +63,14 @@ with QUESTIONS_PATH.open(
     "r",
     encoding="utf-8"
 ) as f:
+
     questions = json.load(f)
 
 
-print(f"测试问题总数：{len(questions)}")
+print(
+    f"测试问题总数："
+    f"{len(questions)}"
+)
 
 
 # ============================================================
@@ -70,12 +79,16 @@ print(f"测试问题总数：{len(questions)}")
 
 print("正在加载 Retriever...")
 
+
 retriever = Retriever(
     index_path=INDEX_PATH,
     metadata_path=METADATA_PATH
 )
 
-print("Retriever 加载完成。\n")
+
+print(
+    "Retriever 加载完成。\n"
+)
 
 
 # ============================================================
@@ -83,8 +96,10 @@ print("Retriever 加载完成。\n")
 # ============================================================
 
 def safe_divide(a, b):
+
     if b == 0:
         return 0.0
+
     return a / b
 
 
@@ -98,25 +113,33 @@ def calculate_gate_metrics(
     fp = 0
     fn = 0
 
+
     for record in records:
 
-        truth = record["answerable"]
+        truth = (
+            record["answerable"]
+        )
 
         predicted = (
             record["best_score"]
             >= threshold
         )
 
+
         if truth and predicted:
+
             tp += 1
 
         elif not truth and not predicted:
+
             tn += 1
 
         elif not truth and predicted:
+
             fp += 1
 
         elif truth and not predicted:
+
             fn += 1
 
 
@@ -139,6 +162,7 @@ def calculate_gate_metrics(
         2 * precision * recall,
         precision + recall
     )
+
 
     return {
         "tp": tp,
@@ -193,7 +217,9 @@ for item in questions:
 
     if results:
 
-        best_score = results[0]["score"]
+        best_score = (
+            results[0]["score"]
+        )
 
         retrieved_sections = [
             result["document"]["section"]
@@ -201,16 +227,21 @@ for item in questions:
         ]
 
         top1_section = (
-            results[0]["document"]["section"]
+            results[0]
+            ["document"]
+            ["section"]
         )
 
         top1_source = (
-            results[0]["document"]["source"]
+            results[0]
+            ["document"]
+            ["source"]
         )
 
     else:
 
         best_score = float("-inf")
+
         retrieved_sections = []
 
         top1_section = None
@@ -228,6 +259,7 @@ for item in questions:
     if answerable:
 
         answerable_count += 1
+
 
         if (
             retrieved_sections
@@ -249,27 +281,18 @@ for item in questions:
             hit3 = True
 
 
-    # --------------------------------------------------------
-    # Current Gate Prediction
-    # --------------------------------------------------------
-
     predicted_answerable = (
         best_score
         >= MIN_RETRIEVAL_SCORE
     )
 
 
-    # --------------------------------------------------------
-    # Save Record
-    # --------------------------------------------------------
-
     evaluation_records.append({
         "id": question_id,
         "question": question,
         "answerable": answerable,
-        "expected_sections": list(
-            expected_sections
-        ),
+        "expected_sections":
+            list(expected_sections),
         "best_score": best_score,
         "top1_section": top1_section,
         "top1_source": top1_source,
@@ -278,11 +301,9 @@ for item in questions:
     })
 
 
-    # --------------------------------------------------------
-    # Print
-    # --------------------------------------------------------
-
-    print("\n" + "-" * 110)
+    print(
+        "\n" + "-" * 110
+    )
 
     print(
         f"[{question_id}] "
@@ -290,40 +311,43 @@ for item in questions:
     )
 
     print(
-        f"Ground Truth Answerable: "
-        f"{answerable}"
+        "Ground Truth Answerable:",
+        answerable
     )
 
     print(
-        f"Best Score: "
+        "Best Score:",
         f"{best_score:.4f}"
     )
 
     print(
         f"Gate Prediction "
-        f"(threshold={MIN_RETRIEVAL_SCORE:.2f}): "
+        f"(threshold="
+        f"{MIN_RETRIEVAL_SCORE:.2f}): "
         f"{predicted_answerable}"
     )
 
     print(
-        f"Expected Sections: "
-        f"{list(expected_sections)}"
+        "Expected Sections:",
+        list(expected_sections)
     )
 
     print(
-        f"Retrieved Sections: "
-        f"{retrieved_sections}"
+        "Retrieved Sections:",
+        retrieved_sections
     )
 
 
     if answerable:
 
         print(
-            f"Hit@1: {hit1}"
+            "Hit@1:",
+            hit1
         )
 
         print(
-            f"Hit@3: {hit3}"
+            "Hit@3:",
+            hit3
         )
 
 
@@ -342,13 +366,11 @@ hit_at_3 = safe_divide(
 )
 
 
-# ============================================================
-# Gate Metrics
-# ============================================================
-
-current_metrics = calculate_gate_metrics(
-    evaluation_records,
-    MIN_RETRIEVAL_SCORE
+current_metrics = (
+    calculate_gate_metrics(
+        evaluation_records,
+        MIN_RETRIEVAL_SCORE
+    )
 )
 
 
@@ -358,19 +380,20 @@ print("=" * 110)
 print("Evaluation Result")
 print("=" * 110)
 
+
 print(
-    f"Total Questions: "
-    f"{len(questions)}"
+    "Total Questions:",
+    len(questions)
 )
 
 print(
-    f"Answerable Questions: "
-    f"{answerable_count}"
+    "Answerable Questions:",
+    answerable_count
 )
 
 print(
-    f"Unanswerable Questions: "
-    f"{len(questions) - answerable_count}"
+    "Unanswerable Questions:",
+    len(questions) - answerable_count
 )
 
 print()
@@ -388,30 +411,32 @@ print(
 print()
 
 print(
-    f"Current Threshold: "
+    "Current Threshold:",
     f"{MIN_RETRIEVAL_SCORE:.2f}"
 )
 
 print()
 
+print("Confusion Matrix")
+
 print(
-    "Confusion Matrix"
+    "TP:",
+    current_metrics["tp"]
 )
 
 print(
-    f"TP: {current_metrics['tp']}"
+    "TN:",
+    current_metrics["tn"]
 )
 
 print(
-    f"TN: {current_metrics['tn']}"
+    "FP:",
+    current_metrics["fp"]
 )
 
 print(
-    f"FP: {current_metrics['fp']}"
-)
-
-print(
-    f"FN: {current_metrics['fn']}"
+    "FN:",
+    current_metrics["fn"]
 )
 
 print()
@@ -438,16 +463,19 @@ print(
 
 
 # ============================================================
-# Error Cases at Current Threshold
+# Gate Error Cases
 # ============================================================
 
 print("\n\n")
 
 print("=" * 110)
+
 print(
     f"Gate Error Cases "
-    f"(Threshold={MIN_RETRIEVAL_SCORE:.2f})"
+    f"(Threshold="
+    f"{MIN_RETRIEVAL_SCORE:.2f})"
 )
+
 print("=" * 110)
 
 
@@ -472,45 +500,55 @@ for record in evaluation_records:
 
 
     if predicted and not truth:
-        error_type = "FALSE POSITIVE"
+
+        error_type = (
+            "FALSE POSITIVE"
+        )
 
     else:
-        error_type = "FALSE NEGATIVE"
 
+        error_type = (
+            "FALSE NEGATIVE"
+        )
 
-    print("\n" + "-" * 110)
 
     print(
-        f"Type: {error_type}"
+        "\n" + "-" * 110
     )
 
     print(
-        f"ID: {record['id']}"
+        "Type:",
+        error_type
     )
 
     print(
-        f"Question: "
-        f"{record['question']}"
+        "ID:",
+        record["id"]
     )
 
     print(
-        f"Best Score: "
+        "Question:",
+        record["question"]
+    )
+
+    print(
+        "Best Score:",
         f"{record['best_score']:.4f}"
     )
 
     print(
-        f"Top-1 Source: "
-        f"{record['top1_source']}"
+        "Top-1 Source:",
+        record["top1_source"]
     )
 
     print(
-        f"Top-1 Section: "
-        f"{record['top1_section']}"
+        "Top-1 Section:",
+        record["top1_section"]
     )
 
     print(
-        f"Expected Sections: "
-        f"{record['expected_sections']}"
+        "Expected Sections:",
+        record["expected_sections"]
     )
 
 
@@ -522,13 +560,17 @@ if error_count == 0:
 
 
 # ============================================================
-# Retrieval Ranking Failure Cases
+# Retrieval Ranking Failure
 # ============================================================
 
 print("\n\n")
 
 print("=" * 110)
-print("Retrieval Ranking Failure Cases")
+
+print(
+    "Retrieval Ranking Failure Cases"
+)
+
 print("=" * 110)
 
 
@@ -545,7 +587,6 @@ for record in evaluation_records:
         record["expected_sections"]
     )
 
-
     retrieved = (
         record["retrieved_sections"]
     )
@@ -553,7 +594,8 @@ for record in evaluation_records:
 
     hit1 = (
         bool(retrieved)
-        and retrieved[0] in expected
+        and
+        retrieved[0] in expected
     )
 
 
@@ -561,37 +603,42 @@ for record in evaluation_records:
 
         retrieval_failure_count += 1
 
-        print("\n" + "-" * 110)
 
         print(
-            f"ID: {record['id']}"
+            "\n" + "-" * 110
         )
 
         print(
-            f"Question: "
-            f"{record['question']}"
+            "ID:",
+            record["id"]
         )
 
         print(
-            f"Best Score: "
+            "Question:",
+            record["question"]
+        )
+
+        print(
+            "Best Score:",
             f"{record['best_score']:.4f}"
         )
 
         print(
-            f"Expected: "
-            f"{record['expected_sections']}"
+            "Expected:",
+            record["expected_sections"]
         )
 
         print(
-            f"Retrieved: "
-            f"{record['retrieved_sections']}"
+            "Retrieved:",
+            record["retrieved_sections"]
         )
 
 
 if retrieval_failure_count == 0:
 
     print(
-        "\n当前数据集上没有 Hit@1 Failure。"
+        "\n当前数据集上没有 "
+        "Hit@1 Failure。"
     )
 
 
@@ -604,6 +651,7 @@ print("\n\n")
 print("=" * 110)
 print("Threshold Sweep")
 print("=" * 110)
+
 
 print(
     f"{'Threshold':<12}"
@@ -626,9 +674,11 @@ for i in range(40, 86):
     threshold = i / 100
 
 
-    metrics = calculate_gate_metrics(
-        evaluation_records,
-        threshold
+    metrics = (
+        calculate_gate_metrics(
+            evaluation_records,
+            threshold
+        )
     )
 
 
@@ -650,7 +700,7 @@ for i in range(40, 86):
 
 
 # ============================================================
-# Best Threshold by F1
+# Threshold Analysis
 # ============================================================
 
 best_f1_result = max(
@@ -658,14 +708,6 @@ best_f1_result = max(
     key=lambda x: x["f1"]
 )
 
-
-# ============================================================
-# Conservative Threshold
-#
-# 对客服场景：
-# 优先 FP 少
-# 再考虑 FN
-# ============================================================
 
 conservative_result = min(
     threshold_results,
@@ -688,76 +730,76 @@ print("=" * 110)
 print("\nBest F1 Threshold:")
 
 print(
-    f"Threshold: "
+    "Threshold:",
     f"{best_f1_result['threshold']:.2f}"
 )
 
 print(
-    f"Accuracy: "
+    "Accuracy:",
     f"{best_f1_result['accuracy']:.2%}"
 )
 
 print(
-    f"Precision: "
+    "Precision:",
     f"{best_f1_result['precision']:.2%}"
 )
 
 print(
-    f"Recall: "
+    "Recall:",
     f"{best_f1_result['recall']:.2%}"
 )
 
 print(
-    f"F1: "
+    "F1:",
     f"{best_f1_result['f1']:.2%}"
 )
 
 print(
-    f"FP: "
-    f"{best_f1_result['fp']}"
+    "FP:",
+    best_f1_result["fp"]
 )
 
 print(
-    f"FN: "
-    f"{best_f1_result['fn']}"
+    "FN:",
+    best_f1_result["fn"]
 )
 
 
 print("\nConservative Candidate:")
 
 print(
-    f"Threshold: "
+    "Threshold:",
     f"{conservative_result['threshold']:.2f}"
 )
 
 print(
-    f"Accuracy: "
+    "Accuracy:",
     f"{conservative_result['accuracy']:.2%}"
 )
 
 print(
-    f"Precision: "
+    "Precision:",
     f"{conservative_result['precision']:.2%}"
 )
 
 print(
-    f"Recall: "
+    "Recall:",
     f"{conservative_result['recall']:.2%}"
 )
 
 print(
-    f"F1: "
+    "F1:",
     f"{conservative_result['f1']:.2%}"
 )
 
 print(
-    f"FP: "
-    f"{conservative_result['fp']}"
+    "FP:",
+    conservative_result["fp"]
 )
 
 print(
-    f"FN: "
-    f"{conservative_result['fn']}"
+    "FN:",
+    conservative_result["fn"]
 )
 
 
@@ -765,13 +807,11 @@ print(
 # Score Distribution
 # ============================================================
 
-answerable_scores = sorted(
-    [
-        record["best_score"]
-        for record in evaluation_records
-        if record["answerable"]
-    ]
-)
+answerable_scores = sorted([
+    record["best_score"]
+    for record in evaluation_records
+    if record["answerable"]
+])
 
 
 unanswerable_scores = sorted(
@@ -817,7 +857,10 @@ if unanswerable_scores:
     )
 
 
-print("\nTop-5 Highest Unanswerable Scores:")
+print(
+    "\nTop-5 Highest "
+    "Unanswerable Scores:"
+)
 
 
 unanswerable_records = sorted(
@@ -834,13 +877,19 @@ unanswerable_records = sorted(
 for record in unanswerable_records[:5]:
 
     print(
-        f"{record['best_score']:.4f} | "
-        f"{record['question']} | "
-        f"Top1={record['top1_section']}"
+        f"{record['best_score']:.4f}"
+        f" | "
+        f"{record['question']}"
+        f" | "
+        f"Top1="
+        f"{record['top1_section']}"
     )
 
 
-print("\nBottom-5 Lowest Answerable Scores:")
+print(
+    "\nBottom-5 Lowest "
+    "Answerable Scores:"
+)
 
 
 answerable_records = sorted(
@@ -856,7 +905,10 @@ answerable_records = sorted(
 for record in answerable_records[:5]:
 
     print(
-        f"{record['best_score']:.4f} | "
-        f"{record['question']} | "
-        f"Top1={record['top1_section']}"
+        f"{record['best_score']:.4f}"
+        f" | "
+        f"{record['question']}"
+        f" | "
+        f"Top1="
+        f"{record['top1_section']}"
     )
