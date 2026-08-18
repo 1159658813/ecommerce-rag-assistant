@@ -403,9 +403,12 @@ improvement_cases = []
 
 regression_cases = []
 
+reranker_top1_failure_cases = []
+
 dense_top3_failure_cases = []
 
 dense_top10_failure_cases = []
+
 
 all_records = []
 
@@ -636,6 +639,33 @@ for question_index, item in enumerate(
     ):
 
         regression_cases.append({
+            "id": question_id,
+            "question": question,
+
+            "expected":
+                list(expected_sections),
+
+            "dense_sections":
+                dense_sections,
+
+            "reranked_sections":
+                reranked_sections,
+
+            "dense_correct_rank":
+                dense_correct_rank,
+
+            "rerank_correct_rank":
+                rerank_correct_rank
+        })
+    # ========================================================
+    # 7. Reranker Top-1 Failure
+    #
+    # 正确 Section 没有被 Reranker 排到第 1
+    # ========================================================
+
+    if rerank_correct_rank != 1:
+
+        reranker_top1_failure_cases.append({
             "id": question_id,
             "question": question,
 
@@ -894,6 +924,11 @@ print(
 )
 
 print(
+    "Reranker Top-1 Failure:",
+    len(reranker_top1_failure_cases)
+)
+
+print(
     "Dense Top-3 Failure:",
     len(dense_top3_failure_cases)
 )
@@ -1027,6 +1062,66 @@ else:
             case["reranked_sections"]
         )
 
+
+# ============================================================
+# Reranker Top-1 Failure Analysis
+# ============================================================
+
+print("\n\n")
+
+print("=" * 120)
+print("Reranker Top-1 Failure Analysis")
+print("=" * 120)
+
+
+if not reranker_top1_failure_cases:
+
+    print(
+        "\n没有 Reranker Top-1 Failure。"
+    )
+
+else:
+
+    for case in reranker_top1_failure_cases:
+
+        print(
+            "\n" + "-" * 120
+        )
+
+        print(
+            "ID:",
+            case["id"]
+        )
+
+        print(
+            "Question:",
+            case["question"]
+        )
+
+        print(
+            "Expected:",
+            case["expected"]
+        )
+
+        print(
+            "Dense Correct Rank:",
+            case["dense_correct_rank"]
+        )
+
+        print(
+            "Reranker Correct Rank:",
+            case["rerank_correct_rank"]
+        )
+
+        print(
+            "Dense Top-10:",
+            case["dense_sections"]
+        )
+
+        print(
+            "Reranked Top-10:",
+            case["reranked_sections"]
+        )
 
 # ============================================================
 # Dense Top-3 Failure Analysis

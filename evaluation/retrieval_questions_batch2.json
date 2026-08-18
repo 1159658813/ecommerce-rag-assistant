@@ -106,7 +106,10 @@
     "id": "b2_q18",
     "question": "微信支付的订单退款一般会退到什么地方？",
     "answerable": true,
-    "expected_sections": ["退款原路返回"]
+    "expected_sections": [
+    "退款原路返回",
+    "原路退款"
+]
   },
   {
     "id": "b2_q19",
