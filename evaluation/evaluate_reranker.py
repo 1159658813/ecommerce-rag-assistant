@@ -32,7 +32,7 @@ from src.retriever import Retriever
 QUESTIONS_PATH = (
     PROJECT_ROOT
     / "evaluation"
-    / "questions_v1.json"
+    / "retrieval_questions_batch2.json"
 )
 
 INDEX_PATH = (
