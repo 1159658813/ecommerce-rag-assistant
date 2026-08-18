@@ -1,0 +1,289 @@
+[
+  {
+    "id": "q01",
+    "question": "定制商品支持七天无理由退货吗？",
+    "answerable": true,
+    "expected_sections": ["七天无理由退货"]
+  },
+  {
+    "id": "q02",
+    "question": "七天无理由退货的七天是从什么时候开始计算的？",
+    "answerable": true,
+    "expected_sections": ["七天无理由退货"]
+  },
+  {
+    "id": "q03",
+    "question": "商品已经影响二次销售了，还能申请七天无理由退货吗？",
+    "answerable": true,
+    "expected_sections": ["七天无理由退货"]
+  },
+
+  {
+    "id": "q04",
+    "question": "银行卡退款一般多久能到账？",
+    "answerable": true,
+    "expected_sections": ["退款到账时间"]
+  },
+  {
+    "id": "q05",
+    "question": "钱退回到我的银行卡通常需要等几天？",
+    "answerable": true,
+    "expected_sections": ["退款到账时间"]
+  },
+  {
+    "id": "q06",
+    "question": "银行卡退款是不是当天一定能收到？",
+    "answerable": true,
+    "expected_sections": ["退款到账时间"]
+  },
+
+  {
+    "id": "q07",
+    "question": "七天无理由退货产生的运费由谁承担？",
+    "answerable": true,
+    "expected_sections": ["退货运费"]
+  },
+  {
+    "id": "q08",
+    "question": "收到的商品有质量问题，退货快递费需要我自己出吗？",
+    "answerable": true,
+    "expected_sections": ["退货运费"]
+  },
+  {
+    "id": "q09",
+    "question": "买了退货运费保障服务以后，退货运费怎么处理？",
+    "answerable": true,
+    "expected_sections": ["退货运费"]
+  },
+
+  {
+    "id": "q10",
+    "question": "普通现货商品付款以后一般多久发货？",
+    "answerable": true,
+    "expected_sections": ["发货时间"]
+  },
+  {
+    "id": "q11",
+    "question": "预售商品的发货时间按照什么确定？",
+    "answerable": true,
+    "expected_sections": ["发货时间"]
+  },
+  {
+    "id": "q12",
+    "question": "遇到大型促销活动时，商品发货会不会延迟？",
+    "answerable": true,
+    "expected_sections": ["发货时间"]
+  },
+
+  {
+    "id": "q13",
+    "question": "订单已经发货了还能修改收货地址吗？",
+    "answerable": true,
+    "expected_sections": ["修改收货地址"]
+  },
+  {
+    "id": "q14",
+    "question": "商品还没进入发货流程，我可以联系客服改地址吗？",
+    "answerable": true,
+    "expected_sections": ["修改收货地址"]
+  },
+  {
+    "id": "q15",
+    "question": "快递已经在路上了，平台还能直接帮我改收货地址吗？",
+    "answerable": true,
+    "expected_sections": ["修改收货地址"]
+  },
+
+  {
+    "id": "q16",
+    "question": "物流超过48小时没有更新应该怎么办？",
+    "answerable": true,
+    "expected_sections": ["物流长时间未更新"]
+  },
+  {
+    "id": "q17",
+    "question": "我的快递两天多没有物流信息了，可以找平台客服处理吗？",
+    "answerable": true,
+    "expected_sections": ["物流长时间未更新"]
+  },
+  {
+    "id": "q18",
+    "question": "如果确认快递把商品弄丢了，平台会怎么处理？",
+    "answerable": true,
+    "expected_sections": ["物流长时间未更新"]
+  },
+
+  {
+    "id": "q19",
+    "question": "满100减20优惠券需要满足什么条件才能使用？",
+    "answerable": true,
+    "expected_sections": ["使用条件"]
+  },
+  {
+    "id": "q20",
+    "question": "为什么我的订单金额已经够了，优惠券还是不能使用？",
+    "answerable": true,
+    "expected_sections": ["使用条件"]
+  },
+  {
+    "id": "q21",
+    "question": "秒杀商品一定可以使用平台优惠券吗？",
+    "answerable": true,
+    "expected_sections": ["使用条件"]
+  },
+
+  {
+    "id": "q22",
+    "question": "优惠券过期以后还能继续使用吗？",
+    "answerable": true,
+    "expected_sections": ["优惠券有效期"]
+  },
+  {
+    "id": "q23",
+    "question": "在哪里可以查看优惠券什么时候到期？",
+    "answerable": true,
+    "expected_sections": ["优惠券有效期"]
+  },
+  {
+    "id": "q24",
+    "question": "已经过期的优惠券一般还能恢复吗？",
+    "answerable": true,
+    "expected_sections": ["优惠券有效期"]
+  },
+
+  {
+    "id": "q25",
+    "question": "平台优惠券和商家优惠券可以一起使用吗？",
+    "answerable": true,
+    "expected_sections": ["优惠券叠加"]
+  },
+  {
+    "id": "q26",
+    "question": "一个订单可以同时使用两张同类型的平台优惠券吗？",
+    "answerable": true,
+    "expected_sections": ["优惠券叠加"]
+  },
+  {
+    "id": "q27",
+    "question": "优惠券到底能不能叠加，应该以哪里显示的结果为准？",
+    "answerable": true,
+    "expected_sections": ["优惠券叠加"]
+  },
+
+  {
+    "id": "q28",
+    "question": "七天无理由退货必须保留原包装盒和说明书吗？",
+    "answerable": false,
+    "expected_sections": []
+  },
+  {
+    "id": "q29",
+    "question": "申请七天无理由退货需要上传几张商品照片？",
+    "answerable": false,
+    "expected_sections": []
+  },
+
+  {
+    "id": "q30",
+    "question": "退款可以改退到另一张银行卡吗？",
+    "answerable": false,
+    "expected_sections": []
+  },
+  {
+    "id": "q31",
+    "question": "银行卡退款能不能申请加急到账？",
+    "answerable": false,
+    "expected_sections": []
+  },
+
+  {
+    "id": "q32",
+    "question": "七天无理由退货的运费最高不能超过多少钱？",
+    "answerable": false,
+    "expected_sections": []
+  },
+  {
+    "id": "q33",
+    "question": "商品质量问题退货时必须使用平台指定的快递公司吗？",
+    "answerable": false,
+    "expected_sections": []
+  },
+
+  {
+    "id": "q34",
+    "question": "普通现货超过48小时还没发货，平台会赔偿多少钱？",
+    "answerable": false,
+    "expected_sections": []
+  },
+  {
+    "id": "q35",
+    "question": "普通现货超过48小时没有发货，订单会自动取消吗？",
+    "answerable": false,
+    "expected_sections": []
+  },
+
+  {
+    "id": "q36",
+    "question": "修改收货地址需要支付手续费吗？",
+    "answerable": false,
+    "expected_sections": []
+  },
+  {
+    "id": "q37",
+    "question": "订单发货以后，哪些物流公司支持修改收货地址？",
+    "answerable": false,
+    "expected_sections": []
+  },
+
+  {
+    "id": "q38",
+    "question": "物流丢件以后补发需要多少天？",
+    "answerable": false,
+    "expected_sections": []
+  },
+  {
+    "id": "q39",
+    "question": "物流超过48小时没有更新，平台会赔偿多少钱？",
+    "answerable": false,
+    "expected_sections": []
+  },
+
+  {
+    "id": "q40",
+    "question": "满100减20的100元门槛，是按商品原价还是优惠后的金额计算？",
+    "answerable": false,
+    "expected_sections": []
+  },
+  {
+    "id": "q41",
+    "question": "不同店铺的商品金额可以合并凑满100元优惠券门槛吗？",
+    "answerable": false,
+    "expected_sections": []
+  },
+
+  {
+    "id": "q42",
+    "question": "优惠券到期之前平台会提前几天提醒我？",
+    "answerable": false,
+    "expected_sections": []
+  },
+  {
+    "id": "q43",
+    "question": "优惠券的有效期是按照北京时间还是用户所在地时间计算？",
+    "answerable": false,
+    "expected_sections": []
+  },
+
+  {
+    "id": "q44",
+    "question": "两张商家优惠券可以同时叠加使用吗？",
+    "answerable": false,
+    "expected_sections": []
+  },
+  {
+    "id": "q45",
+    "question": "优惠券可以和会员积分同时抵扣吗？",
+    "answerable": false,
+    "expected_sections": []
+  }
+]

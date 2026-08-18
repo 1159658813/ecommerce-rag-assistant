@@ -1,0 +1,187 @@
+[
+  {
+    "id": "b2_q01",
+    "question": "满100减20的门槛是按照商品划线原价还是优惠后的商品金额计算？",
+    "answerable": true,
+    "expected_sections": ["优惠门槛计算口径"]
+  },
+  {
+    "id": "b2_q02",
+    "question": "商品原价110元，活动后只要95元，还能用满100减20的券吗？",
+    "answerable": true,
+    "expected_sections": ["优惠门槛计算口径"]
+  },
+  {
+    "id": "b2_q03",
+    "question": "不同店铺的商品可以一起凑平台优惠券的满减门槛吗？",
+    "answerable": true,
+    "expected_sections": ["跨店凑单规则"]
+  },
+  {
+    "id": "b2_q04",
+    "question": "商家优惠券能不能拿其他店铺的商品一起凑金额？",
+    "answerable": true,
+    "expected_sections": ["跨店凑单规则"]
+  },
+  {
+    "id": "b2_q05",
+    "question": "同一个商家的两张优惠券能同时用在一个订单里吗？",
+    "answerable": true,
+    "expected_sections": ["商家优惠券叠加"]
+  },
+  {
+    "id": "b2_q06",
+    "question": "商家券可以和平台券一起使用吗？",
+    "answerable": true,
+    "expected_sections": ["商家优惠券叠加", "优惠券叠加"]
+  },
+  {
+    "id": "b2_q07",
+    "question": "整单退款后之前用掉的平台优惠券会退回来吗？",
+    "answerable": true,
+    "expected_sections": ["优惠券退款返还"]
+  },
+  {
+    "id": "b2_q08",
+    "question": "订单只退了一部分商品，之前用的整张优惠券会自动返还吗？",
+    "answerable": true,
+    "expected_sections": ["优惠券退款返还"]
+  },
+  {
+    "id": "b2_q09",
+    "question": "我刚提交订单还没付款，为什么这张优惠券不能拿去下另一个订单？",
+    "answerable": true,
+    "expected_sections": ["优惠券锁定与释放"]
+  },
+  {
+    "id": "b2_q10",
+    "question": "未付款订单取消以后优惠券大概多久会解除锁定？",
+    "answerable": true,
+    "expected_sections": ["优惠券锁定与释放"]
+  },
+
+  {
+    "id": "b2_q11",
+    "question": "七天无理由退货必须把快递寄来的外层纸箱也保存好吗？",
+    "answerable": true,
+    "expected_sections": ["七天无理由原包装要求"]
+  },
+  {
+    "id": "b2_q12",
+    "question": "商品自己的原包装和配件丢了会不会影响七天无理由退货？",
+    "answerable": true,
+    "expected_sections": ["七天无理由原包装要求"]
+  },
+  {
+    "id": "b2_q13",
+    "question": "普通七天无理由退货必须上传商品照片吗？",
+    "answerable": true,
+    "expected_sections": ["退货举证材料"]
+  },
+  {
+    "id": "b2_q14",
+    "question": "质量问题申请退货规定一定要上传几张照片吗？",
+    "answerable": true,
+    "expected_sections": ["退货举证材料"]
+  },
+  {
+    "id": "b2_q15",
+    "question": "七天无理由退货的快递费有没有统一的最高金额限制？",
+    "answerable": true,
+    "expected_sections": ["退货运费金额规则"]
+  },
+  {
+    "id": "b2_q16",
+    "question": "商品有质量问题导致退货，退货物流费需要我承担吗？",
+    "answerable": true,
+    "expected_sections": ["退货运费金额规则", "退货运费"]
+  },
+  {
+    "id": "b2_q17",
+    "question": "银行卡付款的订单退款时可以要求退到另一张银行卡吗？",
+    "answerable": true,
+    "expected_sections": ["退款原路返回"]
+  },
+  {
+    "id": "b2_q18",
+    "question": "微信支付的订单退款一般会退到什么地方？",
+    "answerable": true,
+    "expected_sections": [
+    "退款原路返回",
+    "原路退款"
+]
+  },
+  {
+    "id": "b2_q19",
+    "question": "商家给了退货地址以后，我需要在多少天内把商品寄回去？",
+    "answerable": true,
+    "expected_sections": ["退货寄回时限"]
+  },
+  {
+    "id": "b2_q20",
+    "question": "拿到退货地址以后超过七天都没有寄商品会怎么样？",
+    "answerable": true,
+    "expected_sections": ["退货寄回时限"]
+  },
+
+  {
+    "id": "b2_q21",
+    "question": "普通商品超过48小时没有发货，订单会自动取消吗？",
+    "answerable": true,
+    "expected_sections": ["发货超时处理"]
+  },
+  {
+    "id": "b2_q22",
+    "question": "付款两天还没发货，我能申请取消订单吗？",
+    "answerable": true,
+    "expected_sections": ["发货超时处理"]
+  },
+  {
+    "id": "b2_q23",
+    "question": "快递确认丢件以后，平台多久会安排新的补发订单？",
+    "answerable": true,
+    "expected_sections": ["物流丢件补发时效"]
+  },
+  {
+    "id": "b2_q24",
+    "question": "丢件后的48小时是指48小时收到货，还是48小时内安排补发？",
+    "answerable": true,
+    "expected_sections": ["物流丢件补发时效"]
+  },
+  {
+    "id": "b2_q25",
+    "question": "商品已经发货了，我还能让平台尝试把快递拦回来吗？",
+    "answerable": true,
+    "expected_sections": ["发货后拦截规则"]
+  },
+  {
+    "id": "b2_q26",
+    "question": "申请物流拦截以后是不是一定能够成功？",
+    "answerable": true,
+    "expected_sections": ["发货后拦截规则"]
+  },
+  {
+    "id": "b2_q27",
+    "question": "快递拒收以后是不是马上就会退款？",
+    "answerable": true,
+    "expected_sections": ["拒收后的处理"]
+  },
+  {
+    "id": "b2_q28",
+    "question": "我拒收了商品，为什么退款还没有立即到账？",
+    "answerable": true,
+    "expected_sections": ["拒收后的处理"]
+  },
+  {
+    "id": "b2_q29",
+    "question": "物流显示已经签收，但我实际上没有拿到包裹怎么办？",
+    "answerable": true,
+    "expected_sections": ["物流签收异常"]
+  },
+  {
+    "id": "b2_q30",
+    "question": "快递显示签收一天了还是找不到商品，可以找平台处理吗？",
+    "answerable": true,
+    "expected_sections": ["物流签收异常"]
+  }
+]

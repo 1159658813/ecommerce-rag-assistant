@@ -1,0 +1,50 @@
+[
+  {
+    "id": "b2_n01",
+    "question": "跨店凑平台优惠券最多允许同时选择几家店？",
+    "answerable": false,
+    "expected_sections": []
+  },
+  {
+    "id": "b2_n02",
+    "question": "优惠券退款返还以后有效期会自动延长多少天？",
+    "answerable": false,
+    "expected_sections": []
+  },
+  {
+    "id": "b2_n03",
+    "question": "上传退货照片时必须使用JPG格式吗？",
+    "answerable": false,
+    "expected_sections": []
+  },
+  {
+    "id": "b2_n04",
+    "question": "退货寄回必须使用顺丰快递吗？",
+    "answerable": false,
+    "expected_sections": []
+  },
+  {
+    "id": "b2_n05",
+    "question": "物流拦截成功需要支付多少服务费？",
+    "answerable": false,
+    "expected_sections": []
+  },
+  {
+    "id": "b2_n06",
+    "question": "物流丢件补发时平台默认使用哪一家快递公司？",
+    "answerable": false,
+    "expected_sections": []
+  },
+  {
+    "id": "b2_n07",
+    "question": "物流显示签收但没有收到商品可以获得多少赔偿？",
+    "answerable": false,
+    "expected_sections": []
+  },
+  {
+    "id": "b2_n08",
+    "question": "普通商品发货超时后平台会赔偿用户多少钱？",
+    "answerable": false,
+    "expected_sections": []
+  }
+]
