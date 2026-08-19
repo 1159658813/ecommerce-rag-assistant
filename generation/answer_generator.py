@@ -46,6 +46,11 @@ class AnswerGenerator:
         question,
         evidences
     ):
+        if not evidences:
+            return (
+                "根据当前知识库信息，"
+                "暂时无法确认。"
+            )
 
         user_prompt = build_answer_prompt(
             question=question,

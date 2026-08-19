@@ -1,0 +1,658 @@
+[
+  {
+    "id": "b2_q01",
+    "question": "满100减20的门槛是按照商品划线原价还是优惠后的商品金额计算？",
+    "answerable": true,
+    "expected_sections": [
+      "优惠门槛计算口径"
+    ],
+    "category": "优惠券",
+    "reference_answer": "满100减20的门槛按照参与优惠计算的商品金额判断，不是按照商品划线原价直接计算。",
+    "must_include": [
+      "参与优惠计算的商品金额",
+      "不是按划线原价"
+    ],
+    "must_not_include": [
+      "按照划线原价计算",
+      "只要原价满100元就可以使用"
+    ]
+  },
+  {
+    "id": "b2_q02",
+    "question": "商品原价110元，活动后只要95元，还能用满100减20的券吗？",
+    "answerable": true,
+    "expected_sections": [
+      "优惠门槛计算口径"
+    ],
+    "category": "优惠券",
+    "reference_answer": "如果参与优惠计算的商品金额只有95元，就没有达到满100元的使用门槛，因此不能使用满100减20优惠券。",
+    "must_include": [
+      "95元",
+      "未达到100元",
+      "不能使用"
+    ],
+    "must_not_include": [
+      "原价110元所以可以使用",
+      "按照商品原价判断"
+    ]
+  },
+  {
+    "id": "b2_q03",
+    "question": "不同店铺的商品可以一起凑平台优惠券的满减门槛吗？",
+    "answerable": true,
+    "expected_sections": [
+      "跨店凑单规则"
+    ],
+    "category": "优惠券",
+    "reference_answer": "平台优惠券是否可以跨店凑单，要看优惠券的适用范围和活动规则；支持跨店凑单时，符合范围的不同店铺商品可以一起计算门槛。",
+    "must_include": [
+      "平台优惠券",
+      "跨店凑单",
+      "适用范围或活动规则"
+    ],
+    "must_not_include": [
+      "所有店铺都一定可以凑单",
+      "平台优惠券一律不能跨店"
+    ]
+  },
+  {
+    "id": "b2_q04",
+    "question": "商家优惠券能不能拿其他店铺的商品一起凑金额？",
+    "answerable": true,
+    "expected_sections": [
+      "跨店凑单规则"
+    ],
+    "category": "优惠券",
+    "reference_answer": "商家优惠券通常只适用于发券商家的商品，其他店铺的商品不能用来凑这张商家优惠券的使用门槛。",
+    "must_include": [
+      "商家优惠券",
+      "发券商家",
+      "其他店铺不能凑金额"
+    ],
+    "must_not_include": [
+      "其他店铺商品可以一起凑商家券门槛",
+      "所有店铺通用"
+    ]
+  },
+  {
+    "id": "b2_q05",
+    "question": "同一个商家的两张优惠券能同时用在一个订单里吗？",
+    "answerable": true,
+    "expected_sections": [
+      "商家优惠券叠加"
+    ],
+    "category": "优惠券",
+    "reference_answer": "同一订单能否同时使用两张商家优惠券，需要按照商家优惠券的叠加规则判断；不能仅因为两张券来自同一商家就认定一定可以同时使用。",
+    "must_include": [
+      "商家优惠券叠加规则",
+      "不一定可以同时使用"
+    ],
+    "must_not_include": [
+      "同一商家的优惠券一定可以叠加",
+      "任何两张商家券都能同时使用"
+    ]
+  },
+  {
+    "id": "b2_q06",
+    "question": "商家券可以和平台券一起使用吗？",
+    "answerable": true,
+    "expected_sections": [
+      "商家优惠券叠加",
+      "优惠券叠加"
+    ],
+    "category": "优惠券",
+    "reference_answer": "商家券和平台券是否可以同时使用，需要看两类优惠券各自的叠加规则；只有规则允许时才能叠加使用。",
+    "must_include": [
+      "商家券",
+      "平台券",
+      "叠加规则"
+    ],
+    "must_not_include": [
+      "一定可以叠加",
+      "一定不能叠加"
+    ]
+  },
+  {
+    "id": "b2_q07",
+    "question": "整单退款后之前用掉的平台优惠券会退回来吗？",
+    "answerable": true,
+    "expected_sections": [
+      "优惠券退款返还"
+    ],
+    "category": "优惠券",
+    "reference_answer": "整单退款后，优惠券是否返还需要按照优惠券退款返还规则判断；符合返还条件的优惠券可以由系统返还。",
+    "must_include": [
+      "整单退款",
+      "优惠券返还规则",
+      "符合条件可返还"
+    ],
+    "must_not_include": [
+      "所有优惠券退款后一定返还",
+      "退款后优惠券永远不会返还"
+    ]
+  },
+  {
+    "id": "b2_q08",
+    "question": "订单只退了一部分商品，之前用的整张优惠券会自动返还吗？",
+    "answerable": true,
+    "expected_sections": [
+      "优惠券退款返还"
+    ],
+    "category": "优惠券",
+    "reference_answer": "部分退款通常不会因为退掉部分商品就自动返还整张优惠券，具体是否返还需要按照优惠券退款返还规则处理。",
+    "must_include": [
+      "部分退款",
+      "不会自动返还整张优惠券",
+      "退款返还规则"
+    ],
+    "must_not_include": [
+      "部分退款一定返还整张优惠券"
+    ]
+  },
+  {
+    "id": "b2_q09",
+    "question": "我刚提交订单还没付款，为什么这张优惠券不能拿去下另一个订单？",
+    "answerable": true,
+    "expected_sections": [
+      "优惠券锁定与释放"
+    ],
+    "category": "优惠券",
+    "reference_answer": "提交订单后，即使还没有付款，订单中使用的优惠券也可能先被系统锁定，因此暂时不能用于另一个订单；订单取消或失效后再按规则释放。",
+    "must_include": [
+      "未付款订单",
+      "优惠券被锁定",
+      "取消或失效后释放"
+    ],
+    "must_not_include": [
+      "未付款时优惠券不会被占用",
+      "可以同时拿去下其他订单"
+    ]
+  },
+  {
+    "id": "b2_q10",
+    "question": "未付款订单取消以后优惠券大概多久会解除锁定？",
+    "answerable": true,
+    "expected_sections": [
+      "优惠券锁定与释放"
+    ],
+    "category": "优惠券",
+    "reference_answer": "未付款订单取消后，优惠券会按照系统的锁定与释放规则解除占用；通常由系统自动释放，实际恢复时间以系统处理结果为准。",
+    "must_include": [
+      "订单取消",
+      "自动释放",
+      "系统处理"
+    ],
+    "must_not_include": [
+      "取消订单后优惠券永久失效",
+      "必须人工联系客服才能释放"
+    ]
+  },
+  {
+    "id": "b2_q11",
+    "question": "七天无理由退货必须把快递寄来的外层纸箱也保存好吗？",
+    "answerable": true,
+    "expected_sections": [
+      "七天无理由原包装要求"
+    ],
+    "category": "七天无理由退货",
+    "reference_answer": "七天无理由退货主要关注商品本身及商品原包装、配件等是否保持完好，快递运输使用的外层纸箱通常不等同于商品原包装。",
+    "must_include": [
+      "商品原包装",
+      "外层快递纸箱不等同于商品原包装"
+    ],
+    "must_not_include": [
+      "必须保留快递外层纸箱才能退货"
+    ]
+  },
+  {
+    "id": "b2_q12",
+    "question": "商品自己的原包装和配件丢了会不会影响七天无理由退货？",
+    "answerable": true,
+    "expected_sections": [
+      "七天无理由原包装要求"
+    ],
+    "category": "七天无理由退货",
+    "reference_answer": "会有影响。商品原包装、配件等属于判断商品是否保持完好的重要内容，缺失后可能影响七天无理由退货。",
+    "must_include": [
+      "会影响",
+      "商品原包装",
+      "配件",
+      "商品完好"
+    ],
+    "must_not_include": [
+      "原包装和配件丢失完全不影响退货"
+    ]
+  },
+  {
+    "id": "b2_q13",
+    "question": "普通七天无理由退货必须上传商品照片吗？",
+    "answerable": true,
+    "expected_sections": [
+      "退货举证材料"
+    ],
+    "category": "退货举证",
+    "reference_answer": "普通七天无理由退货并不意味着固定必须上传商品照片，是否需要提交图片等材料应以退货申请页面和平台要求为准。",
+    "must_include": [
+      "不一定必须上传照片",
+      "以平台或申请页面要求为准"
+    ],
+    "must_not_include": [
+      "所有七天无理由退货都必须上传照片",
+      "固定必须上传若干张照片"
+    ]
+  },
+  {
+    "id": "b2_q14",
+    "question": "质量问题申请退货规定一定要上传几张照片吗？",
+    "answerable": true,
+    "expected_sections": [
+      "退货举证材料"
+    ],
+    "category": "退货举证",
+    "reference_answer": "质量问题退货通常需要提供能够说明问题的有效证据，但并不能仅凭这条规则认定固定必须上传某个数量的照片，具体材料要求以申请页面为准。",
+    "must_include": [
+      "质量问题",
+      "有效证据",
+      "没有固定照片数量"
+    ],
+    "must_not_include": [
+      "固定必须上传3张照片",
+      "固定必须上传5张照片"
+    ]
+  },
+  {
+    "id": "b2_q15",
+    "question": "七天无理由退货的快递费有没有统一的最高金额限制？",
+    "answerable": true,
+    "expected_sections": [
+      "退货运费金额规则"
+    ],
+    "category": "退货运费",
+    "reference_answer": "七天无理由退货的运费处理应按照退货运费金额规则执行，不能简单认为平台对所有订单都设置了统一的最高运费金额。",
+    "must_include": [
+      "退货运费金额规则",
+      "没有统一最高金额"
+    ],
+    "must_not_include": [
+      "所有退货统一最高10元",
+      "所有退货统一最高20元"
+    ]
+  },
+  {
+    "id": "b2_q16",
+    "question": "商品有质量问题导致退货，退货物流费需要我承担吗？",
+    "answerable": true,
+    "expected_sections": [
+      "退货运费金额规则",
+      "退货运费"
+    ],
+    "category": "退货运费",
+    "reference_answer": "如果退货是由商品质量问题导致，退货运费应按照质量问题退货的运费规则处理，通常不应由消费者自行承担应由责任方承担的合理退货运费。",
+    "must_include": [
+      "商品质量问题",
+      "退货运费",
+      "责任方承担"
+    ],
+    "must_not_include": [
+      "质量问题退货运费一定由消费者承担"
+    ]
+  },
+  {
+    "id": "b2_q17",
+    "question": "银行卡付款的订单退款时可以要求退到另一张银行卡吗？",
+    "answerable": true,
+    "expected_sections": [
+      "退款原路返回"
+    ],
+    "category": "退款",
+    "reference_answer": "不可以自行指定另一张银行卡。订单退款通常按照原支付路径退回，也就是退回原付款渠道。",
+    "must_include": [
+      "原路返回",
+      "原支付路径",
+      "不能指定另一张银行卡"
+    ],
+    "must_not_include": [
+      "可以任意指定其他银行卡收款"
+    ]
+  },
+  {
+    "id": "b2_q18",
+    "question": "微信支付的订单退款一般会退到什么地方？",
+    "answerable": true,
+    "expected_sections": [
+      "退款原路返回",
+      "原路退款"
+    ],
+    "category": "退款",
+    "reference_answer": "微信支付的订单退款一般按照原支付路径退回到原微信支付渠道，而不是由用户另外指定一个收款账户。",
+    "must_include": [
+      "原路退款",
+      "原微信支付渠道"
+    ],
+    "must_not_include": [
+      "默认退到支付宝",
+      "可以任意指定其他收款账户"
+    ]
+  },
+  {
+    "id": "b2_q19",
+    "question": "商家给了退货地址以后，我需要在多少天内把商品寄回去？",
+    "answerable": true,
+    "expected_sections": [
+      "退货寄回时限"
+    ],
+    "category": "退货流程",
+    "reference_answer": "获得退货地址后，需要按照退货寄回时限及时寄出商品；当前规则中的寄回时限为7天。",
+    "must_include": [
+      "退货地址",
+      "7天内寄回"
+    ],
+    "must_not_include": [
+      "没有寄回时间限制",
+      "可以无限期等待"
+    ]
+  },
+  {
+    "id": "b2_q20",
+    "question": "拿到退货地址以后超过七天都没有寄商品会怎么样？",
+    "answerable": true,
+    "expected_sections": [
+      "退货寄回时限"
+    ],
+    "category": "退货流程",
+    "reference_answer": "拿到退货地址后超过规定的7天仍未寄回商品，可能导致退货申请失效、关闭或者影响后续退货处理。",
+    "must_include": [
+      "超过7天",
+      "未寄回商品",
+      "可能影响或关闭退货申请"
+    ],
+    "must_not_include": [
+      "超过七天完全没有影响",
+      "退货申请永久有效"
+    ]
+  },
+  {
+    "id": "b2_q21",
+    "question": "普通商品超过48小时没有发货，订单会自动取消吗？",
+    "answerable": true,
+    "expected_sections": [
+      "发货超时处理"
+    ],
+    "category": "订单发货",
+    "reference_answer": "普通商品超过规定发货时间后，并不意味着订单一定会自动取消；应按照平台的发货超时处理规则进行催发货、取消订单或其他处理。",
+    "must_include": [
+      "超过48小时未发货",
+      "不一定自动取消",
+      "发货超时处理"
+    ],
+    "must_not_include": [
+      "超过48小时一定自动取消"
+    ]
+  },
+  {
+    "id": "b2_q22",
+    "question": "付款两天还没发货，我能申请取消订单吗？",
+    "answerable": true,
+    "expected_sections": [
+      "发货超时处理"
+    ],
+    "category": "订单发货",
+    "reference_answer": "付款两天仍未发货时，可以按照发货超时规则申请取消或进行相应的超时处理，最终处理结果以当前订单状态和平台规则为准。",
+    "must_include": [
+      "未发货",
+      "可以申请取消",
+      "发货超时规则"
+    ],
+    "must_not_include": [
+      "未发货订单绝对不能取消"
+    ]
+  },
+  {
+    "id": "b2_q23",
+    "question": "快递确认丢件以后，平台多久会安排新的补发订单？",
+    "answerable": true,
+    "expected_sections": [
+      "物流丢件补发时效"
+    ],
+    "category": "物流异常",
+    "reference_answer": "快递确认丢件后，应按照物流丢件补发时效处理，平台或商家会在规定时限内安排补发；这里的48小时指安排补发的处理时限。",
+    "must_include": [
+      "确认丢件",
+      "48小时",
+      "安排补发"
+    ],
+    "must_not_include": [
+      "48小时内一定收到新商品"
+    ]
+  },
+  {
+    "id": "b2_q24",
+    "question": "丢件后的48小时是指48小时收到货，还是48小时内安排补发？",
+    "answerable": true,
+    "expected_sections": [
+      "物流丢件补发时效"
+    ],
+    "category": "物流异常",
+    "reference_answer": "这里的48小时是指在48小时内安排补发处理，并不是承诺补发商品一定在48小时内送达。",
+    "must_include": [
+      "48小时内安排补发",
+      "不是48小时内收到货"
+    ],
+    "must_not_include": [
+      "48小时内必须送达"
+    ]
+  },
+  {
+    "id": "b2_q25",
+    "question": "商品已经发货了，我还能让平台尝试把快递拦回来吗？",
+    "answerable": true,
+    "expected_sections": [
+      "发货后拦截规则"
+    ],
+    "category": "物流拦截",
+    "reference_answer": "商品已经发货后，如果符合条件，可以申请由平台或物流尝试进行包裹拦截，但拦截属于尝试处理，并不代表一定能够成功。",
+    "must_include": [
+      "已经发货",
+      "可以尝试拦截",
+      "不保证成功"
+    ],
+    "must_not_include": [
+      "发货后绝对不能申请拦截",
+      "申请拦截就一定成功"
+    ]
+  },
+  {
+    "id": "b2_q26",
+    "question": "申请物流拦截以后是不是一定能够成功？",
+    "answerable": true,
+    "expected_sections": [
+      "发货后拦截规则"
+    ],
+    "category": "物流拦截",
+    "reference_answer": "不是。物流拦截只能尝试执行，能否成功会受到包裹当前物流状态等因素影响，因此不能保证一定拦截成功。",
+    "must_include": [
+      "不一定成功",
+      "物流状态",
+      "只能尝试拦截"
+    ],
+    "must_not_include": [
+      "申请后一定拦截成功",
+      "平台可以保证100%拦截"
+    ]
+  },
+  {
+    "id": "b2_q27",
+    "question": "快递拒收以后是不是马上就会退款？",
+    "answerable": true,
+    "expected_sections": [
+      "拒收后的处理"
+    ],
+    "category": "拒收退款",
+    "reference_answer": "不是。快递拒收后通常还需要等待包裹退回并完成相应的退款处理流程，因此不会因为拒收动作本身就立即完成退款。",
+    "must_include": [
+      "不会马上退款",
+      "包裹退回",
+      "退款处理流程"
+    ],
+    "must_not_include": [
+      "拒收后立即到账",
+      "拒收成功就自动即时退款"
+    ]
+  },
+  {
+    "id": "b2_q28",
+    "question": "我拒收了商品，为什么退款还没有立即到账？",
+    "answerable": true,
+    "expected_sections": [
+      "拒收后的处理"
+    ],
+    "category": "拒收退款",
+    "reference_answer": "拒收商品后，退款通常需要等待包裹退回以及后续退款流程完成，所以不会在拒收后立即到账。",
+    "must_include": [
+      "拒收",
+      "等待包裹退回",
+      "不会立即到账"
+    ],
+    "must_not_include": [
+      "拒收后退款必须立即到账"
+    ]
+  },
+  {
+    "id": "b2_q29",
+    "question": "物流显示已经签收，但我实际上没有拿到包裹怎么办？",
+    "answerable": true,
+    "expected_sections": [
+      "物流签收异常"
+    ],
+    "category": "物流异常",
+    "reference_answer": "物流显示签收但实际没有收到商品时，应按物流签收异常处理，可以先核实快递投递情况，并向平台或物流反馈异常以继续核查。",
+    "must_include": [
+      "物流签收异常",
+      "实际未收到",
+      "核实物流或联系平台"
+    ],
+    "must_not_include": [
+      "物流显示签收就无法处理",
+      "只能自行承担损失"
+    ]
+  },
+  {
+    "id": "b2_q30",
+    "question": "快递显示签收一天了还是找不到商品，可以找平台处理吗？",
+    "answerable": true,
+    "expected_sections": [
+      "物流签收异常"
+    ],
+    "category": "物流异常",
+    "reference_answer": "可以。物流显示签收但仍然找不到商品属于签收异常场景，可以联系平台进行核查和后续处理。",
+    "must_include": [
+      "可以联系平台",
+      "物流签收异常",
+      "核查处理"
+    ],
+    "must_not_include": [
+      "签收后平台一律不处理",
+      "只能自己联系快递且平台无法介入"
+    ]
+  },
+  {
+    "id": "b2_q31",
+    "question": "平台支持货到付款吗？",
+    "expected_sections": [],
+    "answerable": false,
+    "category": "insufficient",
+    "reference_answer": "根据当前知识库信息，暂时无法确认。",
+    "must_include": [],
+    "must_not_include": ["支持货到付款", "不支持货到付款"]
+  },
+  {
+    "id": "b2_q32",
+    "question": "平台会员一共有几个等级？",
+    "expected_sections": [],
+    "answerable": false,
+    "category": "insufficient",
+    "reference_answer": "根据当前知识库信息，暂时无法确认。",
+    "must_include": [],
+    "must_not_include": []
+  },
+  {
+    "id": "b2_q33",
+    "question": "下单以后可以获得多少会员积分？",
+    "expected_sections": [],
+    "answerable": false,
+    "category": "insufficient",
+    "reference_answer": "根据当前知识库信息，暂时无法确认。",
+    "must_include": [],
+    "must_not_include": []
+  },
+  {
+    "id": "b2_q34",
+    "question": "平台支持比特币付款吗？",
+    "expected_sections": [],
+    "answerable": false,
+    "category": "insufficient",
+    "reference_answer": "根据当前知识库信息，暂时无法确认。",
+    "must_include": [],
+    "must_not_include": ["支持比特币", "不支持比特币"]
+  },
+  {
+    "id": "b2_q35",
+    "question": "人工客服每天几点下班？",
+    "expected_sections": [],
+    "answerable": false,
+    "category": "insufficient",
+    "reference_answer": "根据当前知识库信息，暂时无法确认。",
+    "must_include": [],
+    "must_not_include": []
+  },
+  {
+    "id": "b2_q36",
+    "question": "平台有没有学生专属优惠？",
+    "expected_sections": [],
+    "answerable": false,
+    "category": "insufficient",
+    "reference_answer": "根据当前知识库信息，暂时无法确认。",
+    "must_include": [],
+    "must_not_include": []
+  },
+  {
+    "id": "b2_q37",
+    "question": "商品最长可以保修几年？",
+    "expected_sections": [],
+    "answerable": false,
+    "category": "insufficient",
+    "reference_answer": "根据当前知识库信息，暂时无法确认。",
+    "must_include": [],
+    "must_not_include": []
+  },
+  {
+    "id": "b2_q38",
+    "question": "平台支持海外直邮吗？",
+    "expected_sections": [],
+    "answerable": false,
+    "category": "insufficient",
+    "reference_answer": "根据当前知识库信息，暂时无法确认。",
+    "must_include": [],
+    "must_not_include": ["支持海外直邮", "不支持海外直邮"]
+  },
+  {
+    "id": "b2_q39",
+    "question": "生日当天购物有额外折扣吗？",
+    "expected_sections": [],
+    "answerable": false,
+    "category": "insufficient",
+    "reference_answer": "根据当前知识库信息，暂时无法确认。",
+    "must_include": [],
+    "must_not_include": []
+  },
+  {
+    "id": "b2_q40",
+    "question": "一个账号最多可以绑定几张银行卡？",
+    "expected_sections": [],
+    "answerable": false,
+    "category": "insufficient",
+    "reference_answer": "根据当前知识库信息，暂时无法确认。",
+    "must_include": [],
+    "must_not_include": []
+  }
+]
