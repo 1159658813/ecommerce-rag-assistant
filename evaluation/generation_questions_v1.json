@@ -654,5 +654,353 @@
     "reference_answer": "根据当前知识库信息，暂时无法确认。",
     "must_include": [],
     "must_not_include": []
-  }
+  },
+  {
+  "id": "b2_q41",
+  "question": "商品有质量问题，我不是想退货而是想申请换货，处理时是不是也直接按七天无理由退货规则走？",
+  "category": "hard_negative",
+  "answerable": true,
+  "expected_sections": [
+    "换货申请条件"
+  ],
+  "reference_answer": "不是。商品存在质量问题并希望换货时，应按照换货申请条件处理，不能因为同样属于售后问题就直接套用七天无理由退货规则。",
+  "must_include": [
+    "换货申请条件",
+    "不能直接按七天无理由退货处理"
+  ],
+  "must_not_include": [
+    "质量问题换货必须按照七天无理由退货处理",
+    "换货和退货完全是同一规则"
+  ]
+},
+{
+  "id": "b2_q42",
+  "question": "快递把商品弄坏了，我申请售后时主要应该看商品质量问题规则还是运输破损、错发这类规则？",
+  "category": "hard_negative",
+  "answerable": true,
+  "expected_sections": [
+    "商品破损或者错发"
+  ],
+  "reference_answer": "如果问题属于运输过程中造成的商品破损，应优先按照商品破损或者错发相关售后规则处理，而不是简单当作普通商品质量问题。",
+  "must_include": [
+    "运输破损",
+    "商品破损或者错发"
+  ],
+  "must_not_include": [
+    "运输破损只能按普通质量问题处理",
+    "运输破损不属于售后问题"
+  ]
+},
+{
+  "id": "b2_q43",
+  "question": "我退货不是因为质量问题，只是七天无理由，但快递费比较贵，这种情况能不能要求商家承担？",
+  "category": "hard_negative",
+  "answerable": true,
+  "expected_sections": [
+    "退货运费金额规则",
+    "退货运费"
+  ],
+  "reference_answer": "如果是七天无理由退货且商品不存在质量问题，退货运费原则上由用户承担，通常不能仅因为物流费用较高就要求商家承担。",
+  "must_include": [
+    "七天无理由",
+    "没有质量问题",
+    "运费原则上由用户承担"
+  ],
+  "must_not_include": [
+    "七天无理由退货运费一定由商家承担",
+    "只要运费贵就由商家承担"
+  ]
+},
+{
+  "id": "b2_q44",
+  "question": "订单已经超过48小时没发货，是不是和物流长时间没更新一样，都说明快递已经出问题了？",
+  "category": "hard_negative",
+  "answerable": true,
+  "expected_sections": [
+    "发货超时处理"
+  ],
+  "reference_answer": "不是。超过48小时仍未发货属于发货超时问题，此时商品可能尚未进入物流环节，不能直接等同于已经发货后的物流长时间未更新。",
+  "must_include": [
+    "发货超时",
+    "不能等同于物流长时间未更新"
+  ],
+  "must_not_include": [
+    "超过48小时未发货就说明快递运输异常",
+    "发货超时和物流停滞完全相同"
+  ]
+},
+{
+  "id": "b2_q45",
+  "question": "我把没付款的单关掉了，刚才占着的那张券大概要等多久才能重新选？",
+  "category": "paraphrase",
+  "answerable": true,
+  "expected_sections": [
+    "优惠券锁定与释放"
+  ],
+  "reference_answer": "未付款订单取消后，被锁定的优惠券通常会由系统在10分钟内释放，释放后才能重新用于其他订单。",
+  "must_include": [
+    "订单取消",
+    "优惠券释放",
+    "10分钟"
+  ],
+  "must_not_include": [
+    "优惠券会永久锁定",
+    "取消订单后必须人工联系客服才能恢复"
+  ]
+},
+{
+  "id": "b2_q46",
+  "question": "钱退下来了以后，是回到我当时付款的那个地方，还是我可以另外填一个账户收？",
+  "category": "paraphrase",
+  "answerable": true,
+  "expected_sections": [
+    "退款原路返回",
+    "原路退款"
+  ],
+  "reference_answer": "退款通常按照原支付路径退回到下单时使用的原支付账户，用户通常不能另外指定其他账户接收退款。",
+  "must_include": [
+    "原支付账户",
+    "不能随意指定其他账户"
+  ],
+  "must_not_include": [
+    "可以任意填写新的收款账户",
+    "退款默认转到其他银行卡"
+  ]
+},
+{
+  "id": "b2_q47",
+  "question": "商家已经把收件地址发我了，我如果一直拖着不寄，过一个星期之后售后还会一直留着吗？",
+  "category": "paraphrase",
+  "answerable": true,
+  "expected_sections": [
+    "退货寄回时限"
+  ],
+  "reference_answer": "不会一直保留。获得有效退货地址后应在7个自然日内寄出商品，超过规定时间仍未寄出时，售后申请可能被关闭。",
+  "must_include": [
+    "7个自然日",
+    "超过时间可能关闭售后申请"
+  ],
+  "must_not_include": [
+    "退货申请会无限期保留",
+    "拿到退货地址后没有寄回时限"
+  ]
+},
+{
+  "id": "b2_q48",
+  "question": "外面的快递盒我已经扔了，只剩商品自己的盒子和配件，这种情况是不是就一定不能七天无理由了？",
+  "category": "paraphrase",
+  "answerable": true,
+  "expected_sections": [
+    "七天无理由原包装要求"
+  ],
+  "reference_answer": "不一定。快递运输使用的外层纸箱通常不要求必须保留，重点是商品自身的原包装、配件等是否保持完整。",
+  "must_include": [
+    "外层快递纸箱不要求必须保留",
+    "商品自身原包装和配件"
+  ],
+  "must_not_include": [
+    "扔掉快递纸箱就一定不能退货",
+    "快递外箱就是商品原包装"
+  ]
+},
+{
+  "id": "b2_q49",
+  "question": "商品原价120元，活动以后98元，而且还有10元运费，这样能不能算满100用满100减20？",
+  "category": "multi_condition",
+  "answerable": true,
+  "expected_sections": [
+    "优惠门槛计算口径"
+  ],
+  "reference_answer": "不能。优惠券门槛按照参与优惠计算的实际商品金额判断，活动后商品金额只有98元，运费不计入优惠券门槛，因此没有达到满100元条件。",
+  "must_include": [
+    "98元",
+    "运费不计入门槛",
+    "未达到100元"
+  ],
+  "must_not_include": [
+    "98元加10元运费达到108元所以可以使用",
+    "按照120元原价判断"
+  ]
+},
+{
+  "id": "b2_q50",
+  "question": "商品有质量问题而且外包装也已经拆了，我申请退货时运费还是要自己承担吗？",
+  "category": "multi_condition",
+  "answerable": true,
+  "expected_sections": [
+    "退货运费",
+    "退货运费金额规则"
+  ],
+  "reference_answer": "如果退货原因确认属于商品质量问题并符合售后条件，退货运费应按照质量问题退货规则由商家承担，不能仅因为包装已经拆开就直接认定由用户承担运费。",
+  "must_include": [
+    "商品质量问题",
+    "退货运费由商家承担"
+  ],
+  "must_not_include": [
+    "只要拆包装运费就一定由用户承担",
+    "质量问题退货运费必须由消费者承担"
+  ]
+},
+{
+  "id": "b2_q51",
+  "question": "我下单以后还没付款，但优惠券已经被占用了，如果现在把订单取消，是不是马上就一定能在下一单使用？",
+  "category": "multi_condition",
+  "answerable": true,
+  "expected_sections": [
+    "优惠券锁定与释放"
+  ],
+  "reference_answer": "未付款订单中的优惠券会处于锁定状态。取消订单后系统通常会在10分钟内释放优惠券，因此不能保证取消后立即就能在下一单使用。",
+  "must_include": [
+    "优惠券锁定",
+    "取消后通常10分钟内释放",
+    "不保证立即可用"
+  ],
+  "must_not_include": [
+    "取消订单后一秒钟内一定恢复",
+    "未付款订单不会占用优惠券"
+  ]
+},
+{
+  "id": "b2_q52",
+  "question": "商品已经有质量问题，同时我拿到退货地址超过七天还没寄，这种情况下售后申请会不会受影响？",
+  "category": "multi_condition",
+  "answerable": true,
+  "expected_sections": [
+    "退货寄回时限"
+  ],
+  "reference_answer": "会有影响。即使退货原因是商品质量问题，在获得有效退货地址后仍应按照规定时限寄回商品；超过7个自然日仍未寄出时，售后申请可能被关闭。",
+  "must_include": [
+    "7个自然日",
+    "超过时限可能关闭售后申请"
+  ],
+  "must_not_include": [
+    "质量问题退货完全没有寄回时限",
+    "质量问题售后永远不会关闭"
+  ]
+},
+{
+  "id": "b2_q53",
+  "question": "银行卡退款需要3到7个工作日，这句话说的是钱退到哪张卡，还是说多久能到账？",
+  "category": "adjacent_policy_confusion",
+  "answerable": true,
+  "expected_sections": [
+    "退款到账时间"
+  ],
+  "reference_answer": "3到7个工作日描述的是银行卡退款的到账时间，不是退款接收账户；退款退到哪里属于原路退款规则。",
+  "must_include": [
+    "到账时间",
+    "不是退款账户"
+  ],
+  "must_not_include": [
+    "3到7个工作日表示退款会换一张银行卡",
+    "这是指定退款账户的规则"
+  ]
+},
+{
+  "id": "b2_q54",
+  "question": "微信退款会回原来的微信账户，这个规则是不是也能说明退款一定当天到账？",
+  "category": "adjacent_policy_confusion",
+  "answerable": true,
+  "expected_sections": [
+    "退款原路返回",
+    "原路退款"
+  ],
+  "reference_answer": "不能。退回原微信支付账户说明的是退款路径，并不能由此推断退款一定当天到账；退款到账时间属于另一项规则。",
+  "must_include": [
+    "原支付账户",
+    "不能说明当天到账"
+  ],
+  "must_not_include": [
+    "原路退款就代表一定当天到账"
+  ]
+},
+{
+  "id": "b2_q55",
+  "question": "平台券能跨店凑单，是不是也代表同一个商家的两张商家券一定可以一起用？",
+  "category": "adjacent_policy_confusion",
+  "answerable": true,
+  "expected_sections": [
+    "商家优惠券叠加"
+  ],
+  "reference_answer": "不是。平台优惠券能否跨店凑单和同一商家多张商家券能否叠加属于不同规则；同一订单中同一商家的两张商家优惠券通常不能同时使用。",
+  "must_include": [
+    "属于不同规则",
+    "两张商家优惠券通常不能同时使用"
+  ],
+  "must_not_include": [
+    "平台券能跨店所以两张商家券一定能叠加",
+    "所有优惠券叠加规则都一样"
+  ]
+},
+{
+  "id": "b2_q56",
+  "question": "普通七天无理由退货不一定要上传照片，是不是商品质量问题退货也一定什么证据都不用提供？",
+  "category": "adjacent_policy_confusion",
+  "answerable": true,
+  "expected_sections": [
+    "退货举证材料"
+  ],
+  "reference_answer": "不是。普通七天无理由退货一般不固定要求上传商品问题照片，但质量问题等售后场景中，平台或商家可能要求提供能够展示问题的照片或视频。",
+  "must_include": [
+    "质量问题可能需要证据",
+    "照片或视频"
+  ],
+  "must_not_include": [
+    "质量问题退货一定不需要任何证据",
+    "所有售后都不需要举证"
+  ]
+},
+{
+  "id": "b2_q57",
+  "question": "银行卡退款如果超过30天还没到账，平台会按照每天多少钱给我赔偿吗？",
+  "category": "near_out_of_kb",
+  "answerable": false,
+  "expected_sections": [],
+  "reference_answer": "根据当前知识库信息，暂时无法确认。",
+  "must_include": [],
+  "must_not_include": [
+    "平台每天赔偿",
+    "按固定金额赔偿",
+    "超过30天一定赔偿"
+  ]
+},
+{
+  "id": "b2_q58",
+  "question": "优惠券被订单锁定超过24小时以后，平台会额外补发一张新券吗？",
+  "category": "near_out_of_kb",
+  "answerable": false,
+  "expected_sections": [],
+  "reference_answer": "根据当前知识库信息，暂时无法确认。",
+  "must_include": [],
+  "must_not_include": [
+    "一定会补发新优惠券",
+    "超过24小时自动送一张券"
+  ]
+},
+{
+  "id": "b2_q59",
+  "question": "商品质量问题退货以后，除了退货运费之外平台还会额外赔我商品价格的30%吗？",
+  "category": "near_out_of_kb",
+  "answerable": false,
+  "expected_sections": [],
+  "reference_answer": "根据当前知识库信息，暂时无法确认。",
+  "must_include": [],
+  "must_not_include": [
+    "一定额外赔偿30%",
+    "质量问题统一赔偿商品价格30%"
+  ]
+},
+{
+  "id": "b2_q60",
+  "question": "商家超过48小时没发货的话，平台是不是会自动赔我订单金额的10%？",
+  "category": "near_out_of_kb",
+  "answerable": false,
+  "expected_sections": [],
+  "reference_answer": "根据当前知识库信息，暂时无法确认。",
+  "must_include": [],
+  "must_not_include": [
+    "平台自动赔偿订单金额10%",
+    "超过48小时一定获得10%赔偿"
+  ]
+}
 ]
