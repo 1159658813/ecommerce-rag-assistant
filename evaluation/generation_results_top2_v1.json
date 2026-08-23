@@ -7,16 +7,16 @@
     "judge_timeout_seconds": 60.0,
     "judge_max_retries": 3,
     "generator_max_retries": 2,
-    "reranker_evidence_k": 3
+    "reranker_evidence_k": 2
   },
   "summary": {
     "total": 60,
     "evaluated": 60,
     "errors": 0,
-    "pass": 53,
-    "partial": 7,
+    "pass": 49,
+    "partial": 11,
     "fail": 0,
-    "pass_rate_among_evaluated": 0.8833333333333333,
+    "pass_rate_among_evaluated": 0.8166666666666667,
     "acceptable_rate_among_evaluated": 1.0,
     "evaluation_coverage": 1.0,
     "hallucination_count": 0,
@@ -24,8 +24,8 @@
     "literal_forbidden_violations": 0,
     "answerable": {
       "total": 46,
-      "pass": 39,
-      "partial": 7,
+      "pass": 35,
+      "partial": 11,
       "fail": 0,
       "error": 0
     },
@@ -66,12 +66,6 @@
           "section": "优惠门槛计算口径",
           "content": "优惠券高级使用规则\n优惠门槛计算口径\n\n满减优惠券的使用门槛按照参与该优惠券计算的商品实际应付商品金额判断。\n\n商品已经参加单品促销、限时折扣等商品级优惠时，应先扣除这些商品级优惠，再判断是否达到优惠券门槛。\n\n商品划线原价不能直接作为优惠券门槛计算依据。\n\n运费、包装服务费以及其他不参与优惠计算的费用，不计入优惠券使用门槛。",
           "reranker_score": 0.976802408695221
-        },
-        {
-          "rank": 3,
-          "section": "使用条件",
-          "content": "优惠券使用规则\n使用条件\n\n优惠券必须满足对应订单金额、商品范围以及有效期等条件后才能使用。\n\n例如满100元减20元优惠券，只有参与优惠计算的商品金额达到100元时才可以使用。\n\n部分特殊商品、秒杀商品以及明确标注不参与优惠活动的商品可能无法使用优惠券。",
-          "reranker_score": 0.6539008617401123
         }
       ],
       "retrieval_debug": {
@@ -103,8 +97,7 @@
         "reranker_score": 0.9872773289680481,
         "selected_sections": [
           "优惠门槛计算口径",
-          "优惠门槛计算口径",
-          "使用条件"
+          "优惠门槛计算口径"
         ]
       },
       "retrieval_top1_section": "优惠门槛计算口径",
@@ -131,8 +124,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 准确地解释了满100减20的门槛是基于优惠后的商品金额计算，而不是商品划线原价，并且提到了扣除单品促销、限时折扣等商品级优惠后的实际应付金额。这些信息与 Evidence 和 Reference Answer 一致，没有出现任何矛盾或幻觉。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 准确地解释了满100减20的门槛是基于优惠后的商品金额计算，而不是商品划线原价，并且提到了扣除单品促销、限时折扣等商品级优惠后的实际应付金额。这些信息与 Evidence 和 Reference Answer 一致，没有出现任何矛盾或幻觉。\"\n}"
+        "reason": "Candidate Answer 的核心结论正确，说明了满100减20的门槛是按照优惠后的商品金额计算，并明确指出商品划线原价不作为计算依据。回答内容与 Evidence 和 Reference Answer 一致，没有出现幻觉或矛盾。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，说明了满100减20的门槛是按照优惠后的商品金额计算，并明确指出商品划线原价不作为计算依据。回答内容与 Evidence 和 Reference Answer 一致，没有出现幻觉或矛盾。\"\n}"
       }
     },
     {
@@ -157,12 +150,6 @@
           "section": "使用条件",
           "content": "优惠券使用规则\n使用条件\n\n优惠券必须满足对应订单金额、商品范围以及有效期等条件后才能使用。\n\n例如满100元减20元优惠券，只有参与优惠计算的商品金额达到100元时才可以使用。\n\n部分特殊商品、秒杀商品以及明确标注不参与优惠活动的商品可能无法使用优惠券。",
           "reranker_score": 0.9605096578598022
-        },
-        {
-          "rank": 3,
-          "section": "优惠门槛计算口径",
-          "content": "优惠券高级使用规则\n优惠门槛计算口径\n\n满减优惠券的使用门槛按照参与该优惠券计算的商品实际应付商品金额判断。\n\n商品已经参加单品促销、限时折扣等商品级优惠时，应先扣除这些商品级优惠，再判断是否达到优惠券门槛。\n\n商品划线原价不能直接作为优惠券门槛计算依据。\n\n运费、包装服务费以及其他不参与优惠计算的费用，不计入优惠券使用门槛。",
-          "reranker_score": 0.268749475479126
         }
       ],
       "retrieval_debug": {
@@ -194,8 +181,7 @@
         "reranker_score": 0.999322772026062,
         "selected_sections": [
           "优惠门槛计算口径",
-          "使用条件",
-          "优惠门槛计算口径"
+          "使用条件"
         ]
       },
       "retrieval_top1_section": "优惠门槛计算口径",
@@ -210,8 +196,10 @@
         "按照商品原价判断"
       ],
       "status": "PASS",
-      "candidate_answer": "不能使用满100减20的券。商品活动后实际金额为95元，未达到100元的优惠券使用门槛。",
-      "missing_literal_items": [],
+      "candidate_answer": "不能使用满100减20的券。商品活动后实际金额为95元，未达到满100元的优惠门槛。",
+      "missing_literal_items": [
+        "未达到100元"
+      ],
       "forbidden_literal_items": [],
       "judge": {
         "verdict": "PASS",
@@ -220,8 +208,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 的核心结论正确，明确说明了商品活动后实际金额为95元，未达到100元的优惠券使用门槛。回答基于 Evidence 中的信息，没有出现任何幻觉或矛盾，并且覆盖了用户询问的核心问题和 Reference Answer 中的关键语义。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，明确说明了商品活动后实际金额为95元，未达到100元的优惠券使用门槛。回答基于 Evidence 中的信息，没有出现任何幻觉或矛盾，并且覆盖了用户询问的核心问题和 Reference Answer 中的关键语义。\"\n}"
+        "reason": "Candidate Answer 的核心结论正确，明确说明了商品活动后实际金额95元未达到满100元的优惠门槛，不能使用满100减20的券。回答基于 Evidence 支持，没有出现 Evidence 中不存在的事实性断言，并且涵盖了用户询问的核心问题和 Reference Answer 中的关键语义。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，明确说明了商品活动后实际金额95元未达到满100元的优惠门槛，不能使用满100减20的券。回答基于 Evidence 支持，没有出现 Evidence 中不存在的事实性断言，并且涵盖了用户询问的核心问题和 Reference Answer 中的关键语义。\"\n}"
       }
     },
     {
@@ -246,12 +234,6 @@
           "section": "优惠券叠加",
           "content": "优惠券使用规则\n优惠券叠加\n\n不同类型优惠券是否可以叠加使用，由具体活动规则决定。\n\n一般情况下，同类型平台优惠券在一个订单中只能使用一张。\n\n平台优惠券和商家优惠券在部分活动中可以同时使用，但最终以订单结算页面显示的优惠结果为准。",
           "reranker_score": 0.6839474439620972
-        },
-        {
-          "rank": 3,
-          "section": "优惠门槛计算口径",
-          "content": "优惠券高级使用规则\n优惠门槛计算口径\n\n例如某商品原价110元，商品活动优惠后实际商品金额为95元，则不能使用满100元减20元优惠券。",
-          "reranker_score": 0.4290107190608978
         }
       ],
       "retrieval_debug": {
@@ -283,8 +265,7 @@
         "reranker_score": 0.9957518577575684,
         "selected_sections": [
           "跨店凑单规则",
-          "优惠券叠加",
-          "优惠门槛计算口径"
+          "优惠券叠加"
         ]
       },
       "retrieval_top1_section": "跨店凑单规则",
@@ -299,7 +280,7 @@
         "平台优惠券一律不能跨店"
       ],
       "status": "PASS",
-      "candidate_answer": "可以，不同店铺的商品在活动规则允许的情况下，可以一起凑平台优惠券的满减门槛，但只有参与同一平台优惠活动的商品金额才会计入门槛。商家优惠券则不能跨店凑单。",
+      "candidate_answer": "可以，不同店铺的商品在活动规则允许的情况下，可以一起凑平台优惠券的满减门槛，但只有参与该平台优惠活动的商品金额才会计入门槛。商家优惠券则只能用于对应店铺的商品，不支持跨店凑单。",
       "missing_literal_items": [
         "适用范围或活动规则"
       ],
@@ -311,8 +292,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 的核心结论正确，明确说明了不同店铺的商品在活动规则允许的情况下可以一起凑平台优惠券的满减门槛，并且只有参与同一平台优惠活动的商品金额才会计入门槛。同时，也指出了商家优惠券不能跨店凑单。这些信息与 Retrieved Evidence 和 Reference Answer 一致，没有出现重要幻觉或矛盾。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，明确说明了不同店铺的商品在活动规则允许的情况下可以一起凑平台优惠券的满减门槛，并且只有参与同一平台优惠活动的商品金额才会计入门槛。同时，也指出了商家优惠券不能跨店凑单。这些信息与 Retrieved Evidence 和 Reference Answer 一致，没有出现重要幻觉或矛盾。\"\n}"
+        "reason": "Candidate Answer 核心结论正确，明确指出了平台优惠券在活动规则允许的情况下可以跨店凑单，并且只有参与该平台优惠活动的商品金额才会计入门槛。同时提到了商家优惠券不能用于其他店铺商品的限制，没有出现与 Evidence 或 Reference Answer 矛盾的内容，覆盖了用户询问的核心问题和关键语义要求。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 核心结论正确，明确指出了平台优惠券在活动规则允许的情况下可以跨店凑单，并且只有参与该平台优惠活动的商品金额才会计入门槛。同时提到了商家优惠券不能用于其他店铺商品的限制，没有出现与 Evidence 或 Reference Answer 矛盾的内容，覆盖了用户询问的核心问题和关键语义要求。\"\n}"
       }
     },
     {
@@ -337,12 +318,6 @@
           "section": "商家优惠券叠加",
           "content": "优惠券高级使用规则\n商家优惠券叠加\n\n同一个订单中，同一商家的两张商家优惠券通常不能同时使用。\n\n如果用户拥有多张符合条件的商家优惠券，结算时通常只能选择其中一张。\n\n商家优惠券在活动规则允许的情况下，可以与平台优惠券同时使用。\n\n是否能够组合使用最终以订单结算页面展示结果为准。",
           "reranker_score": 0.9318356513977051
-        },
-        {
-          "rank": 3,
-          "section": "优惠券叠加",
-          "content": "优惠券使用规则\n优惠券叠加\n\n不同类型优惠券是否可以叠加使用，由具体活动规则决定。\n\n一般情况下，同类型平台优惠券在一个订单中只能使用一张。\n\n平台优惠券和商家优惠券在部分活动中可以同时使用，但最终以订单结算页面显示的优惠结果为准。",
-          "reranker_score": 0.7793218493461609
         }
       ],
       "retrieval_debug": {
@@ -374,8 +349,7 @@
         "reranker_score": 0.9982926249504089,
         "selected_sections": [
           "跨店凑单规则",
-          "商家优惠券叠加",
-          "优惠券叠加"
+          "商家优惠券叠加"
         ]
       },
       "retrieval_top1_section": "跨店凑单规则",
@@ -390,7 +364,7 @@
         "所有店铺通用"
       ],
       "status": "PASS",
-      "candidate_answer": "商家优惠券只能用于对应商家的商品，不能用其他店铺的商品金额凑满商家优惠券的使用门槛。",
+      "candidate_answer": "商家优惠券只能用于对应商家的商品，不能用其他店铺的商品凑金额。",
       "missing_literal_items": [
         "发券商家",
         "其他店铺不能凑金额"
@@ -403,8 +377,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 准确地回答了用户的问题，指出了商家优惠券只能用于对应商家的商品，不能用其他店铺的商品金额凑满使用门槛。该回答与 Evidence 和 Reference Answer 一致，且没有出现任何幻觉或矛盾。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 准确地回答了用户的问题，指出了商家优惠券只能用于对应商家的商品，不能用其他店铺的商品金额凑满使用门槛。该回答与 Evidence 和 Reference Answer 一致，且没有出现任何幻觉或矛盾。\"\n}"
+        "reason": "Candidate Answer 准确回答了用户的问题，明确指出商家优惠券不能用于其他店铺的商品凑金额，并且这个结论得到了 Evidence 的支持。同时，回答没有包含任何与 Evidence 或 Reference Answer 矛盾的信息。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 准确回答了用户的问题，明确指出商家优惠券不能用于其他店铺的商品凑金额，并且这个结论得到了 Evidence 的支持。同时，回答没有包含任何与 Evidence 或 Reference Answer 矛盾的信息。\"\n}"
       }
     },
     {
@@ -429,12 +403,6 @@
           "section": "优惠券叠加",
           "content": "优惠券使用规则\n优惠券叠加\n\n不同类型优惠券是否可以叠加使用，由具体活动规则决定。\n\n一般情况下，同类型平台优惠券在一个订单中只能使用一张。\n\n平台优惠券和商家优惠券在部分活动中可以同时使用，但最终以订单结算页面显示的优惠结果为准。",
           "reranker_score": 0.9899863600730896
-        },
-        {
-          "rank": 3,
-          "section": "优惠券锁定与释放",
-          "content": "优惠券高级使用规则\n优惠券锁定与释放\n\n用户提交订单后，本次订单选择使用的优惠券会暂时进入锁定状态。\n\n锁定期间，该优惠券不能同时用于其他订单。\n\n如果未付款订单被取消，系统通常会在10分钟内释放被锁定的优惠券。\n\n已经付款的订单发生退款时，则按照退款后的优惠券返还规则处理。",
-          "reranker_score": 0.8738621473312378
         }
       ],
       "retrieval_debug": {
@@ -466,8 +434,7 @@
         "reranker_score": 0.9996672868728638,
         "selected_sections": [
           "商家优惠券叠加",
-          "优惠券叠加",
-          "优惠券锁定与释放"
+          "优惠券叠加"
         ]
       },
       "retrieval_top1_section": "商家优惠券叠加",
@@ -494,8 +461,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 的核心结论正确，明确说明了同一商家的两张优惠券通常不能同时使用，并且结算时只能选择其中一张。最终能否组合使用以订单结算页面为准，符合 Evidence 和 Reference Answer 的内容。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，明确说明了同一商家的两张优惠券通常不能同时使用，并且结算时只能选择其中一张。最终能否组合使用以订单结算页面为准，符合 Evidence 和 Reference Answer 的内容。\"\n}"
+        "reason": "Candidate Answer 正确表达了同一商家的两张优惠券通常不能同时使用，并且指出了结算时一般只能选择其中一张，以及最终以订单结算页面展示结果为准。这些内容都得到了 Evidence 的支持，没有出现任何与 Evidence 或 Reference Answer 矛盾的地方。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确表达了同一商家的两张优惠券通常不能同时使用，并且指出了结算时一般只能选择其中一张，以及最终以订单结算页面展示结果为准。这些内容都得到了 Evidence 的支持，没有出现任何与 Evidence 或 Reference Answer 矛盾的地方。\"\n}"
       }
     },
     {
@@ -521,12 +488,6 @@
           "section": "优惠券叠加",
           "content": "优惠券使用规则\n优惠券叠加\n\n不同类型优惠券是否可以叠加使用，由具体活动规则决定。\n\n一般情况下，同类型平台优惠券在一个订单中只能使用一张。\n\n平台优惠券和商家优惠券在部分活动中可以同时使用，但最终以订单结算页面显示的优惠结果为准。",
           "reranker_score": 0.9930693507194519
-        },
-        {
-          "rank": 3,
-          "section": "跨店凑单规则",
-          "content": "优惠券高级使用规则\n跨店凑单规则\n\n平台优惠券在活动规则允许的情况下，可以对多个参与同一优惠活动的店铺商品进行跨店凑单。\n\n只有明确标记为参与该平台优惠活动的商品金额才会计入门槛。\n\n商家优惠券只能用于对应商家的商品，不能使用其他店铺的商品金额凑满商家优惠券门槛。",
-          "reranker_score": 0.9290551543235779
         }
       ],
       "retrieval_debug": {
@@ -558,8 +519,7 @@
         "reranker_score": 0.9979089498519897,
         "selected_sections": [
           "商家优惠券叠加",
-          "优惠券叠加",
-          "跨店凑单规则"
+          "优惠券叠加"
         ]
       },
       "retrieval_top1_section": "商家优惠券叠加",
@@ -574,7 +534,7 @@
         "一定不能叠加"
       ],
       "status": "PASS",
-      "candidate_answer": "商家券在活动规则允许的情况下，可以与平台券一起使用。具体是否能够叠加使用，以订单结算页面展示结果为准。",
+      "candidate_answer": "商家券在活动规则允许的情况下，可以与平台券一起使用。是否能够组合使用，最终以订单结算页面展示结果为准。",
       "missing_literal_items": [
         "叠加规则"
       ],
@@ -586,8 +546,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 核心结论正确，指出商家券在活动规则允许的情况下可以与平台券一起使用，并且强调了具体是否能够叠加使用需要以订单结算页面展示结果为准。回答基于 Evidence 提供的信息，没有出现幻觉或矛盾，覆盖了用户询问的核心问题和 Reference Answer 中的关键语义。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 核心结论正确，指出商家券在活动规则允许的情况下可以与平台券一起使用，并且强调了具体是否能够叠加使用需要以订单结算页面展示结果为准。回答基于 Evidence 提供的信息，没有出现幻觉或矛盾，覆盖了用户询问的核心问题和 Reference Answer 中的关键语义。\"\n}"
+        "reason": "Candidate Answer 核心结论正确，明确说明了商家券在活动规则允许的情况下可以与平台券一起使用，并且最终以订单结算页面展示结果为准。回答基于 Retrieved Evidence，没有出现未经支持的事实性断言，覆盖了用户询问的核心问题和 Reference Answer 中的关键语义。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 核心结论正确，明确说明了商家券在活动规则允许的情况下可以与平台券一起使用，并且最终以订单结算页面展示结果为准。回答基于 Retrieved Evidence，没有出现未经支持的事实性断言，覆盖了用户询问的核心问题和 Reference Answer 中的关键语义。\"\n}"
       }
     },
     {
@@ -612,12 +572,6 @@
           "section": "优惠券锁定与释放",
           "content": "优惠券高级使用规则\n优惠券锁定与释放\n\n用户提交订单后，本次订单选择使用的优惠券会暂时进入锁定状态。\n\n锁定期间，该优惠券不能同时用于其他订单。\n\n如果未付款订单被取消，系统通常会在10分钟内释放被锁定的优惠券。\n\n已经付款的订单发生退款时，则按照退款后的优惠券返还规则处理。",
           "reranker_score": 0.4801739454269409
-        },
-        {
-          "rank": 3,
-          "section": "优惠券有效期",
-          "content": "优惠券使用规则\n优惠券有效期\n\n优惠券只能在标注的有效期内使用。\n\n超过有效期后，优惠券会自动失效，一般无法恢复。\n\n用户可以在个人账户的优惠券页面查看优惠券的具体有效时间和使用条件。",
-          "reranker_score": 0.31689754128456116
         }
       ],
       "retrieval_debug": {
@@ -649,8 +603,7 @@
         "reranker_score": 0.9734938144683838,
         "selected_sections": [
           "优惠券退款返还",
-          "优惠券锁定与释放",
-          "优惠券有效期"
+          "优惠券锁定与释放"
         ]
       },
       "retrieval_top1_section": "优惠券退款返还",
@@ -664,22 +617,22 @@
         "所有优惠券退款后一定返还",
         "退款后优惠券永远不会返还"
       ],
-      "status": "PASS",
-      "candidate_answer": "整单退款后，如果原优惠券仍在有效期内且活动规则允许返还，优惠券通常会自动退回用户账户。如果退款完成时优惠券已过期，则一般不会退回。具体以优惠券页面显示状态为准。",
+      "status": "PARTIAL",
+      "candidate_answer": "整单退款后，如果原优惠券仍在有效期内且活动规则允许返还，优惠券通常会自动退回用户账户。具体是否返还以优惠券页面显示状态为准。",
       "missing_literal_items": [
         "优惠券返还规则",
         "符合条件可返还"
       ],
       "forbidden_literal_items": [],
       "judge": {
-        "verdict": "PASS",
+        "verdict": "PARTIAL",
         "correctness": 2,
         "groundedness": 2,
-        "completeness": 2,
+        "completeness": 1,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 准确地描述了整单退款后优惠券的返还规则，并且明确指出如果优惠券在有效期内且活动规则允许，通常会自动退回用户账户。同时，也提到了如果退款完成时优惠券已过期，则一般不会退回。这些信息与 Evidence 和 Reference Answer 一致，且满足 must_include 的要求，没有出现 must_not_include 的情况。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 准确地描述了整单退款后优惠券的返还规则，并且明确指出如果优惠券在有效期内且活动规则允许，通常会自动退回用户账户。同时，也提到了如果退款完成时优惠券已过期，则一般不会退回。这些信息与 Evidence 和 Reference Answer 一致，且满足 must_include 的要求，没有出现 must_not_include 的情况。\"\n}"
+        "reason": "Candidate Answer 的核心结论正确，并且由 Evidence 支持，但没有明确提到“整单退款”和“优惠券返还规则”，以及“符合条件可返还”的关键语义。",
+        "raw_judge_output": "{\n  \"verdict\": \"PARTIAL\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 1,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，并且由 Evidence 支持，但没有明确提到“整单退款”和“优惠券返还规则”，以及“符合条件可返还”的关键语义。\"\n}"
       }
     },
     {
@@ -704,12 +657,6 @@
           "section": "优惠券锁定与释放",
           "content": "优惠券高级使用规则\n优惠券锁定与释放\n\n用户提交订单后，本次订单选择使用的优惠券会暂时进入锁定状态。\n\n锁定期间，该优惠券不能同时用于其他订单。\n\n如果未付款订单被取消，系统通常会在10分钟内释放被锁定的优惠券。\n\n已经付款的订单发生退款时，则按照退款后的优惠券返还规则处理。",
           "reranker_score": 0.2756168842315674
-        },
-        {
-          "rank": 3,
-          "section": "优惠券有效期",
-          "content": "优惠券使用规则\n优惠券有效期\n\n优惠券只能在标注的有效期内使用。\n\n超过有效期后，优惠券会自动失效，一般无法恢复。\n\n用户可以在个人账户的优惠券页面查看优惠券的具体有效时间和使用条件。",
-          "reranker_score": 0.20882359147071838
         }
       ],
       "retrieval_debug": {
@@ -741,8 +688,7 @@
         "reranker_score": 0.9967396855354309,
         "selected_sections": [
           "优惠券退款返还",
-          "优惠券锁定与释放",
-          "优惠券有效期"
+          "优惠券锁定与释放"
         ]
       },
       "retrieval_top1_section": "优惠券退款返还",
@@ -769,8 +715,8 @@
         "completeness": 1,
         "contradiction": false,
         "hallucination": false,
-        "reason": "核心结论正确且有证据支持，但未提及具体的退款返还规则，缺乏对用户问题的完整回答。",
-        "raw_judge_output": "{\n  \"verdict\": \"PARTIAL\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 1,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"核心结论正确且有证据支持，但未提及具体的退款返还规则，缺乏对用户问题的完整回答。\"\n}"
+        "reason": "核心结论正确且由 Evidence 支持，但未提及需要按照退款返还规则处理的具体情况，缺乏对用户询问的部分细节覆盖。",
+        "raw_judge_output": "{\n  \"verdict\": \"PARTIAL\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 1,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"核心结论正确且由 Evidence 支持，但未提及需要按照退款返还规则处理的具体情况，缺乏对用户询问的部分细节覆盖。\"\n}"
       }
     },
     {
@@ -795,12 +741,6 @@
           "section": "商家优惠券叠加",
           "content": "优惠券高级使用规则\n商家优惠券叠加\n\n同一个订单中，同一商家的两张商家优惠券通常不能同时使用。\n\n如果用户拥有多张符合条件的商家优惠券，结算时通常只能选择其中一张。\n\n商家优惠券在活动规则允许的情况下，可以与平台优惠券同时使用。\n\n是否能够组合使用最终以订单结算页面展示结果为准。",
           "reranker_score": 0.3558868169784546
-        },
-        {
-          "rank": 3,
-          "section": "优惠券叠加",
-          "content": "优惠券使用规则\n优惠券叠加\n\n不同类型优惠券是否可以叠加使用，由具体活动规则决定。\n\n一般情况下，同类型平台优惠券在一个订单中只能使用一张。\n\n平台优惠券和商家优惠券在部分活动中可以同时使用，但最终以订单结算页面显示的优惠结果为准。",
-          "reranker_score": 0.2391715943813324
         }
       ],
       "retrieval_debug": {
@@ -832,8 +772,7 @@
         "reranker_score": 0.9416541457176208,
         "selected_sections": [
           "优惠券锁定与释放",
-          "商家优惠券叠加",
-          "优惠券叠加"
+          "商家优惠券叠加"
         ]
       },
       "retrieval_top1_section": "优惠券锁定与释放",
@@ -848,7 +787,7 @@
         "可以同时拿去下其他订单"
       ],
       "status": "PASS",
-      "candidate_answer": "提交订单后，您使用的优惠券会被锁定，无法同时用于其他订单。只有当前订单取消且优惠券释放后，才能在其他订单中使用。",
+      "candidate_answer": "提交订单后，您使用的优惠券会被锁定，无法同时用于其他订单。只有当前订单取消且优惠券释放后，才能用于下单。",
       "missing_literal_items": [
         "未付款订单",
         "优惠券被锁定",
@@ -862,8 +801,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 准确地解释了提交订单后优惠券被锁定的情况，并且指出了只有在当前订单取消且优惠券释放后才能用于其他订单。这与 Evidence 和 Reference Answer 一致，没有出现重要遗漏或矛盾。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 准确地解释了提交订单后优惠券被锁定的情况，并且指出了只有在当前订单取消且优惠券释放后才能用于其他订单。这与 Evidence 和 Reference Answer 一致，没有出现重要遗漏或矛盾。\"\n}"
+        "reason": "Candidate Answer 的核心结论正确，解释了优惠券在未付款订单中被锁定的情况，并且说明了只有在当前订单取消且优惠券释放后才能用于其他订单。这与 Evidence 和 Reference Answer 一致，没有出现矛盾或幻觉。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，解释了优惠券在未付款订单中被锁定的情况，并且说明了只有在当前订单取消且优惠券释放后才能用于其他订单。这与 Evidence 和 Reference Answer 一致，没有出现矛盾或幻觉。\"\n}"
       }
     },
     {
@@ -888,12 +827,6 @@
           "section": "订单自动关闭",
           "content": "订单与取消规则\n订单自动关闭\n\n未付款订单在超过规定支付时间后可能被系统自动关闭。\n\n订单因支付超时、风控审核失败或者商品库存异常而关闭后，用户通常需要重新下单。\n\n已经关闭的订单不能直接恢复为原订单。",
           "reranker_score": 0.04867657274007797
-        },
-        {
-          "rank": 3,
-          "section": "优惠券有效期",
-          "content": "优惠券使用规则\n优惠券有效期\n\n优惠券只能在标注的有效期内使用。\n\n超过有效期后，优惠券会自动失效，一般无法恢复。\n\n用户可以在个人账户的优惠券页面查看优惠券的具体有效时间和使用条件。",
-          "reranker_score": 0.03697755187749863
         }
       ],
       "retrieval_debug": {
@@ -925,8 +858,7 @@
         "reranker_score": 0.9937829375267029,
         "selected_sections": [
           "优惠券锁定与释放",
-          "订单自动关闭",
-          "优惠券有效期"
+          "订单自动关闭"
         ]
       },
       "retrieval_top1_section": "优惠券锁定与释放",
@@ -941,7 +873,7 @@
         "必须人工联系客服才能释放"
       ],
       "status": "PARTIAL",
-      "candidate_answer": "未付款订单取消后，系统通常会在10分钟内释放被锁定的优惠券。",
+      "candidate_answer": "未付款订单取消后，优惠券通常会在10分钟内解除锁定。",
       "missing_literal_items": [
         "自动释放",
         "系统处理"
@@ -954,8 +886,8 @@
         "completeness": 1,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 的核心结论是正确的，且基于 Evidence。但是它没有完全覆盖用户真正询问的核心问题，即优惠券的释放是由系统处理的结果，而不仅仅是时间上的描述。",
-        "raw_judge_output": "{\n  \"verdict\": \"PARTIAL\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 1,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论是正确的，且基于 Evidence。但是它没有完全覆盖用户真正询问的核心问题，即优惠券的释放是由系统处理的结果，而不仅仅是时间上的描述。\"\n}"
+        "reason": "Candidate Answer 提到了优惠券通常会在10分钟内解除锁定，这是正确的。但是没有提到实际恢复时间以系统处理结果为准，缺少了对系统处理的强调，因此在完整性上有所欠缺。",
+        "raw_judge_output": "{\n  \"verdict\": \"PARTIAL\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 1,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 提到了优惠券通常会在10分钟内解除锁定，这是正确的。但是没有提到实际恢复时间以系统处理结果为准，缺少了对系统处理的强调，因此在完整性上有所欠缺。\"\n}"
       }
     },
     {
@@ -980,12 +912,6 @@
           "section": "七天无理由退货",
           "content": "退款与退货政策\n七天无理由退货\n\n用户自收到商品之日起7日内，在商品保持完好、不影响二次销售的情况下，可以申请七天无理由退货。\n\n定制商品、生鲜食品、已拆封的数字商品以及其他依法不适用七天无理由退货的商品除外。\n\n商品退回后，平台将在确认商品符合退货条件后处理退款。",
           "reranker_score": 0.43950679898262024
-        },
-        {
-          "rank": 3,
-          "section": "退货举证材料",
-          "content": "售后与退款高级规则\n退货举证材料\n\n普通七天无理由退货一般不要求用户必须上传商品问题照片。\n\n如果用户因为商品质量问题、运输破损、错发或者漏发申请售后，平台或商家可能要求用户上传能够清楚展示问题的照片或者视频。\n\n平台不统一规定必须上传固定数量的照片。\n\n用户提供的材料只需要能够充分展示实际问题即可。",
-          "reranker_score": 0.35958901047706604
         }
       ],
       "retrieval_debug": {
@@ -1017,8 +943,7 @@
         "reranker_score": 0.999208390712738,
         "selected_sections": [
           "七天无理由原包装要求",
-          "七天无理由退货",
-          "退货举证材料"
+          "七天无理由退货"
         ]
       },
       "retrieval_top1_section": "七天无理由原包装要求",
@@ -1031,7 +956,7 @@
         "必须保留快递外层纸箱才能退货"
       ],
       "status": "PASS",
-      "candidate_answer": "不需要。七天无理由退货不要求必须保留快递运输使用的外层纸箱或者快递袋。但建议尽量保持商品自身的原包装、配件、赠品、标签和说明书完整，以免影响商品二次销售，导致退货受限。",
+      "candidate_answer": "不需要保留快递运输使用的外层纸箱。申请七天无理由退货时，不要求必须保留快递袋或外层包装箱。但商品自身的原包装、配件、标签等应尽量保持完整，以免影响二次销售。",
       "missing_literal_items": [
         "商品原包装",
         "外层快递纸箱不等同于商品原包装"
@@ -1044,8 +969,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 正确地指出了七天无理由退货不要求保留外层快递纸箱，并且建议保持商品原包装和配件的完整性，这与 Evidence 和 Reference Answer 一致。同时满足了 must_include 的要求，并没有提到必须保留快递外层纸箱才能退货的内容。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地指出了七天无理由退货不要求保留外层快递纸箱，并且建议保持商品原包装和配件的完整性，这与 Evidence 和 Reference Answer 一致。同时满足了 must_include 的要求，并没有提到必须保留快递外层纸箱才能退货的内容。\"\n}"
+        "reason": "Candidate Answer 的核心结论正确，明确说明了不需要保留快递运输使用的外层纸箱，并且强调了商品原包装、配件等应保持完整。这些信息都与 Evidence 和 Reference Answer 一致，没有出现矛盾或幻觉。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，明确说明了不需要保留快递运输使用的外层纸箱，并且强调了商品原包装、配件等应保持完整。这些信息都与 Evidence 和 Reference Answer 一致，没有出现矛盾或幻觉。\"\n}"
       }
     },
     {
@@ -1070,12 +995,6 @@
           "section": "七天无理由退货",
           "content": "退款与退货政策\n七天无理由退货\n\n用户自收到商品之日起7日内，在商品保持完好、不影响二次销售的情况下，可以申请七天无理由退货。\n\n定制商品、生鲜食品、已拆封的数字商品以及其他依法不适用七天无理由退货的商品除外。\n\n商品退回后，平台将在确认商品符合退货条件后处理退款。",
           "reranker_score": 0.3655698895454407
-        },
-        {
-          "rank": 3,
-          "section": "退货运费",
-          "content": "退款与退货政策\n退货运费\n\n因商品质量问题、商品破损、错发或者漏发导致的退货，退货运费由商家承担。\n\n七天无理由退货且商品不存在质量问题时，退货运费原则上由用户承担。\n\n如果订单购买了退货运费保障服务，则按照对应保障规则进行赔付。",
-          "reranker_score": 0.18877223134040833
         }
       ],
       "retrieval_debug": {
@@ -1107,8 +1026,7 @@
         "reranker_score": 0.9899086952209473,
         "selected_sections": [
           "七天无理由原包装要求",
-          "七天无理由退货",
-          "退货运费"
+          "七天无理由退货"
         ]
       },
       "retrieval_top1_section": "七天无理由原包装要求",
@@ -1123,7 +1041,7 @@
         "原包装和配件丢失完全不影响退货"
       ],
       "status": "PASS",
-      "candidate_answer": "商品自身的原包装和配件属于商品完整性的一部分，如果丢失导致商品无法再次正常销售，可能会影响七天无理由退货申请。",
+      "candidate_answer": "如果商品自身的原包装、配件、赠品、标签或说明书丢失，导致商品无法再次正常销售，可能会影响七天无理由退货申请。建议尽量保持商品完整性以便顺利退货。",
       "missing_literal_items": [
         "商品原包装",
         "商品完好"
@@ -1136,8 +1054,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 的核心结论正确，明确指出原包装和配件丢失可能会影响七天无理由退货申请，并且这个回答完全基于所提供的 Evidence。同时，Candidate Answer 涵盖了用户询问的核心问题以及 Reference Answer 中的关键语义，没有出现任何与 Evidence 或 Reference Answer 矛盾的内容。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，明确指出原包装和配件丢失可能会影响七天无理由退货申请，并且这个回答完全基于所提供的 Evidence。同时，Candidate Answer 涵盖了用户询问的核心问题以及 Reference Answer 中的关键语义，没有出现任何与 Evidence 或 Reference Answer 矛盾的内容。\"\n}"
+        "reason": "Candidate Answer 的核心结论正确，指出了商品原包装和配件的丢失可能会影响七天无理由退货申请，并建议保持商品完整性。这与 Evidence 和 Reference Answer 一致，且包含了必须的信息。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，指出了商品原包装和配件的丢失可能会影响七天无理由退货申请，并建议保持商品完整性。这与 Evidence 和 Reference Answer 一致，且包含了必须的信息。\"\n}"
       }
     },
     {
@@ -1162,12 +1080,6 @@
           "section": "七天无理由原包装要求",
           "content": "售后与退款高级规则\n七天无理由原包装要求\n\n申请七天无理由退货时，不要求用户必须保留快递运输使用的外层纸箱或者快递袋。\n\n但是，如果商品自身的原包装、配件、赠品、标签或者说明书属于商品完整性的一部分，则用户应尽量保持完整。\n\n如果缺少这些内容导致商品无法再次正常销售，可能影响七天无理由退货申请。",
           "reranker_score": 0.8503443598747253
-        },
-        {
-          "rank": 3,
-          "section": "七天无理由退货",
-          "content": "退款与退货政策\n七天无理由退货\n\n用户自收到商品之日起7日内，在商品保持完好、不影响二次销售的情况下，可以申请七天无理由退货。\n\n定制商品、生鲜食品、已拆封的数字商品以及其他依法不适用七天无理由退货的商品除外。\n\n商品退回后，平台将在确认商品符合退货条件后处理退款。",
-          "reranker_score": 0.5890073776245117
         }
       ],
       "retrieval_debug": {
@@ -1199,8 +1111,7 @@
         "reranker_score": 0.9995539784431458,
         "selected_sections": [
           "退货举证材料",
-          "七天无理由原包装要求",
-          "七天无理由退货"
+          "七天无理由原包装要求"
         ]
       },
       "retrieval_top1_section": "退货举证材料",
@@ -1214,7 +1125,7 @@
         "固定必须上传若干张照片"
       ],
       "status": "PARTIAL",
-      "candidate_answer": "普通七天无理由退货不要求必须上传商品照片。",
+      "candidate_answer": "普通七天无理由退货一般不要求用户必须上传商品照片。",
       "missing_literal_items": [
         "不一定必须上传照片",
         "以平台或申请页面要求为准"
@@ -1227,8 +1138,8 @@
         "completeness": 1,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 的核心结论正确，即普通七天无理由退货不要求必须上传商品照片。然而，它没有提到以平台或申请页面的具体要求为准，这在 Reference Answer 中是关键语义之一。因此，在 completeness 方面有所欠缺。",
-        "raw_judge_output": "{\n  \"verdict\": \"PARTIAL\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 1,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，即普通七天无理由退货不要求必须上传商品照片。然而，它没有提到以平台或申请页面的具体要求为准，这在 Reference Answer 中是关键语义之一。因此，在 completeness 方面有所欠缺。\"\n}"
+        "reason": "核心结论正确且由证据支持，但没有提到以平台或申请页面要求为准，缺少重要信息。",
+        "raw_judge_output": "{\n  \"verdict\": \"PARTIAL\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 1,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"核心结论正确且由证据支持，但没有提到以平台或申请页面要求为准，缺少重要信息。\"\n}"
       }
     },
     {
@@ -1253,12 +1164,6 @@
           "section": "商品质量问题",
           "content": "售后服务规则\n商品质量问题\n\n如果收到的商品存在明显质量问题，用户可以通过售后页面提交申请。\n\n申请时应尽量提供能够说明商品问题的图片、视频或者其他证明材料。\n\n商家或者平台会根据提交的信息以及实际商品情况进行审核。",
           "reranker_score": 0.7498207092285156
-        },
-        {
-          "rank": 3,
-          "section": "七天无理由原包装要求",
-          "content": "售后与退款高级规则\n七天无理由原包装要求\n\n申请七天无理由退货时，不要求用户必须保留快递运输使用的外层纸箱或者快递袋。\n\n但是，如果商品自身的原包装、配件、赠品、标签或者说明书属于商品完整性的一部分，则用户应尽量保持完整。\n\n如果缺少这些内容导致商品无法再次正常销售，可能影响七天无理由退货申请。",
-          "reranker_score": 0.06119922548532486
         }
       ],
       "retrieval_debug": {
@@ -1290,8 +1195,7 @@
         "reranker_score": 0.9917163252830505,
         "selected_sections": [
           "退货举证材料",
-          "商品质量问题",
-          "七天无理由原包装要求"
+          "商品质量问题"
         ]
       },
       "retrieval_top1_section": "退货举证材料",
@@ -1319,8 +1223,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 准确地指出了质量问题申请退货并不需要上传固定数量的照片，只需提供能够充分展示问题的图片或视频即可。这与 Evidence 和 Reference Answer 的内容一致，并且涵盖了用户的核心问题。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 准确地指出了质量问题申请退货并不需要上传固定数量的照片，只需提供能够充分展示问题的图片或视频即可。这与 Evidence 和 Reference Answer 的内容一致，并且涵盖了用户的核心问题。\"\n}"
+        "reason": "Candidate Answer 准确地回答了用户的问题，指出质量问题申请退货并不强制要求上传固定数量的照片，而是需要提供能够充分展示问题的图片或视频。这与 Evidence 和 Reference Answer 的信息一致，没有出现任何矛盾或重要遗漏。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 准确地回答了用户的问题，指出质量问题申请退货并不强制要求上传固定数量的照片，而是需要提供能够充分展示问题的图片或视频。这与 Evidence 和 Reference Answer 的信息一致，没有出现任何矛盾或重要遗漏。\"\n}"
       }
     },
     {
@@ -1345,12 +1249,6 @@
           "section": "退货运费",
           "content": "退款与退货政策\n退货运费\n\n因商品质量问题、商品破损、错发或者漏发导致的退货，退货运费由商家承担。\n\n七天无理由退货且商品不存在质量问题时，退货运费原则上由用户承担。\n\n如果订单购买了退货运费保障服务，则按照对应保障规则进行赔付。",
           "reranker_score": 0.2240554392337799
-        },
-        {
-          "rank": 3,
-          "section": "退货举证材料",
-          "content": "售后与退款高级规则\n退货举证材料\n\n普通七天无理由退货一般不要求用户必须上传商品问题照片。\n\n如果用户因为商品质量问题、运输破损、错发或者漏发申请售后，平台或商家可能要求用户上传能够清楚展示问题的照片或者视频。\n\n平台不统一规定必须上传固定数量的照片。\n\n用户提供的材料只需要能够充分展示实际问题即可。",
-          "reranker_score": 0.11696558445692062
         }
       ],
       "retrieval_debug": {
@@ -1382,8 +1280,7 @@
         "reranker_score": 0.9872773289680481,
         "selected_sections": [
           "退货运费金额规则",
-          "退货运费",
-          "退货举证材料"
+          "退货运费"
         ]
       },
       "retrieval_top1_section": "退货运费金额规则",
@@ -1410,8 +1307,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 准确回答了用户的问题，明确指出七天无理由退货的快递费没有统一的最高金额限制，并且说明用户承担的是实际发生的合理退货物流费用。这些信息与 Evidence 和 Reference Answer 一致，没有出现矛盾或幻觉。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 准确回答了用户的问题，明确指出七天无理由退货的快递费没有统一的最高金额限制，并且说明用户承担的是实际发生的合理退货物流费用。这些信息与 Evidence 和 Reference Answer 一致，没有出现矛盾或幻觉。\"\n}"
+        "reason": "Candidate Answer 准确地指出了七天无理由退货的快递费没有统一的最高金额限制，并且说明了用户需要承担实际发生的合理退货物流费用，这与 Evidence 和 Reference Answer 一致。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 准确地指出了七天无理由退货的快递费没有统一的最高金额限制，并且说明了用户需要承担实际发生的合理退货物流费用，这与 Evidence 和 Reference Answer 一致。\"\n}"
       }
     },
     {
@@ -1437,12 +1334,6 @@
           "section": "退货运费金额规则",
           "content": "售后与退款高级规则\n退货运费金额规则\n\n七天无理由退货且商品不存在质量问题时，退货运费原则上由用户承担。\n\n用户承担的是实际发生的合理退货物流费用，平台不设置统一的固定最高金额限制。\n\n因商品质量问题、商品破损、错发或者漏发导致的退货，符合售后条件时退货运费由商家承担。",
           "reranker_score": 0.9901401400566101
-        },
-        {
-          "rank": 3,
-          "section": "换货运费",
-          "content": "商品换货规则\n换货运费\n\n因商品质量问题、商品破损、错发或者漏发产生的换货运费，原则上由商家承担。\n\n因用户个人原因申请更换尺码、颜色或者其他规格产生的物流费用，具体承担方式以售后页面显示规则为准。",
-          "reranker_score": 0.7964508533477783
         }
       ],
       "retrieval_debug": {
@@ -1474,8 +1365,7 @@
         "reranker_score": 0.9905142784118652,
         "selected_sections": [
           "退货运费",
-          "退货运费金额规则",
-          "换货运费"
+          "退货运费金额规则"
         ]
       },
       "retrieval_top1_section": "退货运费",
@@ -1488,21 +1378,21 @@
       "must_not_include": [
         "质量问题退货运费一定由消费者承担"
       ],
-      "status": "PASS",
+      "status": "PARTIAL",
       "candidate_answer": "因商品质量问题导致退货，退货运费由商家承担。",
       "missing_literal_items": [
         "责任方承担"
       ],
       "forbidden_literal_items": [],
       "judge": {
-        "verdict": "PASS",
+        "verdict": "PARTIAL",
         "correctness": 2,
         "groundedness": 2,
-        "completeness": 2,
+        "completeness": 1,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 的核心结论正确，明确指出因商品质量问题导致的退货，退货运费由商家承担。回答基于 Retrieved Evidence 提供的信息，没有出现任何幻觉或矛盾。同时，Candidate Answer 覆盖了用户询问的核心问题，并满足了 Important Semantic Requirements 中的要求。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，明确指出因商品质量问题导致的退货，退货运费由商家承担。回答基于 Retrieved Evidence 提供的信息，没有出现任何幻觉或矛盾。同时，Candidate Answer 覆盖了用户询问的核心问题，并满足了 Important Semantic Requirements 中的要求。\"\n}"
+        "reason": "Candidate Answer 核心结论正确且由 Evidence 支持，但未完整覆盖用户询问的核心问题和 Reference Answer 中的关键语义。缺少对责任方承担的明确表述。",
+        "raw_judge_output": "{\n  \"verdict\": \"PARTIAL\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 1,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 核心结论正确且由 Evidence 支持，但未完整覆盖用户询问的核心问题和 Reference Answer 中的关键语义。缺少对责任方承担的明确表述。\"\n}"
       }
     },
     {
@@ -1527,12 +1417,6 @@
           "section": "原路退款",
           "content": "支付与退款路径规则\n原路退款\n\n平台发起退款后，退款原则上返回用户支付订单时使用的原支付渠道。\n\n使用银行卡支付的订单，退款通常返回原支付银行卡。\n\n使用支付宝或者微信支付的订单，退款通常返回原支付账户。\n\n用户通常不能在退款过程中自行指定其他银行卡或者其他支付账户作为退款接收账户。",
           "reranker_score": 0.9675945043563843
-        },
-        {
-          "rank": 3,
-          "section": "支付失败",
-          "content": "支付与退款路径规则\n支付失败\n\n如果支付页面提示支付失败，用户可以先确认银行卡、支付账户余额以及网络状态是否正常。\n\n支付失败但账户没有实际扣款时，可以重新发起支付。\n\n如果页面显示支付失败，但银行卡或者支付账户已经扣款，用户不要立即重复支付，可以先等待支付状态同步。\n\n如果长时间仍未恢复，可以联系平台客服查询支付结果。",
-          "reranker_score": 0.016979992389678955
         }
       ],
       "retrieval_debug": {
@@ -1564,8 +1448,7 @@
         "reranker_score": 0.9878528118133545,
         "selected_sections": [
           "退款原路返回",
-          "原路退款",
-          "支付失败"
+          "原路退款"
         ]
       },
       "retrieval_top1_section": "退款原路返回",
@@ -1579,7 +1462,7 @@
         "可以任意指定其他银行卡收款"
       ],
       "status": "PASS",
-      "candidate_answer": "不可以。银行卡付款的订单退款时，退款会原路返回至原支付银行卡，用户通常不能要求退到另一张银行卡。",
+      "candidate_answer": "不可以。银行卡付款的订单退款时，退款将原路返回至原支付银行卡，用户通常不能要求退到另一张银行卡。",
       "missing_literal_items": [
         "原支付路径",
         "不能指定另一张银行卡"
@@ -1592,8 +1475,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 的核心结论正确，明确说明了退款会原路返回至原支付银行卡，并且用户不能要求退到另一张银行卡。回答基于 Evidence 支持，没有出现 Evidence 中不存在的事实性断言，同时覆盖了用户询问的核心问题和 Reference Answer 中的关键语义。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，明确说明了退款会原路返回至原支付银行卡，并且用户不能要求退到另一张银行卡。回答基于 Evidence 支持，没有出现 Evidence 中不存在的事实性断言，同时覆盖了用户询问的核心问题和 Reference Answer 中的关键语义。\"\n}"
+        "reason": "Candidate Answer 的核心结论正确，回答由 Evidence 支持，没有出现 Evidence 中不存在的事实性断言。同时，Candidate Answer 覆盖了用户询问的核心问题和 Reference Answer 中的关键语义，并且没有与 Evidence、Reference Answer 或 answerable 标注明显矛盾。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，回答由 Evidence 支持，没有出现 Evidence 中不存在的事实性断言。同时，Candidate Answer 覆盖了用户询问的核心问题和 Reference Answer 中的关键语义，并且没有与 Evidence、Reference Answer 或 answerable 标注明显矛盾。\"\n}"
       }
     },
     {
@@ -1619,12 +1502,6 @@
           "section": "退款原路返回",
           "content": "售后与退款高级规则\n退款原路返回\n\n平台发起退款后，退款原则上返回用户下单时使用的原支付账户。\n\n例如订单使用银行卡支付，退款通常返回原银行卡；使用支付宝或者微信支付的订单，则返回对应原支付账户。\n\n用户通常不能要求平台将退款主动修改到另一张银行卡、微信账户或者其他非原支付账户。",
           "reranker_score": 0.9784671068191528
-        },
-        {
-          "rank": 3,
-          "section": "退款到账时间",
-          "content": "退款与退货政策\n退款到账时间\n\n用户提交退款申请后，平台通常会在24小时内完成审核。\n\n审核通过后，如果订单尚未发货，退款一般会在1至3个工作日内原路返回。\n\n如果订单已经发货并需要退货，商家收到退回商品并确认商品符合退款条件后，平台会发起退款。\n\n退款发起后，支付宝、微信等支付渠道通常会在1至3个工作日内到账；银行卡退款可能需要3至7个工作日。\n\n具体到账时间可能受到银行、支付机构以及节假日等因素影响。",
-          "reranker_score": 0.8194603323936462
         }
       ],
       "retrieval_debug": {
@@ -1656,8 +1533,7 @@
         "reranker_score": 0.9840323328971863,
         "selected_sections": [
           "原路退款",
-          "退款原路返回",
-          "退款到账时间"
+          "退款原路返回"
         ]
       },
       "retrieval_top1_section": "原路退款",
@@ -1671,7 +1547,7 @@
         "可以任意指定其他收款账户"
       ],
       "status": "PASS",
-      "candidate_answer": "微信支付的订单退款会原路返回到您支付时使用的微信支付账户。",
+      "candidate_answer": "微信支付的订单退款会退回到原支付账户，即您当时支付时使用的微信支付账户。",
       "missing_literal_items": [
         "原路退款",
         "原微信支付渠道"
@@ -1684,8 +1560,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 准确回答了微信支付的订单退款会原路返回到支付时使用的微信支付账户，符合 Evidence 和 Reference Answer 的内容。包含了必须的关键语义 '原路退款' 和 '原微信支付渠道'，没有出现 must_not_include 中的内容。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 准确回答了微信支付的订单退款会原路返回到支付时使用的微信支付账户，符合 Evidence 和 Reference Answer 的内容。包含了必须的关键语义 '原路退款' 和 '原微信支付渠道'，没有出现 must_not_include 中的内容。\"\n}"
+        "reason": "Candidate Answer 准确地回答了微信支付订单退款会退回到原支付账户，并且符合 Evidence 和 Reference Answer 中的核心语义。同时满足 must_include 要求，没有出现 must_not_include 的内容。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 准确地回答了微信支付订单退款会退回到原支付账户，并且符合 Evidence 和 Reference Answer 中的核心语义。同时满足 must_include 要求，没有出现 must_not_include 的内容。\"\n}"
       }
     },
     {
@@ -1710,12 +1586,6 @@
           "section": "七天无理由退货",
           "content": "退款与退货政策\n七天无理由退货\n\n用户自收到商品之日起7日内，在商品保持完好、不影响二次销售的情况下，可以申请七天无理由退货。\n\n定制商品、生鲜食品、已拆封的数字商品以及其他依法不适用七天无理由退货的商品除外。\n\n商品退回后，平台将在确认商品符合退货条件后处理退款。",
           "reranker_score": 0.3767378032207489
-        },
-        {
-          "rank": 3,
-          "section": "退款到账时间",
-          "content": "退款与退货政策\n退款到账时间\n\n用户提交退款申请后，平台通常会在24小时内完成审核。\n\n审核通过后，如果订单尚未发货，退款一般会在1至3个工作日内原路返回。\n\n如果订单已经发货并需要退货，商家收到退回商品并确认商品符合退款条件后，平台会发起退款。\n\n退款发起后，支付宝、微信等支付渠道通常会在1至3个工作日内到账；银行卡退款可能需要3至7个工作日。\n\n具体到账时间可能受到银行、支付机构以及节假日等因素影响。",
-          "reranker_score": 0.3178495764732361
         }
       ],
       "retrieval_debug": {
@@ -1747,8 +1617,7 @@
         "reranker_score": 0.9758545756340027,
         "selected_sections": [
           "退货寄回时限",
-          "七天无理由退货",
-          "退款到账时间"
+          "七天无理由退货"
         ]
       },
       "retrieval_top1_section": "退货寄回时限",
@@ -1774,8 +1643,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 准确地回答了用户的问题，指出了在商家提供有效退货地址后，用户需要在7个自然日内将商品寄出。该答案基于 Retrieved Evidence 中的信息，并且包含了 Important Semantic Requirements 中提到的必须包含的内容。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 准确地回答了用户的问题，指出了在商家提供有效退货地址后，用户需要在7个自然日内将商品寄出。该答案基于 Retrieved Evidence 中的信息，并且包含了 Important Semantic Requirements 中提到的必须包含的内容。\"\n}"
+        "reason": "Candidate Answer 准确地回答了用户的问题，指出了在商家提供有效退货地址后7个自然日内需要寄出商品。这与 Evidence 和 Reference Answer 一致，且没有出现任何幻觉或矛盾。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 准确地回答了用户的问题，指出了在商家提供有效退货地址后7个自然日内需要寄出商品。这与 Evidence 和 Reference Answer 一致，且没有出现任何幻觉或矛盾。\"\n}"
       }
     },
     {
@@ -1800,12 +1669,6 @@
           "section": "发货超时处理",
           "content": "物流高级处理规则\n发货超时处理\n\n普通现货商品通常应在付款后的48小时内完成发货。\n\n超过48小时仍未发货，并不代表订单一定会被系统自动取消。\n\n如果订单仍然处于未发货状态，用户可以通过订单页面申请取消订单，或者联系客服催促商家处理。\n\n是否能够立即取消，以订单当前状态和实际处理结果为准。",
           "reranker_score": 0.13006426393985748
-        },
-        {
-          "rank": 3,
-          "section": "物流长时间未更新",
-          "content": "发货与物流政策\n物流长时间未更新\n\n如果物流信息超过48小时没有更新，用户可以先通过订单详情查看物流公司的最新运输状态。\n\n如果物流信息长时间没有变化，可以联系平台客服，由客服协助向物流公司查询。\n\n如果确认商品发生丢失，平台会根据订单情况安排补发或者退款。",
-          "reranker_score": 0.06754669547080994
         }
       ],
       "retrieval_debug": {
@@ -1837,8 +1700,7 @@
         "reranker_score": 0.8305941224098206,
         "selected_sections": [
           "退货寄回时限",
-          "发货超时处理",
-          "物流长时间未更新"
+          "发货超时处理"
         ]
       },
       "retrieval_top1_section": "退货寄回时限",
@@ -1853,7 +1715,7 @@
         "退货申请永久有效"
       ],
       "status": "PASS",
-      "candidate_answer": "拿到退货地址后超过七天没有寄出商品，售后申请可能被关闭。如果因特殊情况无法按时寄出，建议在售后申请关闭前联系客服说明情况。",
+      "candidate_answer": "超过七天未寄出退货商品，售后申请可能被关闭。如因特殊情况无法按时寄出，可在售后申请关闭前联系客服说明情况。",
       "missing_literal_items": [
         "超过7天",
         "未寄回商品",
@@ -1867,8 +1729,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 正确指出了超过七天未寄回商品可能导致售后申请关闭，并且建议用户在无法按时寄出时联系客服，符合 Evidence 和 Reference Answer 的内容。同时满足了 must_include 的要求，没有出现 must_not_include 的情况。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确指出了超过七天未寄回商品可能导致售后申请关闭，并且建议用户在无法按时寄出时联系客服，符合 Evidence 和 Reference Answer 的内容。同时满足了 must_include 的要求，没有出现 must_not_include 的情况。\"\n}"
+        "reason": "Candidate Answer 核心结论正确，明确说明了超过七天未寄出退货商品可能导致售后申请关闭，并且提到了特殊情况可以联系客服。这些信息都与 Evidence 和 Reference Answer 一致，没有出现重要遗漏或矛盾。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 核心结论正确，明确说明了超过七天未寄出退货商品可能导致售后申请关闭，并且提到了特殊情况可以联系客服。这些信息都与 Evidence 和 Reference Answer 一致，没有出现重要遗漏或矛盾。\"\n}"
       }
     },
     {
@@ -1893,12 +1755,6 @@
           "section": "订单自动关闭",
           "content": "订单与取消规则\n订单自动关闭\n\n未付款订单在超过规定支付时间后可能被系统自动关闭。\n\n订单因支付超时、风控审核失败或者商品库存异常而关闭后，用户通常需要重新下单。\n\n已经关闭的订单不能直接恢复为原订单。",
           "reranker_score": 0.6586371064186096
-        },
-        {
-          "rank": 3,
-          "section": "物流长时间未更新",
-          "content": "发货与物流政策\n物流长时间未更新\n\n如果物流信息超过48小时没有更新，用户可以先通过订单详情查看物流公司的最新运输状态。\n\n如果物流信息长时间没有变化，可以联系平台客服，由客服协助向物流公司查询。\n\n如果确认商品发生丢失，平台会根据订单情况安排补发或者退款。",
-          "reranker_score": 0.5680564045906067
         }
       ],
       "retrieval_debug": {
@@ -1930,8 +1786,7 @@
         "reranker_score": 0.9988620281219482,
         "selected_sections": [
           "发货超时处理",
-          "订单自动关闭",
-          "物流长时间未更新"
+          "订单自动关闭"
         ]
       },
       "retrieval_top1_section": "发货超时处理",
@@ -1944,8 +1799,8 @@
       "must_not_include": [
         "超过48小时一定自动取消"
       ],
-      "status": "PASS",
-      "candidate_answer": "普通商品超过48小时没有发货，订单不会被系统自动取消。用户可自行通过订单页面申请取消订单，或联系客服催促商家处理。是否能够立即取消，以订单当前状态和实际处理结果为准。",
+      "status": "PARTIAL",
+      "candidate_answer": "普通商品超过48小时没有发货，订单不会被系统自动取消。用户可以自行通过订单页面申请取消订单，或联系客服催促商家处理。",
       "missing_literal_items": [
         "超过48小时未发货",
         "不一定自动取消",
@@ -1953,14 +1808,14 @@
       ],
       "forbidden_literal_items": [],
       "judge": {
-        "verdict": "PASS",
+        "verdict": "PARTIAL",
         "correctness": 2,
         "groundedness": 2,
-        "completeness": 2,
+        "completeness": 1,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 正确地说明了超过48小时未发货并不意味着订单会自动取消，并提供了用户可以采取的措施，符合 Evidence 和 Reference Answer 的内容。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地说明了超过48小时未发货并不意味着订单会自动取消，并提供了用户可以采取的措施，符合 Evidence 和 Reference Answer 的内容。\"\n}"
+        "reason": "Candidate Answer 的核心结论正确，且由 Evidence 支持。然而，它没有完全覆盖用户询问的核心问题和 Reference Answer 中的关键语义，缺少了 '发货超时处理' 这一重要信息。",
+        "raw_judge_output": "{\n  \"verdict\": \"PARTIAL\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 1,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，且由 Evidence 支持。然而，它没有完全覆盖用户询问的核心问题和 Reference Answer 中的关键语义，缺少了 '发货超时处理' 这一重要信息。\"\n}"
       }
     },
     {
@@ -1985,12 +1840,6 @@
           "section": "订单取消",
           "content": "订单与取消规则\n订单取消\n\n未付款订单可以由用户主动取消。\n\n已经付款但尚未进入仓库拣货或发货流程的订单，用户可以在订单详情页尝试申请取消。\n\n如果订单已经进入拣货、打包或者出库流程，订单可能无法直接取消。\n\n取消申请是否成功，以订单页面最终显示的状态为准。",
           "reranker_score": 0.9424007534980774
-        },
-        {
-          "rank": 3,
-          "section": "重复下单",
-          "content": "订单与取消规则\n重复下单\n\n如果用户误操作产生多个重复订单，在订单尚未发货时，可以尝试取消不需要的订单。\n\n如果重复订单已经发货，需要根据实际物流状态处理。\n\n已经收到的重复商品，如符合退货条件，可以按照对应退货规则申请退货。",
-          "reranker_score": 0.7771307229995728
         }
       ],
       "retrieval_debug": {
@@ -2022,8 +1871,7 @@
         "reranker_score": 0.9431384205818176,
         "selected_sections": [
           "发货超时处理",
-          "订单取消",
-          "重复下单"
+          "订单取消"
         ]
       },
       "retrieval_top1_section": "发货超时处理",
@@ -2049,8 +1897,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 的核心结论正确，说明了用户可以在订单页面尝试申请取消，并且提到联系客服催促商家处理。同时指出是否能够成功取消以订单当前状态和实际处理结果为准，符合 Evidence 和 Reference Answer 的内容。包含了必须的语义要求（未发货、可以申请取消、发货超时规则），没有出现不应包含的内容。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，说明了用户可以在订单页面尝试申请取消，并且提到联系客服催促商家处理。同时指出是否能够成功取消以订单当前状态和实际处理结果为准，符合 Evidence 和 Reference Answer 的内容。包含了必须的语义要求（未发货、可以申请取消、发货超时规则），没有出现不应包含的内容。\"\n}"
+        "reason": "Candidate Answer 核心结论正确，指出了用户可以在订单页面尝试申请取消或联系客服催促商家处理，并说明了最终是否能成功取消取决于当前订单状态和实际处理结果。这些信息与 Evidence 和 Reference Answer 一致，且包含了必须的信息点。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 核心结论正确，指出了用户可以在订单页面尝试申请取消或联系客服催促商家处理，并说明了最终是否能成功取消取决于当前订单状态和实际处理结果。这些信息与 Evidence 和 Reference Answer 一致，且包含了必须的信息点。\"\n}"
       }
     },
     {
@@ -2075,12 +1923,6 @@
           "section": "物流长时间未更新",
           "content": "发货与物流政策\n物流长时间未更新\n\n如果物流信息超过48小时没有更新，用户可以先通过订单详情查看物流公司的最新运输状态。\n\n如果物流信息长时间没有变化，可以联系平台客服，由客服协助向物流公司查询。\n\n如果确认商品发生丢失，平台会根据订单情况安排补发或者退款。",
           "reranker_score": 0.6954414248466492
-        },
-        {
-          "rank": 3,
-          "section": "换货处理时间",
-          "content": "商品换货规则\n换货处理时间\n\n用户提交换货申请后，需要等待商家或者平台审核。\n\n如果需要寄回原商品，通常需要在商家收到退回商品并确认符合换货条件后，再安排新的商品发出。\n\n具体处理时间受到物流运输、商家审核以及库存状态影响。",
-          "reranker_score": 0.3965354263782501
         }
       ],
       "retrieval_debug": {
@@ -2112,8 +1954,7 @@
         "reranker_score": 0.9984869956970215,
         "selected_sections": [
           "物流丢件补发时效",
-          "物流长时间未更新",
-          "换货处理时间"
+          "物流长时间未更新"
         ]
       },
       "retrieval_top1_section": "物流丢件补发时效",
@@ -2127,7 +1968,7 @@
         "48小时内一定收到新商品"
       ],
       "status": "PASS",
-      "candidate_answer": "平台确认丢件后，通常会在48小时内安排并创建新的补发订单。实际收到商品的时间取决于后续物流运输情况。",
+      "candidate_answer": "平台通常会在确认丢件后的48小时内安排并创建新的补发订单。实际收到商品的时间取决于新的物流运输过程。",
       "missing_literal_items": [
         "安排补发"
       ],
@@ -2139,8 +1980,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 核心结论正确，说明了平台会在48小时内安排补发订单，并且指出了实际收到商品的时间取决于后续物流运输情况。回答基于 Evidence 提供的信息，没有出现 Evidence 中不存在的事实性断言。同时满足了 must_include 的语义要求，也没有违反 must_not_include 的限制。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 核心结论正确，说明了平台会在48小时内安排补发订单，并且指出了实际收到商品的时间取决于后续物流运输情况。回答基于 Evidence 提供的信息，没有出现 Evidence 中不存在的事实性断言。同时满足了 must_include 的语义要求，也没有违反 must_not_include 的限制。\"\n}"
+        "reason": "Candidate Answer 准确地传达了确认丢件后48小时内安排补发的信息，并且说明了实际收到商品的时间取决于新的物流运输过程，符合 Evidence 和 Reference Answer 的要求。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 准确地传达了确认丢件后48小时内安排补发的信息，并且说明了实际收到商品的时间取决于新的物流运输过程，符合 Evidence 和 Reference Answer 的要求。\"\n}"
       }
     },
     {
@@ -2165,12 +2006,6 @@
           "section": "物流长时间未更新",
           "content": "发货与物流政策\n物流长时间未更新\n\n如果物流信息超过48小时没有更新，用户可以先通过订单详情查看物流公司的最新运输状态。\n\n如果物流信息长时间没有变化，可以联系平台客服，由客服协助向物流公司查询。\n\n如果确认商品发生丢失，平台会根据订单情况安排补发或者退款。",
           "reranker_score": 0.6159545183181763
-        },
-        {
-          "rank": 3,
-          "section": "发货时间",
-          "content": "发货与物流政策\n发货时间\n\n普通现货商品一般会在用户付款后的48小时内完成发货。\n\n预售商品、定制商品以及页面明确标注特殊发货时间的商品，以商品详情页约定的发货时间为准。\n\n遇到大型促销活动、极端天气或者其他不可抗力情况，实际发货时间可能有所延迟。",
-          "reranker_score": 0.49187538027763367
         }
       ],
       "retrieval_debug": {
@@ -2202,8 +2037,7 @@
         "reranker_score": 0.9977830052375793,
         "selected_sections": [
           "物流丢件补发时效",
-          "物流长时间未更新",
-          "发货时间"
+          "物流长时间未更新"
         ]
       },
       "retrieval_top1_section": "物流丢件补发时效",
@@ -2216,7 +2050,7 @@
         "48小时内必须送达"
       ],
       "status": "PASS",
-      "candidate_answer": "丢件后的48小时是指平台在确认丢件后的48小时内安排补发并创建新的补发订单，不是指用户在48小时内收到货。实际收货时间取决于新订单的物流运输情况。",
+      "candidate_answer": "48小时是指平台在确认丢件后48小时内安排补发并创建新的补发订单，不是指用户在48小时内收到货。实际收货时间以补发物流的运输时效为准。",
       "missing_literal_items": [
         "不是48小时内收到货"
       ],
@@ -2228,8 +2062,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 正确地解释了48小时是指安排补发的时间，而不是用户收到货的时间，并且这个结论得到了Evidence的支持。同时，回答中没有出现任何与Evidence或Reference Answer相矛盾的内容，也没有遗漏用户关心的核心问题。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地解释了48小时是指安排补发的时间，而不是用户收到货的时间，并且这个结论得到了Evidence的支持。同时，回答中没有出现任何与Evidence或Reference Answer相矛盾的内容，也没有遗漏用户关心的核心问题。\"\n}"
+        "reason": "Candidate Answer 准确地说明了48小时是指安排补发的时间，而不是用户收到货的时间，并且没有引入任何与 Evidence 或 Reference Answer 矛盾的信息。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 准确地说明了48小时是指安排补发的时间，而不是用户收到货的时间，并且没有引入任何与 Evidence 或 Reference Answer 矛盾的信息。\"\n}"
       }
     },
     {
@@ -2254,12 +2088,6 @@
           "section": "发货后不想要商品",
           "content": "订单与取消规则\n发货后不想要商品\n\n订单完成发货后，平台通常无法再直接执行订单取消。\n\n用户可以联系客服尝试申请物流拦截。\n\n物流拦截是否成功取决于商品当前运输状态以及物流公司的处理能力。\n\n如果物流拦截失败，用户可以根据商品情况选择拒收，或者在收到商品后按照退货政策申请退货。",
           "reranker_score": 0.9210741519927979
-        },
-        {
-          "rank": 3,
-          "section": "修改收货地址",
-          "content": "发货与物流政策\n修改收货地址\n\n订单尚未进入发货流程时，用户可以联系客服申请修改收货地址。\n\n如果订单已经完成发货，平台通常无法直接修改物流运输中的收货地址。\n\n这种情况下，用户可以尝试联系对应物流公司协商修改，但是否能够修改由物流公司决定。",
-          "reranker_score": 0.020606474950909615
         }
       ],
       "retrieval_debug": {
@@ -2291,8 +2119,7 @@
         "reranker_score": 0.958304226398468,
         "selected_sections": [
           "发货后拦截规则",
-          "发货后不想要商品",
-          "修改收货地址"
+          "发货后不想要商品"
         ]
       },
       "retrieval_top1_section": "发货后拦截规则",
@@ -2307,7 +2134,7 @@
         "申请拦截就一定成功"
       ],
       "status": "PASS",
-      "candidate_answer": "可以，商品发货后您可以联系客服尝试申请物流拦截。但拦截能否成功取决于包裹当前的运输状态及物流公司的处理能力，无法保证一定成功。如果拦截失败，您可以在商品送达后选择拒收，或按平台规则申请退货。",
+      "candidate_answer": "可以联系客服尝试申请物流拦截，但无法保证成功，是否能够拦截取决于包裹当前的运输状态以及物流公司的处理能力。如果拦截失败，您可以在商品到达后选择拒收，或按退货政策申请退货。",
       "missing_literal_items": [
         "已经发货",
         "可以尝试拦截",
@@ -2321,8 +2148,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 准确回答了用户的问题，说明了发货后可以尝试申请物流拦截，但不保证成功，并且指出了如果拦截失败的后续处理方式。这些信息与 Evidence 和 Reference Answer 一致，没有出现矛盾或重要幻觉。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 准确回答了用户的问题，说明了发货后可以尝试申请物流拦截，但不保证成功，并且指出了如果拦截失败的后续处理方式。这些信息与 Evidence 和 Reference Answer 一致，没有出现矛盾或重要幻觉。\"\n}"
+        "reason": "Candidate Answer 核心结论正确，说明了可以尝试拦截但不保证成功，并且提供了拦截失败后的处理方式。这些信息都与 Evidence 和 Reference Answer 一致，没有出现矛盾或重要幻觉。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 核心结论正确，说明了可以尝试拦截但不保证成功，并且提供了拦截失败后的处理方式。这些信息都与 Evidence 和 Reference Answer 一致，没有出现矛盾或重要幻觉。\"\n}"
       }
     },
     {
@@ -2347,12 +2174,6 @@
           "section": "发货后不想要商品",
           "content": "订单与取消规则\n发货后不想要商品\n\n订单完成发货后，平台通常无法再直接执行订单取消。\n\n用户可以联系客服尝试申请物流拦截。\n\n物流拦截是否成功取决于商品当前运输状态以及物流公司的处理能力。\n\n如果物流拦截失败，用户可以根据商品情况选择拒收，或者在收到商品后按照退货政策申请退货。",
           "reranker_score": 0.9694979190826416
-        },
-        {
-          "rank": 3,
-          "section": "拒收后的处理",
-          "content": "物流高级处理规则\n拒收后的处理\n\n用户拒收已经发出的商品，并不代表系统会立即完成退款。\n\n拒收后的包裹通常需要先由物流公司退回商家。\n\n商家收到退回商品并确认商品状态后，平台再按照对应售后规则处理退款。\n\n具体退款到账时间仍然取决于支付渠道以及退款处理流程。",
-          "reranker_score": 0.0037507887464016676
         }
       ],
       "retrieval_debug": {
@@ -2384,8 +2205,7 @@
         "reranker_score": 0.9859364032745361,
         "selected_sections": [
           "发货后拦截规则",
-          "发货后不想要商品",
-          "拒收后的处理"
+          "发货后不想要商品"
         ]
       },
       "retrieval_top1_section": "发货后拦截规则",
@@ -2400,7 +2220,7 @@
         "平台可以保证100%拦截"
       ],
       "status": "PASS",
-      "candidate_answer": "申请物流拦截后不一定能够成功，是否成功取决于包裹当前的运输状态以及物流公司的处理能力。如果拦截失败，您可以选择拒收或在收到商品后按规则申请退货。",
+      "candidate_answer": "申请物流拦截不一定能够成功，是否成功取决于包裹当前的运输状态以及物流公司的处理能力。",
       "missing_literal_items": [
         "不一定成功",
         "物流状态",
@@ -2414,8 +2234,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 正确表达了物流拦截不一定成功，并且说明了其取决于包裹当前的运输状态以及物流公司的处理能力。同时，提到了如果拦截失败，用户可以选择拒收或按规则申请退货，这与 Evidence 和 Reference Answer 的内容一致，没有出现重要幻觉或矛盾。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确表达了物流拦截不一定成功，并且说明了其取决于包裹当前的运输状态以及物流公司的处理能力。同时，提到了如果拦截失败，用户可以选择拒收或按规则申请退货，这与 Evidence 和 Reference Answer 的内容一致，没有出现重要幻觉或矛盾。\"\n}"
+        "reason": "Candidate Answer 准确传达了物流拦截不一定成功，并且提到了包裹当前的运输状态和物流公司的处理能力，符合 Evidence 和 Reference Answer 的核心内容。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 准确传达了物流拦截不一定成功，并且提到了包裹当前的运输状态和物流公司的处理能力，符合 Evidence 和 Reference Answer 的核心内容。\"\n}"
       }
     },
     {
@@ -2440,12 +2260,6 @@
           "section": "七天无理由退货",
           "content": "退款与退货政策\n七天无理由退货\n\n用户自收到商品之日起7日内，在商品保持完好、不影响二次销售的情况下，可以申请七天无理由退货。\n\n定制商品、生鲜食品、已拆封的数字商品以及其他依法不适用七天无理由退货的商品除外。\n\n商品退回后，平台将在确认商品符合退货条件后处理退款。",
           "reranker_score": 0.05490385368466377
-        },
-        {
-          "rank": 3,
-          "section": "发货后不想要商品",
-          "content": "订单与取消规则\n发货后不想要商品\n\n订单完成发货后，平台通常无法再直接执行订单取消。\n\n用户可以联系客服尝试申请物流拦截。\n\n物流拦截是否成功取决于商品当前运输状态以及物流公司的处理能力。\n\n如果物流拦截失败，用户可以根据商品情况选择拒收，或者在收到商品后按照退货政策申请退货。",
-          "reranker_score": 0.039048291742801666
         }
       ],
       "retrieval_debug": {
@@ -2477,8 +2291,7 @@
         "reranker_score": 0.9906960725784302,
         "selected_sections": [
           "拒收后的处理",
-          "七天无理由退货",
-          "发货后不想要商品"
+          "七天无理由退货"
         ]
       },
       "retrieval_top1_section": "拒收后的处理",
@@ -2493,7 +2306,7 @@
         "拒收成功就自动即时退款"
       ],
       "status": "PASS",
-      "candidate_answer": "快递拒收后不会马上退款。拒收的包裹需要先由物流公司退回商家，商家收到并确认商品状态后，平台才会按照售后规则处理退款。具体到账时间还受支付渠道和退款流程影响。",
+      "candidate_answer": "快递拒收后不会马上退款。拒收的包裹需要先由物流公司退回给商家，商家收到并确认商品状态后，平台才会按照售后规则处理退款。具体退款到账时间还取决于支付渠道和退款流程。",
       "missing_literal_items": [
         "包裹退回",
         "退款处理流程"
@@ -2506,8 +2319,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 准确回答了快递拒收后不会马上退款，并解释了包裹退回和退款处理流程，符合 Evidence 和 Reference Answer 的内容。同时满足 must_include 的语义要求，没有出现 must_not_include 的情况。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 准确回答了快递拒收后不会马上退款，并解释了包裹退回和退款处理流程，符合 Evidence 和 Reference Answer 的内容。同时满足 must_include 的语义要求，没有出现 must_not_include 的情况。\"\n}"
+        "reason": "Candidate Answer 的核心结论正确，明确表示快递拒收后不会马上退款，并且解释了包裹退回和退款处理流程。这些信息与 Evidence 和 Reference Answer 一致，没有出现幻觉或矛盾。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，明确表示快递拒收后不会马上退款，并且解释了包裹退回和退款处理流程。这些信息与 Evidence 和 Reference Answer 一致，没有出现幻觉或矛盾。\"\n}"
       }
     },
     {
@@ -2532,12 +2345,6 @@
           "section": "退款到账时间",
           "content": "退款与退货政策\n退款到账时间\n\n用户提交退款申请后，平台通常会在24小时内完成审核。\n\n审核通过后，如果订单尚未发货，退款一般会在1至3个工作日内原路返回。\n\n如果订单已经发货并需要退货，商家收到退回商品并确认商品符合退款条件后，平台会发起退款。\n\n退款发起后，支付宝、微信等支付渠道通常会在1至3个工作日内到账；银行卡退款可能需要3至7个工作日。\n\n具体到账时间可能受到银行、支付机构以及节假日等因素影响。",
           "reranker_score": 0.3326355218887329
-        },
-        {
-          "rank": 3,
-          "section": "支付失败",
-          "content": "支付与退款路径规则\n支付失败\n\n如果支付页面提示支付失败，用户可以先确认银行卡、支付账户余额以及网络状态是否正常。\n\n支付失败但账户没有实际扣款时，可以重新发起支付。\n\n如果页面显示支付失败，但银行卡或者支付账户已经扣款，用户不要立即重复支付，可以先等待支付状态同步。\n\n如果长时间仍未恢复，可以联系平台客服查询支付结果。",
-          "reranker_score": 0.04476431384682655
         }
       ],
       "retrieval_debug": {
@@ -2569,8 +2376,7 @@
         "reranker_score": 0.9257686138153076,
         "selected_sections": [
           "拒收后的处理",
-          "退款到账时间",
-          "支付失败"
+          "退款到账时间"
         ]
       },
       "retrieval_top1_section": "拒收后的处理",
@@ -2584,7 +2390,7 @@
         "拒收后退款必须立即到账"
       ],
       "status": "PASS",
-      "candidate_answer": "拒收商品后，退款不会立即到账。包裹需要先由物流公司退回给商家，商家收到并确认商品状态后，平台才会按照售后规则发起退款。退款发起后，具体到账时间还取决于支付渠道，例如支付宝、微信一般1至3个工作日到账，银行卡可能需要3至7个工作日，且可能受节假日等因素影响。",
+      "candidate_answer": "拒收商品后，退款不会立即到账。因为拒收的包裹需要先由物流公司退回给商家，商家收到并确认商品状态符合退款条件后，平台才会发起退款。退款发起后，具体到账时间取决于支付方式：支付宝、微信一般需1至3个工作日，银行卡可能需要3至7个工作日，实际到账时间还可能受银行或节假日影响。",
       "missing_literal_items": [
         "等待包裹退回"
       ],
@@ -2596,8 +2402,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 准确解释了拒收商品后退款不会立即到账的原因，包括包裹退回流程、商家确认商品状态以及不同支付渠道的退款时间。回答内容与 Evidence 和 Reference Answer 一致，没有出现重要幻觉或矛盾，并且涵盖了所有必须包含的关键语义。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 准确解释了拒收商品后退款不会立即到账的原因，包括包裹退回流程、商家确认商品状态以及不同支付渠道的退款时间。回答内容与 Evidence 和 Reference Answer 一致，没有出现重要幻觉或矛盾，并且涵盖了所有必须包含的关键语义。\"\n}"
+        "reason": "Candidate Answer 核心结论正确，明确解释了拒收商品后退款不会立即到账的原因，并且详细说明了退款流程和具体到账时间。所有信息都有 Evidence 支持，没有出现重要幻觉或矛盾。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 核心结论正确，明确解释了拒收商品后退款不会立即到账的原因，并且详细说明了退款流程和具体到账时间。所有信息都有 Evidence 支持，没有出现重要幻觉或矛盾。\"\n}"
       }
     },
     {
@@ -2622,12 +2428,6 @@
           "section": "发货超时处理",
           "content": "物流高级处理规则\n发货超时处理\n\n普通现货商品通常应在付款后的48小时内完成发货。\n\n超过48小时仍未发货，并不代表订单一定会被系统自动取消。\n\n如果订单仍然处于未发货状态，用户可以通过订单页面申请取消订单，或者联系客服催促商家处理。\n\n是否能够立即取消，以订单当前状态和实际处理结果为准。",
           "reranker_score": 0.10087862610816956
-        },
-        {
-          "rank": 3,
-          "section": "拒收后的处理",
-          "content": "物流高级处理规则\n拒收后的处理\n\n用户拒收已经发出的商品，并不代表系统会立即完成退款。\n\n拒收后的包裹通常需要先由物流公司退回商家。\n\n商家收到退回商品并确认商品状态后，平台再按照对应售后规则处理退款。\n\n具体退款到账时间仍然取决于支付渠道以及退款处理流程。",
-          "reranker_score": 0.09982065856456757
         }
       ],
       "retrieval_debug": {
@@ -2659,8 +2459,7 @@
         "reranker_score": 0.9981324076652527,
         "selected_sections": [
           "物流签收异常",
-          "发货超时处理",
-          "拒收后的处理"
+          "发货超时处理"
         ]
       },
       "retrieval_top1_section": "物流签收异常",
@@ -2675,10 +2474,9 @@
         "只能自行承担损失"
       ],
       "status": "PASS",
-      "candidate_answer": "物流显示已签收但您未收到包裹时，请先检查快递柜、驿站、门卫或代收点，并联系物流公司核实签收情况。若24小时后仍无法找到包裹，可联系平台客服申请物流异常调查，平台将协助进一步处理。",
+      "candidate_answer": "如果物流显示已签收但您实际未收到包裹，请先检查快递柜、驿站、门卫或代收点，并联系物流公司核实签收情况。若24小时后仍无法找到包裹，可联系平台客服申请物流异常调查，平台将协助您进一步处理。",
       "missing_literal_items": [
         "物流签收异常",
-        "实际未收到",
         "核实物流或联系平台"
       ],
       "forbidden_literal_items": [],
@@ -2689,8 +2487,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 准确地提供了用户在物流显示签收但实际未收到包裹时应采取的步骤，包括检查快递柜、驿站等位置以及联系物流公司核实情况，并在24小时后仍无法找到包裹时联系平台客服申请物流异常调查。这些信息与 Evidence 和 Reference Answer 完全一致，且满足了所有重要的语义要求。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 准确地提供了用户在物流显示签收但实际未收到包裹时应采取的步骤，包括检查快递柜、驿站等位置以及联系物流公司核实情况，并在24小时后仍无法找到包裹时联系平台客服申请物流异常调查。这些信息与 Evidence 和 Reference Answer 完全一致，且满足了所有重要的语义要求。\"\n}"
+        "reason": "Candidate Answer 核心结论正确，基于 Evidence 提供了正确的建议步骤，包括检查快递柜、驿站等以及联系物流公司核实签收情况，并在24小时后仍未找到包裹时联系平台客服申请物流异常调查。回答完整且没有出现任何与 Evidence 或 Reference Answer 矛盾的地方。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 核心结论正确，基于 Evidence 提供了正确的建议步骤，包括检查快递柜、驿站等以及联系物流公司核实签收情况，并在24小时后仍未找到包裹时联系平台客服申请物流异常调查。回答完整且没有出现任何与 Evidence 或 Reference Answer 矛盾的地方。\"\n}"
       }
     },
     {
@@ -2715,12 +2513,6 @@
           "section": "物流丢件补发时效",
           "content": "物流高级处理规则\n物流丢件补发时效\n\n如果平台或物流公司确认商品在运输过程中丢失，平台可以根据订单情况安排退款或者重新补发商品。\n\n选择补发时，平台通常会在确认丢件后的48小时内创建新的补发订单。\n\n这里的48小时是指安排并创建补发订单的时间，不代表用户一定能够在48小时内收到新的商品。\n\n补发商品的实际送达时间取决于新的物流运输过程。",
           "reranker_score": 0.10266400873661041
-        },
-        {
-          "rank": 3,
-          "section": "物流长时间未更新",
-          "content": "发货与物流政策\n物流长时间未更新\n\n如果物流信息超过48小时没有更新，用户可以先通过订单详情查看物流公司的最新运输状态。\n\n如果物流信息长时间没有变化，可以联系平台客服，由客服协助向物流公司查询。\n\n如果确认商品发生丢失，平台会根据订单情况安排补发或者退款。",
-          "reranker_score": 0.08897849172353745
         }
       ],
       "retrieval_debug": {
@@ -2752,8 +2544,7 @@
         "reranker_score": 0.9871788024902344,
         "selected_sections": [
           "物流签收异常",
-          "物流丢件补发时效",
-          "物流长时间未更新"
+          "物流丢件补发时效"
         ]
       },
       "retrieval_top1_section": "物流签收异常",
@@ -2768,8 +2559,9 @@
         "只能自己联系快递且平台无法介入"
       ],
       "status": "PASS",
-      "candidate_answer": "可以，物流显示签收但一天了仍找不到商品，您可以联系平台客服申请物流异常调查，平台会协助您进一步处理。",
+      "candidate_answer": "可以，如果快递显示签收但您实际未收到商品，建议先检查快递柜、驿站或代收点，并联系物流公司核实签收情况。若超过24小时仍无法找到包裹，可联系平台客服申请物流异常调查，平台会协助进一步处理。",
       "missing_literal_items": [
+        "可以联系平台",
         "物流签收异常",
         "核查处理"
       ],
@@ -2781,8 +2573,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 的核心结论正确，由 Evidence 支持，并且覆盖了用户询问的核心问题和 Reference Answer 中的关键语义。没有出现与 Evidence 或 Reference Answer 矛盾的情况，也没有重要幻觉。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，由 Evidence 支持，并且覆盖了用户询问的核心问题和 Reference Answer 中的关键语义。没有出现与 Evidence 或 Reference Answer 矛盾的情况，也没有重要幻觉。\"\n}"
+        "reason": "Candidate Answer 的核心结论正确，回答由 Evidence 支持，涵盖了用户询问的核心问题，并且包含了必须包含的关键语义。没有出现与 Evidence 或 Reference Answer 矛盾的情况，也没有重要幻觉。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，回答由 Evidence 支持，涵盖了用户询问的核心问题，并且包含了必须包含的关键语义。没有出现与 Evidence 或 Reference Answer 矛盾的情况，也没有重要幻觉。\"\n}"
       }
     },
     {
@@ -2805,12 +2597,6 @@
           "section": "退款到账时间",
           "content": "退款与退货政策\n退款到账时间\n\n用户提交退款申请后，平台通常会在24小时内完成审核。\n\n审核通过后，如果订单尚未发货，退款一般会在1至3个工作日内原路返回。\n\n如果订单已经发货并需要退货，商家收到退回商品并确认商品符合退款条件后，平台会发起退款。\n\n退款发起后，支付宝、微信等支付渠道通常会在1至3个工作日内到账；银行卡退款可能需要3至7个工作日。\n\n具体到账时间可能受到银行、支付机构以及节假日等因素影响。",
           "reranker_score": 0.009125636890530586
-        },
-        {
-          "rank": 3,
-          "section": "拒收后的处理",
-          "content": "物流高级处理规则\n拒收后的处理\n\n用户拒收已经发出的商品，并不代表系统会立即完成退款。\n\n拒收后的包裹通常需要先由物流公司退回商家。\n\n商家收到退回商品并确认商品状态后，平台再按照对应售后规则处理退款。\n\n具体退款到账时间仍然取决于支付渠道以及退款处理流程。",
-          "reranker_score": 0.00854433048516512
         }
       ],
       "retrieval_debug": {
@@ -2842,8 +2628,7 @@
         "reranker_score": 0.014615669846534729,
         "selected_sections": [
           "换货申请条件",
-          "退款到账时间",
-          "拒收后的处理"
+          "退款到账时间"
         ]
       },
       "retrieval_top1_section": "换货申请条件",
@@ -2864,8 +2649,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 正确地表示了当前知识库无法确认是否支持货到付款，符合 answerable=false 的要求，并且没有包含任何确定性的结论或与 Evidence、Reference Answer 矛盾的内容。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地表示了当前知识库无法确认是否支持货到付款，符合 answerable=false 的要求，并且没有包含任何确定性的结论或与 Evidence、Reference Answer 矛盾的内容。\"\n}"
+        "reason": "Candidate Answer 正确地表示了根据当前知识库无法确认是否支持货到付款，符合 answerable=false 的要求，并且没有出现任何与 Evidence 或 Reference Answer 矛盾的内容。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地表示了根据当前知识库无法确认是否支持货到付款，符合 answerable=false 的要求，并且没有出现任何与 Evidence 或 Reference Answer 矛盾的内容。\"\n}"
       }
     },
     {
@@ -2888,12 +2673,6 @@
           "section": "优惠门槛计算口径",
           "content": "优惠券高级使用规则\n优惠门槛计算口径\n\n例如某商品原价110元，商品活动优惠后实际商品金额为95元，则不能使用满100元减20元优惠券。",
           "reranker_score": 0.00016093082376755774
-        },
-        {
-          "rank": 3,
-          "section": "售后处理进度",
-          "content": "售后服务规则\n售后处理进度\n\n用户提交售后申请后，可以在订单售后页面查看当前处理状态。\n\n售后流程可能包括待审核、待用户寄回商品、待商家收货、处理中以及处理完成等状态。\n\n如果售后状态长时间没有变化，可以联系平台客服进一步查询。",
-          "reranker_score": 0.00012148174573667347
         }
       ],
       "retrieval_debug": {
@@ -2925,8 +2704,7 @@
         "reranker_score": 0.0003785036678891629,
         "selected_sections": [
           "跨店凑单规则",
-          "优惠门槛计算口径",
-          "售后处理进度"
+          "优惠门槛计算口径"
         ]
       },
       "retrieval_top1_section": "跨店凑单规则",
@@ -2944,8 +2722,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 正确地表示了根据当前知识库无法确认平台会员的等级信息，符合 answerable=false 的要求。没有出现任何与 Evidence 或 Reference Answer 矛盾的内容。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地表示了根据当前知识库无法确认平台会员的等级信息，符合 answerable=false 的要求。没有出现任何与 Evidence 或 Reference Answer 矛盾的内容。\"\n}"
+        "reason": "Candidate Answer 正确地表示了当前知识库无法确认平台会员的等级信息，符合 answerable=false 的要求。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地表示了当前知识库无法确认平台会员的等级信息，符合 answerable=false 的要求。\"\n}"
       }
     },
     {
@@ -2968,12 +2746,6 @@
           "section": "使用条件",
           "content": "优惠券使用规则\n使用条件\n\n优惠券必须满足对应订单金额、商品范围以及有效期等条件后才能使用。\n\n例如满100元减20元优惠券，只有参与优惠计算的商品金额达到100元时才可以使用。\n\n部分特殊商品、秒杀商品以及明确标注不参与优惠活动的商品可能无法使用优惠券。",
           "reranker_score": 0.0006932422984391451
-        },
-        {
-          "rank": 3,
-          "section": "优惠券锁定与释放",
-          "content": "优惠券高级使用规则\n优惠券锁定与释放\n\n用户提交订单后，本次订单选择使用的优惠券会暂时进入锁定状态。\n\n锁定期间，该优惠券不能同时用于其他订单。\n\n如果未付款订单被取消，系统通常会在10分钟内释放被锁定的优惠券。\n\n已经付款的订单发生退款时，则按照退款后的优惠券返还规则处理。",
-          "reranker_score": 0.0003654328465927392
         }
       ],
       "retrieval_debug": {
@@ -3005,8 +2777,7 @@
         "reranker_score": 0.001094452221877873,
         "selected_sections": [
           "优惠门槛计算口径",
-          "使用条件",
-          "优惠券锁定与释放"
+          "使用条件"
         ]
       },
       "retrieval_top1_section": "优惠门槛计算口径",
@@ -3048,12 +2819,6 @@
           "section": "支付失败",
           "content": "支付与退款路径规则\n支付失败\n\n如果支付页面提示支付失败，用户可以先确认银行卡、支付账户余额以及网络状态是否正常。\n\n支付失败但账户没有实际扣款时，可以重新发起支付。\n\n如果页面显示支付失败，但银行卡或者支付账户已经扣款，用户不要立即重复支付，可以先等待支付状态同步。\n\n如果长时间仍未恢复，可以联系平台客服查询支付结果。",
           "reranker_score": 0.0007408055826090276
-        },
-        {
-          "rank": 3,
-          "section": "退款原路返回",
-          "content": "售后与退款高级规则\n退款原路返回\n\n平台发起退款后，退款原则上返回用户下单时使用的原支付账户。\n\n例如订单使用银行卡支付，退款通常返回原银行卡；使用支付宝或者微信支付的订单，则返回对应原支付账户。\n\n用户通常不能要求平台将退款主动修改到另一张银行卡、微信账户或者其他非原支付账户。",
-          "reranker_score": 0.00041731575038284063
         }
       ],
       "retrieval_debug": {
@@ -3085,8 +2850,7 @@
         "reranker_score": 0.0008328334079124033,
         "selected_sections": [
           "重复支付",
-          "支付失败",
-          "退款原路返回"
+          "支付失败"
         ]
       },
       "retrieval_top1_section": "重复支付",
@@ -3107,8 +2871,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 正确地根据当前知识库信息无法确认是否支持比特币付款，符合 answerable=false 的要求。回答没有包含任何与 Evidence 或 Reference Answer 矛盾的内容，也没有出现幻觉。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地根据当前知识库信息无法确认是否支持比特币付款，符合 answerable=false 的要求。回答没有包含任何与 Evidence 或 Reference Answer 矛盾的内容，也没有出现幻觉。\"\n}"
+        "reason": "Candidate Answer 明确表示根据当前知识库无法确认，符合 answerable=false 的要求。没有出现必须避免的语义内容，也没有提供无依据的确定性答案。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 明确表示根据当前知识库无法确认，符合 answerable=false 的要求。没有出现必须避免的语义内容，也没有提供无依据的确定性答案。\"\n}"
       }
     },
     {
@@ -3131,12 +2895,6 @@
           "section": "售后处理进度",
           "content": "售后服务规则\n售后处理进度\n\n用户提交售后申请后，可以在订单售后页面查看当前处理状态。\n\n售后流程可能包括待审核、待用户寄回商品、待商家收货、处理中以及处理完成等状态。\n\n如果售后状态长时间没有变化，可以联系平台客服进一步查询。",
           "reranker_score": 0.00031258779927156866
-        },
-        {
-          "rank": 3,
-          "section": "退款到账时间",
-          "content": "退款与退货政策\n退款到账时间\n\n用户提交退款申请后，平台通常会在24小时内完成审核。\n\n审核通过后，如果订单尚未发货，退款一般会在1至3个工作日内原路返回。\n\n如果订单已经发货并需要退货，商家收到退回商品并确认商品符合退款条件后，平台会发起退款。\n\n退款发起后，支付宝、微信等支付渠道通常会在1至3个工作日内到账；银行卡退款可能需要3至7个工作日。\n\n具体到账时间可能受到银行、支付机构以及节假日等因素影响。",
-          "reranker_score": 0.0002131875662598759
         }
       ],
       "retrieval_debug": {
@@ -3168,8 +2926,7 @@
         "reranker_score": 0.0003514382697176188,
         "selected_sections": [
           "售后申请",
-          "售后处理进度",
-          "退款到账时间"
+          "售后处理进度"
         ]
       },
       "retrieval_top1_section": "售后申请",
@@ -3187,8 +2944,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 正确地表示了根据当前知识库无法确认人工客服下班时间，符合 answerable=false 的要求。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地表示了根据当前知识库无法确认人工客服下班时间，符合 answerable=false 的要求。\"\n}"
+        "reason": "Candidate Answer 正确地表示了根据当前知识库无法确认人工客服的下班时间，符合 answerable=false 的要求。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地表示了根据当前知识库无法确认人工客服的下班时间，符合 answerable=false 的要求。\"\n}"
       }
     },
     {
@@ -3211,12 +2968,6 @@
           "section": "优惠券叠加",
           "content": "优惠券使用规则\n优惠券叠加\n\n不同类型优惠券是否可以叠加使用，由具体活动规则决定。\n\n一般情况下，同类型平台优惠券在一个订单中只能使用一张。\n\n平台优惠券和商家优惠券在部分活动中可以同时使用，但最终以订单结算页面显示的优惠结果为准。",
           "reranker_score": 0.0008295892039313912
-        },
-        {
-          "rank": 3,
-          "section": "优惠券有效期",
-          "content": "优惠券使用规则\n优惠券有效期\n\n优惠券只能在标注的有效期内使用。\n\n超过有效期后，优惠券会自动失效，一般无法恢复。\n\n用户可以在个人账户的优惠券页面查看优惠券的具体有效时间和使用条件。",
-          "reranker_score": 0.0007321811863221228
         }
       ],
       "retrieval_debug": {
@@ -3248,8 +2999,7 @@
         "reranker_score": 0.0016809417866170406,
         "selected_sections": [
           "跨店凑单规则",
-          "优惠券叠加",
-          "优惠券有效期"
+          "优惠券叠加"
         ]
       },
       "retrieval_top1_section": "跨店凑单规则",
@@ -3267,8 +3017,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 正确地表示了根据当前知识库无法确认该问题，符合 answerable=false 的要求。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地表示了根据当前知识库无法确认该问题，符合 answerable=false 的要求。\"\n}"
+        "reason": "Candidate Answer 正确地表示了根据当前知识库无法确认学生专属优惠的信息，符合 answerable=false 的要求。没有出现与 Evidence 或 Reference Answer 矛盾的内容，也没有重要幻觉。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地表示了根据当前知识库无法确认学生专属优惠的信息，符合 answerable=false 的要求。没有出现与 Evidence 或 Reference Answer 矛盾的内容，也没有重要幻觉。\"\n}"
       }
     },
     {
@@ -3291,12 +3041,6 @@
           "section": "七天无理由退货",
           "content": "退款与退货政策\n七天无理由退货\n\n用户自收到商品之日起7日内，在商品保持完好、不影响二次销售的情况下，可以申请七天无理由退货。\n\n定制商品、生鲜食品、已拆封的数字商品以及其他依法不适用七天无理由退货的商品除外。\n\n商品退回后，平台将在确认商品符合退货条件后处理退款。",
           "reranker_score": 0.004264635033905506
-        },
-        {
-          "rank": 3,
-          "section": "商品破损或者错发",
-          "content": "售后服务规则\n商品破损或者错发\n\n如果用户收到商品时发现商品运输破损、商品型号错误或者数量不符，可以及时提交售后申请。\n\n用户应尽量保留商品、外包装以及物流相关信息，以便进行问题核实。\n\n审核确认属于商家或者物流责任后，将根据实际情况提供补发、换货、退货退款等处理方案。",
-          "reranker_score": 0.003135835751891136
         }
       ],
       "retrieval_debug": {
@@ -3328,8 +3072,7 @@
         "reranker_score": 0.007815888151526451,
         "selected_sections": [
           "价格保护时间",
-          "七天无理由退货",
-          "商品破损或者错发"
+          "七天无理由退货"
         ]
       },
       "retrieval_top1_section": "价格保护时间",
@@ -3347,8 +3090,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 正确地表示了根据当前知识库无法确认商品的最长保修年限，符合 answerable=false 的要求。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地表示了根据当前知识库无法确认商品的最长保修年限，符合 answerable=false 的要求。\"\n}"
+        "reason": "Candidate Answer 正确地表示了根据当前知识库无法确认商品最长保修年限，符合 answerable=false 的要求。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地表示了根据当前知识库无法确认商品最长保修年限，符合 answerable=false 的要求。\"\n}"
       }
     },
     {
@@ -3371,12 +3114,6 @@
           "section": "换货申请条件",
           "content": "商品换货规则\n换货申请条件\n\n商品存在质量问题、错发、漏发或者符合平台规定的其他换货条件时，用户可以申请换货。\n\n申请换货时，商品应保持符合售后处理要求的状态。\n\n不同商品是否支持换货，以商品售后页面显示的可申请服务为准。",
           "reranker_score": 0.008916126564145088
-        },
-        {
-          "rank": 3,
-          "section": "修改收货地址",
-          "content": "发货与物流政策\n修改收货地址\n\n订单尚未进入发货流程时，用户可以联系客服申请修改收货地址。\n\n如果订单已经完成发货，平台通常无法直接修改物流运输中的收货地址。\n\n这种情况下，用户可以尝试联系对应物流公司协商修改，但是否能够修改由物流公司决定。",
-          "reranker_score": 0.0033766122069209814
         }
       ],
       "retrieval_debug": {
@@ -3408,8 +3145,7 @@
         "reranker_score": 0.012722708284854889,
         "selected_sections": [
           "物流长时间未更新",
-          "换货申请条件",
-          "修改收货地址"
+          "换货申请条件"
         ]
       },
       "retrieval_top1_section": "物流长时间未更新",
@@ -3430,8 +3166,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 正确地表示了当前知识库无法确认平台是否支持海外直邮，符合 answerable=false 的要求，并且没有包含任何必须避免的语义内容。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地表示了当前知识库无法确认平台是否支持海外直邮，符合 answerable=false 的要求，并且没有包含任何必须避免的语义内容。\"\n}"
+        "reason": "Candidate Answer 正确地拒答了问题，明确表示根据当前知识库无法确认。这符合 answerable=false 的要求，并且没有出现与 Evidence 或 Reference Answer 矛盾的情况。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地拒答了问题，明确表示根据当前知识库无法确认。这符合 answerable=false 的要求，并且没有出现与 Evidence 或 Reference Answer 矛盾的情况。\"\n}"
       }
     },
     {
@@ -3454,12 +3190,6 @@
           "section": "使用条件",
           "content": "优惠券使用规则\n使用条件\n\n优惠券必须满足对应订单金额、商品范围以及有效期等条件后才能使用。\n\n例如满100元减20元优惠券，只有参与优惠计算的商品金额达到100元时才可以使用。\n\n部分特殊商品、秒杀商品以及明确标注不参与优惠活动的商品可能无法使用优惠券。",
           "reranker_score": 0.0038996203802525997
-        },
-        {
-          "rank": 3,
-          "section": "跨店凑单规则",
-          "content": "优惠券高级使用规则\n跨店凑单规则\n\n平台优惠券在活动规则允许的情况下，可以对多个参与同一优惠活动的店铺商品进行跨店凑单。\n\n只有明确标记为参与该平台优惠活动的商品金额才会计入门槛。\n\n商家优惠券只能用于对应商家的商品，不能使用其他店铺的商品金额凑满商家优惠券门槛。",
-          "reranker_score": 0.0007524627726525068
         }
       ],
       "retrieval_debug": {
@@ -3491,8 +3221,7 @@
         "reranker_score": 0.006903838831931353,
         "selected_sections": [
           "优惠门槛计算口径",
-          "使用条件",
-          "跨店凑单规则"
+          "使用条件"
         ]
       },
       "retrieval_top1_section": "优惠门槛计算口径",
@@ -3510,8 +3239,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 正确地表示了根据当前知识库无法确认生日当天购物是否有额外折扣，符合 answerable=false 的要求。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地表示了根据当前知识库无法确认生日当天购物是否有额外折扣，符合 answerable=false 的要求。\"\n}"
+        "reason": "Candidate Answer 正确地表示了根据当前知识库无法确认该问题，符合 answerable=false 的要求。没有出现任何幻觉或矛盾。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地表示了根据当前知识库无法确认该问题，符合 answerable=false 的要求。没有出现任何幻觉或矛盾。\"\n}"
       }
     },
     {
@@ -3534,12 +3263,6 @@
           "section": "退款原路返回",
           "content": "售后与退款高级规则\n退款原路返回\n\n平台发起退款后，退款原则上返回用户下单时使用的原支付账户。\n\n例如订单使用银行卡支付，退款通常返回原银行卡；使用支付宝或者微信支付的订单，则返回对应原支付账户。\n\n用户通常不能要求平台将退款主动修改到另一张银行卡、微信账户或者其他非原支付账户。",
           "reranker_score": 0.001314724562689662
-        },
-        {
-          "rank": 3,
-          "section": "优惠券叠加",
-          "content": "优惠券使用规则\n优惠券叠加\n\n不同类型优惠券是否可以叠加使用，由具体活动规则决定。\n\n一般情况下，同类型平台优惠券在一个订单中只能使用一张。\n\n平台优惠券和商家优惠券在部分活动中可以同时使用，但最终以订单结算页面显示的优惠结果为准。",
-          "reranker_score": 0.0007885457598604262
         }
       ],
       "retrieval_debug": {
@@ -3571,8 +3294,7 @@
         "reranker_score": 0.004086002707481384,
         "selected_sections": [
           "原路退款",
-          "退款原路返回",
-          "优惠券叠加"
+          "退款原路返回"
         ]
       },
       "retrieval_top1_section": "原路退款",
@@ -3590,8 +3312,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 正确地表示了根据当前知识库无法确认，符合 answerable=false 的要求。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地表示了根据当前知识库无法确认，符合 answerable=false 的要求。\"\n}"
+        "reason": "Candidate Answer 正确地表示了根据当前知识库无法确认该问题，符合 answerable=false 的要求。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地表示了根据当前知识库无法确认该问题，符合 answerable=false 的要求。\"\n}"
       }
     },
     {
@@ -3616,12 +3338,6 @@
           "section": "退货运费金额规则",
           "content": "售后与退款高级规则\n退货运费金额规则\n\n七天无理由退货且商品不存在质量问题时，退货运费原则上由用户承担。\n\n用户承担的是实际发生的合理退货物流费用，平台不设置统一的固定最高金额限制。\n\n因商品质量问题、商品破损、错发或者漏发导致的退货，符合售后条件时退货运费由商家承担。",
           "reranker_score": 0.8824278712272644
-        },
-        {
-          "rank": 3,
-          "section": "换货申请条件",
-          "content": "商品换货规则\n换货申请条件\n\n商品存在质量问题、错发、漏发或者符合平台规定的其他换货条件时，用户可以申请换货。\n\n申请换货时，商品应保持符合售后处理要求的状态。\n\n不同商品是否支持换货，以商品售后页面显示的可申请服务为准。",
-          "reranker_score": 0.8618873357772827
         }
       ],
       "retrieval_debug": {
@@ -3653,8 +3369,7 @@
         "reranker_score": 0.9082930684089661,
         "selected_sections": [
           "七天无理由退货",
-          "退货运费金额规则",
-          "换货申请条件"
+          "退货运费金额规则"
         ]
       },
       "retrieval_top1_section": "七天无理由退货",
@@ -3668,7 +3383,7 @@
         "换货和退货完全是同一规则"
       ],
       "status": "PASS",
-      "candidate_answer": "不是，商品有质量问题申请换货不按七天无理由退货规则处理。质量问题换货属于售后问题，符合条件的可直接申请换货，且退货运费由商家承担。具体以商品售后页面显示的可申请服务为准。",
+      "candidate_answer": "不是，商品有质量问题的换货不属于七天无理由退货规则范畴。七天无理由退货适用于无质量问题的商品，而因质量问题申请换货应按照售后规则处理，且退货运费由商家承担。",
       "missing_literal_items": [
         "换货申请条件",
         "不能直接按七天无理由退货处理"
@@ -3681,8 +3396,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 正确指出了商品质量问题申请换货不按七天无理由退货规则处理，并且说明了退货运费由商家承担，同时指出具体以商品售后页面显示的可申请服务为准。这些信息与 Evidence 和 Reference Answer 一致，没有出现幻觉或矛盾。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确指出了商品质量问题申请换货不按七天无理由退货规则处理，并且说明了退货运费由商家承担，同时指出具体以商品售后页面显示的可申请服务为准。这些信息与 Evidence 和 Reference Answer 一致，没有出现幻觉或矛盾。\"\n}"
+        "reason": "Candidate Answer 的核心结论正确，明确指出质量问题的换货不属于七天无理由退货规则，并且说明了应按照售后规则处理。回答基于 Evidence 支持的信息，没有出现幻觉或矛盾。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，明确指出质量问题的换货不属于七天无理由退货规则，并且说明了应按照售后规则处理。回答基于 Evidence 支持的信息，没有出现幻觉或矛盾。\"\n}"
       }
     },
     {
@@ -3707,12 +3422,6 @@
           "section": "商品质量问题",
           "content": "售后服务规则\n商品质量问题\n\n如果收到的商品存在明显质量问题，用户可以通过售后页面提交申请。\n\n申请时应尽量提供能够说明商品问题的图片、视频或者其他证明材料。\n\n商家或者平台会根据提交的信息以及实际商品情况进行审核。",
           "reranker_score": 0.9773707389831543
-        },
-        {
-          "rank": 3,
-          "section": "换货运费",
-          "content": "商品换货规则\n换货运费\n\n因商品质量问题、商品破损、错发或者漏发产生的换货运费，原则上由商家承担。\n\n因用户个人原因申请更换尺码、颜色或者其他规格产生的物流费用，具体承担方式以售后页面显示规则为准。",
-          "reranker_score": 0.8617710471153259
         }
       ],
       "retrieval_debug": {
@@ -3744,8 +3453,7 @@
         "reranker_score": 0.9886244535446167,
         "selected_sections": [
           "商品破损或者错发",
-          "商品质量问题",
-          "换货运费"
+          "商品质量问题"
         ]
       },
       "retrieval_top1_section": "商品破损或者错发",
@@ -3771,8 +3479,8 @@
         "completeness": 1,
         "contradiction": false,
         "hallucination": false,
-        "reason": "核心结论正确且基于Evidence支持，但回答不够完整，未明确指出运输破损应优先按照商品破损或者错发相关售后规则处理。",
-        "raw_judge_output": "{\n  \"verdict\": \"PARTIAL\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 1,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"核心结论正确且基于Evidence支持，但回答不够完整，未明确指出运输破损应优先按照商品破损或者错发相关售后规则处理。\"\n}"
+        "reason": "核心结论正确且由Evidence支持，但回答不够完整，没有明确提到'商品破损或者错发'这一关键点。",
+        "raw_judge_output": "{\n  \"verdict\": \"PARTIAL\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 1,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"核心结论正确且由Evidence支持，但回答不够完整，没有明确提到'商品破损或者错发'这一关键点。\"\n}"
       }
     },
     {
@@ -3798,12 +3506,6 @@
           "section": "退货运费金额规则",
           "content": "售后与退款高级规则\n退货运费金额规则\n\n七天无理由退货且商品不存在质量问题时，退货运费原则上由用户承担。\n\n用户承担的是实际发生的合理退货物流费用，平台不设置统一的固定最高金额限制。\n\n因商品质量问题、商品破损、错发或者漏发导致的退货，符合售后条件时退货运费由商家承担。",
           "reranker_score": 0.9629528522491455
-        },
-        {
-          "rank": 3,
-          "section": "退货举证材料",
-          "content": "售后与退款高级规则\n退货举证材料\n\n普通七天无理由退货一般不要求用户必须上传商品问题照片。\n\n如果用户因为商品质量问题、运输破损、错发或者漏发申请售后，平台或商家可能要求用户上传能够清楚展示问题的照片或者视频。\n\n平台不统一规定必须上传固定数量的照片。\n\n用户提供的材料只需要能够充分展示实际问题即可。",
-          "reranker_score": 0.4379436671733856
         }
       ],
       "retrieval_debug": {
@@ -3835,8 +3537,7 @@
         "reranker_score": 0.9645892381668091,
         "selected_sections": [
           "退货运费",
-          "退货运费金额规则",
-          "退货举证材料"
+          "退货运费金额规则"
         ]
       },
       "retrieval_top1_section": "退货运费",
@@ -3851,7 +3552,7 @@
         "只要运费贵就由商家承担"
       ],
       "status": "PASS",
-      "candidate_answer": "七天无理由退货且商品不存在质量问题的情况下，退货运费原则上由您自行承担，商家没有义务承担快递费用。如果订单购买了退货运费保障服务，可按照对应规则申请赔付。",
+      "candidate_answer": "七天无理由退货且商品不存在质量问题时，退货运费原则上由您自行承担。如果订单购买了退货运费保障服务，可按照对应规则申请赔付。",
       "missing_literal_items": [
         "没有质量问题",
         "运费原则上由用户承担"
@@ -3864,8 +3565,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 准确地回答了用户的问题，明确指出在七天无理由退货且商品没有质量问题的情况下，退货运费原则上由用户承担。同时提到了如果购买了退货运费保障服务的情况，信息完整且与 Evidence 和 Reference Answer 一致。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 准确地回答了用户的问题，明确指出在七天无理由退货且商品没有质量问题的情况下，退货运费原则上由用户承担。同时提到了如果购买了退货运费保障服务的情况，信息完整且与 Evidence 和 Reference Answer 一致。\"\n}"
+        "reason": "Candidate Answer 的核心结论正确，明确说明了七天无理由退货且商品不存在质量问题时，退货运费原则上由用户承担。同时提到了如果购买了退货运费保障服务，可以按照规则申请赔付，这与 Evidence 和 Reference Answer 一致，没有出现重要遗漏或矛盾。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，明确说明了七天无理由退货且商品不存在质量问题时，退货运费原则上由用户承担。同时提到了如果购买了退货运费保障服务，可以按照规则申请赔付，这与 Evidence 和 Reference Answer 一致，没有出现重要遗漏或矛盾。\"\n}"
       }
     },
     {
@@ -3890,12 +3591,6 @@
           "section": "发货超时处理",
           "content": "物流高级处理规则\n发货超时处理\n\n普通现货商品通常应在付款后的48小时内完成发货。\n\n超过48小时仍未发货，并不代表订单一定会被系统自动取消。\n\n如果订单仍然处于未发货状态，用户可以通过订单页面申请取消订单，或者联系客服催促商家处理。\n\n是否能够立即取消，以订单当前状态和实际处理结果为准。",
           "reranker_score": 0.9633687138557434
-        },
-        {
-          "rank": 3,
-          "section": "物流丢件补发时效",
-          "content": "物流高级处理规则\n物流丢件补发时效\n\n如果平台或物流公司确认商品在运输过程中丢失，平台可以根据订单情况安排退款或者重新补发商品。\n\n选择补发时，平台通常会在确认丢件后的48小时内创建新的补发订单。\n\n这里的48小时是指安排并创建补发订单的时间，不代表用户一定能够在48小时内收到新的商品。\n\n补发商品的实际送达时间取决于新的物流运输过程。",
-          "reranker_score": 0.3470943570137024
         }
       ],
       "retrieval_debug": {
@@ -3927,8 +3622,7 @@
         "reranker_score": 0.9893474578857422,
         "selected_sections": [
           "物流长时间未更新",
-          "发货超时处理",
-          "物流丢件补发时效"
+          "发货超时处理"
         ]
       },
       "retrieval_top1_section": "物流长时间未更新",
@@ -3942,7 +3636,7 @@
         "发货超时和物流停滞完全相同"
       ],
       "status": "PASS",
-      "candidate_answer": "订单超过48小时没发货，并不等同于物流长时间未更新，两者说明的问题不同。超过48小时未发货表示商家尚未发出商品，但订单可能仍处于有效状态，用户可申请取消或联系客服催促。而物流长时间未更新是指商品已发货但在运输过程中信息停滞，需进一步查询运输状态。前者是发货环节问题，后者是物流运输环节问题，不能直接认为快递已经出问题。",
+      "candidate_answer": "订单超过48小时没发货，并不等同于物流长时间未更新，两者情况不同。超过48小时未发货说明商家尚未发出商品，用户可申请取消订单或联系客服催促；而物流长时间未更新是指商品已发出但运输信息停滞，需联系物流公司或平台客服查询。目前不能直接认定快递已出问题，需根据具体订单状态和物流信息判断。",
       "missing_literal_items": [
         "发货超时",
         "不能等同于物流长时间未更新"
@@ -3955,8 +3649,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 正确区分了发货超时和物流长时间未更新的不同，并且解释了各自的情况。回答基于提供的 Evidence，没有出现不支持的断言或重要幻觉。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确区分了发货超时和物流长时间未更新的不同，并且解释了各自的情况。回答基于提供的 Evidence，没有出现不支持的断言或重要幻觉。\"\n}"
+        "reason": "Candidate Answer 正确区分了发货超时和物流长时间未更新的不同情况，并且提供了适当的建议。核心结论正确，回答基于 Evidence 支持，没有出现幻觉或矛盾，覆盖了用户询问的核心问题。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确区分了发货超时和物流长时间未更新的不同情况，并且提供了适当的建议。核心结论正确，回答基于 Evidence 支持，没有出现幻觉或矛盾，覆盖了用户询问的核心问题。\"\n}"
       }
     },
     {
@@ -3981,12 +3675,6 @@
           "section": "订单自动关闭",
           "content": "订单与取消规则\n订单自动关闭\n\n未付款订单在超过规定支付时间后可能被系统自动关闭。\n\n订单因支付超时、风控审核失败或者商品库存异常而关闭后，用户通常需要重新下单。\n\n已经关闭的订单不能直接恢复为原订单。",
           "reranker_score": 0.08616956323385239
-        },
-        {
-          "rank": 3,
-          "section": "优惠券有效期",
-          "content": "优惠券使用规则\n优惠券有效期\n\n优惠券只能在标注的有效期内使用。\n\n超过有效期后，优惠券会自动失效，一般无法恢复。\n\n用户可以在个人账户的优惠券页面查看优惠券的具体有效时间和使用条件。",
-          "reranker_score": 0.01678548939526081
         }
       ],
       "retrieval_debug": {
@@ -4018,8 +3706,7 @@
         "reranker_score": 0.3145767152309418,
         "selected_sections": [
           "优惠券锁定与释放",
-          "订单自动关闭",
-          "优惠券有效期"
+          "订单自动关闭"
         ]
       },
       "retrieval_top1_section": "优惠券锁定与释放",
@@ -4033,22 +3720,22 @@
         "优惠券会永久锁定",
         "取消订单后必须人工联系客服才能恢复"
       ],
-      "status": "PASS",
-      "candidate_answer": "被关闭的未付款订单所占用的优惠券，系统通常会在10分钟内释放，之后您就可以重新选择使用。",
+      "status": "PARTIAL",
+      "candidate_answer": "通常会在10分钟内重新释放，之后你就可以重新选择了。",
       "missing_literal_items": [
         "订单取消",
         "优惠券释放"
       ],
       "forbidden_literal_items": [],
       "judge": {
-        "verdict": "PASS",
+        "verdict": "PARTIAL",
         "correctness": 2,
-        "groundedness": 2,
-        "completeness": 2,
+        "groundedness": 1,
+        "completeness": 1,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 核心结论正确，指出了订单取消后优惠券会在10分钟内释放。回答内容基于 Evidence 支持，没有出现 Evidence 中不存在的事实性断言。同时涵盖了用户询问的核心问题和 Reference Answer 中的关键语义，没有矛盾或重要幻觉。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 核心结论正确，指出了订单取消后优惠券会在10分钟内释放。回答内容基于 Evidence 支持，没有出现 Evidence 中不存在的事实性断言。同时涵盖了用户询问的核心问题和 Reference Answer 中的关键语义，没有矛盾或重要幻觉。\"\n}"
+        "reason": "核心结论正确，但没有明确提到'订单取消'和'优惠券释放'，导致信息不完整。",
+        "raw_judge_output": "{\n  \"verdict\": \"PARTIAL\",\n  \"correctness\": 2,\n  \"groundedness\": 1,\n  \"completeness\": 1,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"核心结论正确，但没有明确提到'订单取消'和'优惠券释放'，导致信息不完整。\"\n}"
       }
     },
     {
@@ -4074,12 +3761,6 @@
           "section": "原路退款",
           "content": "支付与退款路径规则\n原路退款\n\n平台发起退款后，退款原则上返回用户支付订单时使用的原支付渠道。\n\n使用银行卡支付的订单，退款通常返回原支付银行卡。\n\n使用支付宝或者微信支付的订单，退款通常返回原支付账户。\n\n用户通常不能在退款过程中自行指定其他银行卡或者其他支付账户作为退款接收账户。",
           "reranker_score": 0.5527811646461487
-        },
-        {
-          "rank": 3,
-          "section": "退款与发票",
-          "content": "发票规则\n退款与发票\n\n订单发生全部退款后，如果该订单已经开具发票，平台或者商家可能需要对原发票进行相应处理。\n\n部分退款时，发票处理方式需要根据实际退款金额以及开票情况确定。\n\n用户可以通过订单或者发票管理页面查看具体处理状态。",
-          "reranker_score": 0.009020279161632061
         }
       ],
       "retrieval_debug": {
@@ -4111,8 +3792,7 @@
         "reranker_score": 0.7041600942611694,
         "selected_sections": [
           "退款原路返回",
-          "原路退款",
-          "退款与发票"
+          "原路退款"
         ]
       },
       "retrieval_top1_section": "退款原路返回",
@@ -4126,7 +3806,7 @@
         "退款默认转到其他银行卡"
       ],
       "status": "PASS",
-      "candidate_answer": "退款会回到您当时付款的原支付账户，不能另外填写其他账户接收。",
+      "candidate_answer": "退款会回到您当时付款的原支付账户，通常不能更换为其他账户收款。",
       "missing_literal_items": [
         "不能随意指定其他账户"
       ],
@@ -4138,8 +3818,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 的核心结论正确，回答基于 Evidence 支持，并且覆盖了用户询问的核心问题。同时满足 must_include 要求，没有出现 must_not_include 中的内容。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，回答基于 Evidence 支持，并且覆盖了用户询问的核心问题。同时满足 must_include 要求，没有出现 must_not_include 中的内容。\"\n}"
+        "reason": "Candidate Answer 准确地回答了退款会退回到原支付账户，并且明确表示通常不能更换为其他账户收款，符合 Evidence 和 Reference Answer 的内容。同时满足了 must_include 的要求，没有出现 must_not_include 的内容。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 准确地回答了退款会退回到原支付账户，并且明确表示通常不能更换为其他账户收款，符合 Evidence 和 Reference Answer 的内容。同时满足了 must_include 的要求，没有出现 must_not_include 的内容。\"\n}"
       }
     },
     {
@@ -4164,12 +3844,6 @@
           "section": "售后处理进度",
           "content": "售后服务规则\n售后处理进度\n\n用户提交售后申请后，可以在订单售后页面查看当前处理状态。\n\n售后流程可能包括待审核、待用户寄回商品、待商家收货、处理中以及处理完成等状态。\n\n如果售后状态长时间没有变化，可以联系平台客服进一步查询。",
           "reranker_score": 0.08897849172353745
-        },
-        {
-          "rank": 3,
-          "section": "商品破损或者错发",
-          "content": "售后服务规则\n商品破损或者错发\n\n如果用户收到商品时发现商品运输破损、商品型号错误或者数量不符，可以及时提交售后申请。\n\n用户应尽量保留商品、外包装以及物流相关信息，以便进行问题核实。\n\n审核确认属于商家或者物流责任后，将根据实际情况提供补发、换货、退货退款等处理方案。",
-          "reranker_score": 0.03541073203086853
         }
       ],
       "retrieval_debug": {
@@ -4201,8 +3875,7 @@
         "reranker_score": 0.17895588278770447,
         "selected_sections": [
           "退货寄回时限",
-          "售后处理进度",
-          "商品破损或者错发"
+          "售后处理进度"
         ]
       },
       "retrieval_top1_section": "退货寄回时限",
@@ -4216,7 +3889,7 @@
         "拿到退货地址后没有寄回时限"
       ],
       "status": "PASS",
-      "candidate_answer": "如果商家已提供有效退货地址，您需在7个自然日内寄出退货商品。若超过规定时间仍未寄出，售后申请可能被关闭。因此，不建议拖延寄回，以免影响售后处理。",
+      "candidate_answer": "如果商家已经提供退货地址，您需要在7个自然日内寄出退货商品。超过这个时间未寄出，售后申请可能会被关闭。因此，不建议拖延寄回，以免影响售后处理。",
       "missing_literal_items": [
         "超过时间可能关闭售后申请"
       ],
@@ -4228,8 +3901,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 的核心结论正确，回答基于 Evidence 支持的信息，并且涵盖了用户询问的核心问题和 Reference Answer 中的关键语义。没有出现与 Evidence 或 Reference Answer 矛盾的内容，也没有重要幻觉。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，回答基于 Evidence 支持的信息，并且涵盖了用户询问的核心问题和 Reference Answer 中的关键语义。没有出现与 Evidence 或 Reference Answer 矛盾的内容，也没有重要幻觉。\"\n}"
+        "reason": "Candidate Answer 的核心结论正确，指出了7个自然日的时限和超过时间可能关闭售后申请的关键信息。回答内容由 Evidence 支持，并且没有出现与 Evidence 或 Reference Answer 矛盾的内容。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，指出了7个自然日的时限和超过时间可能关闭售后申请的关键信息。回答内容由 Evidence 支持，并且没有出现与 Evidence 或 Reference Answer 矛盾的内容。\"\n}"
       }
     },
     {
@@ -4254,12 +3927,6 @@
           "section": "七天无理由退货",
           "content": "退款与退货政策\n七天无理由退货\n\n用户自收到商品之日起7日内，在商品保持完好、不影响二次销售的情况下，可以申请七天无理由退货。\n\n定制商品、生鲜食品、已拆封的数字商品以及其他依法不适用七天无理由退货的商品除外。\n\n商品退回后，平台将在确认商品符合退货条件后处理退款。",
           "reranker_score": 0.16013464331626892
-        },
-        {
-          "rank": 3,
-          "section": "退货运费金额规则",
-          "content": "售后与退款高级规则\n退货运费金额规则\n\n七天无理由退货且商品不存在质量问题时，退货运费原则上由用户承担。\n\n用户承担的是实际发生的合理退货物流费用，平台不设置统一的固定最高金额限制。\n\n因商品质量问题、商品破损、错发或者漏发导致的退货，符合售后条件时退货运费由商家承担。",
-          "reranker_score": 0.06891249865293503
         }
       ],
       "retrieval_debug": {
@@ -4291,8 +3958,7 @@
         "reranker_score": 0.954647421836853,
         "selected_sections": [
           "七天无理由原包装要求",
-          "七天无理由退货",
-          "退货运费金额规则"
+          "七天无理由退货"
         ]
       },
       "retrieval_top1_section": "七天无理由原包装要求",
@@ -4306,7 +3972,7 @@
         "快递外箱就是商品原包装"
       ],
       "status": "PASS",
-      "candidate_answer": "不是，即使快递盒已扔，只要商品自身的盒子、配件等保持完整，且不影响二次销售，仍然可以申请七天无理由退货。但若缺少商品原包装、配件、标签等导致无法正常销售，则可能影响退货申请。",
+      "candidate_answer": "不是，即使快递盒已扔，只要商品自身的盒子、配件等保持完好，不影响二次销售，仍可申请七天无理由退货。",
       "missing_literal_items": [
         "外层快递纸箱不要求必须保留",
         "商品自身原包装和配件"
@@ -4319,8 +3985,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 的核心结论正确，明确指出快递盒不是必须保留的，并且强调了商品自身原包装和配件的重要性。回答基于 Evidence 并涵盖了用户询问的核心问题，没有出现与 Evidence 或 Reference Answer 矛盾的内容。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，明确指出快递盒不是必须保留的，并且强调了商品自身原包装和配件的重要性。回答基于 Evidence 并涵盖了用户询问的核心问题，没有出现与 Evidence 或 Reference Answer 矛盾的内容。\"\n}"
+        "reason": "Candidate Answer 的核心结论正确，明确指出了即使快递盒已扔，只要商品自身的盒子、配件等保持完好，仍可申请七天无理由退货。回答基于 Evidence 提供的信息，并且覆盖了用户询问的核心问题和 Reference Answer 中的关键语义。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，明确指出了即使快递盒已扔，只要商品自身的盒子、配件等保持完好，仍可申请七天无理由退货。回答基于 Evidence 提供的信息，并且覆盖了用户询问的核心问题和 Reference Answer 中的关键语义。\"\n}"
       }
     },
     {
@@ -4345,12 +4011,6 @@
           "section": "使用条件",
           "content": "优惠券使用规则\n使用条件\n\n优惠券必须满足对应订单金额、商品范围以及有效期等条件后才能使用。\n\n例如满100元减20元优惠券，只有参与优惠计算的商品金额达到100元时才可以使用。\n\n部分特殊商品、秒杀商品以及明确标注不参与优惠活动的商品可能无法使用优惠券。",
           "reranker_score": 0.788257360458374
-        },
-        {
-          "rank": 3,
-          "section": "价格保护金额",
-          "content": "商品价格保护规则\n价格保护金额\n\n价格保护主要根据符合规则的商品价格变化计算可退差价。\n\n最终是否产生差价以及具体差价金额，以价格保护系统审核结果为准。\n\n运费、服务费以及部分特殊优惠通常不会简单直接计入商品差价。",
-          "reranker_score": 0.41430631279945374
         }
       ],
       "retrieval_debug": {
@@ -4382,8 +4042,7 @@
         "reranker_score": 0.9738444089889526,
         "selected_sections": [
           "优惠门槛计算口径",
-          "使用条件",
-          "价格保护金额"
+          "使用条件"
         ]
       },
       "retrieval_top1_section": "优惠门槛计算口径",
@@ -4398,7 +4057,7 @@
         "按照120元原价判断"
       ],
       "status": "PASS",
-      "candidate_answer": "不能使用满100减20优惠券。因为商品活动后实际金额为98元，未达到100元的使用门槛，且运费不计入优惠门槛计算。",
+      "candidate_answer": "不能使用满100减20优惠券。因为商品活动后的实际金额为98元，未达到100元的优惠门槛，运费不计入优惠门槛计算。",
       "missing_literal_items": [
         "运费不计入门槛"
       ],
@@ -4410,8 +4069,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 的核心结论正确，明确指出了商品活动后的实际金额为98元，未达到100元的门槛，并且运费不计入优惠门槛计算。回答内容与 Evidence 和 Reference Answer 一致，没有出现矛盾或幻觉。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，明确指出了商品活动后的实际金额为98元，未达到100元的门槛，并且运费不计入优惠门槛计算。回答内容与 Evidence 和 Reference Answer 一致，没有出现矛盾或幻觉。\"\n}"
+        "reason": "Candidate Answer 核心结论正确，明确说明了商品活动后的实际金额为98元未达到100元优惠门槛，并指出运费不计入优惠门槛计算。回答基于 Evidence 支持，没有出现重要幻觉或矛盾。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 核心结论正确，明确说明了商品活动后的实际金额为98元未达到100元优惠门槛，并指出运费不计入优惠门槛计算。回答基于 Evidence 支持，没有出现重要幻觉或矛盾。\"\n}"
       }
     },
     {
@@ -4437,12 +4096,6 @@
           "section": "退货运费金额规则",
           "content": "售后与退款高级规则\n退货运费金额规则\n\n七天无理由退货且商品不存在质量问题时，退货运费原则上由用户承担。\n\n用户承担的是实际发生的合理退货物流费用，平台不设置统一的固定最高金额限制。\n\n因商品质量问题、商品破损、错发或者漏发导致的退货，符合售后条件时退货运费由商家承担。",
           "reranker_score": 0.9399133324623108
-        },
-        {
-          "rank": 3,
-          "section": "换货运费",
-          "content": "商品换货规则\n换货运费\n\n因商品质量问题、商品破损、错发或者漏发产生的换货运费，原则上由商家承担。\n\n因用户个人原因申请更换尺码、颜色或者其他规格产生的物流费用，具体承担方式以售后页面显示规则为准。",
-          "reranker_score": 0.8268516063690186
         }
       ],
       "retrieval_debug": {
@@ -4474,8 +4127,7 @@
         "reranker_score": 0.9599877595901489,
         "selected_sections": [
           "退货运费",
-          "退货运费金额规则",
-          "换货运费"
+          "退货运费金额规则"
         ]
       },
       "retrieval_top1_section": "退货运费",
@@ -4489,9 +4141,8 @@
         "质量问题退货运费必须由消费者承担"
       ],
       "status": "PASS",
-      "candidate_answer": "商品有质量问题，即使外包装已拆，退货运费也由商家承担。",
+      "candidate_answer": "因商品质量问题导致的退货，即使外包装已拆，退货运费也由商家承担。",
       "missing_literal_items": [
-        "商品质量问题",
         "退货运费由商家承担"
       ],
       "forbidden_literal_items": [],
@@ -4502,8 +4153,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 的核心结论正确，明确指出商品有质量问题时退货运费由商家承担。回答基于 Evidence 提供的信息，没有出现任何与 Evidence 或 Reference Answer 矛盾的地方，并且覆盖了用户询问的核心问题。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，明确指出商品有质量问题时退货运费由商家承担。回答基于 Evidence 提供的信息，没有出现任何与 Evidence 或 Reference Answer 矛盾的地方，并且覆盖了用户询问的核心问题。\"\n}"
+        "reason": "Candidate Answer 的核心结论正确，指出因商品质量问题导致的退货，即使外包装已拆，退货运费也由商家承担。该回答基于 Evidence 中的信息，并且没有出现任何与 Evidence 或 Reference Answer 矛盾的内容。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，指出因商品质量问题导致的退货，即使外包装已拆，退货运费也由商家承担。该回答基于 Evidence 中的信息，并且没有出现任何与 Evidence 或 Reference Answer 矛盾的内容。\"\n}"
       }
     },
     {
@@ -4528,12 +4179,6 @@
           "section": "使用条件",
           "content": "优惠券使用规则\n使用条件\n\n优惠券必须满足对应订单金额、商品范围以及有效期等条件后才能使用。\n\n例如满100元减20元优惠券，只有参与优惠计算的商品金额达到100元时才可以使用。\n\n部分特殊商品、秒杀商品以及明确标注不参与优惠活动的商品可能无法使用优惠券。",
           "reranker_score": 0.4409205913543701
-        },
-        {
-          "rank": 3,
-          "section": "优惠券有效期",
-          "content": "优惠券使用规则\n优惠券有效期\n\n优惠券只能在标注的有效期内使用。\n\n超过有效期后，优惠券会自动失效，一般无法恢复。\n\n用户可以在个人账户的优惠券页面查看优惠券的具体有效时间和使用条件。",
-          "reranker_score": 0.3303631544113159
         }
       ],
       "retrieval_debug": {
@@ -4565,8 +4210,7 @@
         "reranker_score": 0.8881781101226807,
         "selected_sections": [
           "优惠券锁定与释放",
-          "使用条件",
-          "优惠券有效期"
+          "使用条件"
         ]
       },
       "retrieval_top1_section": "优惠券锁定与释放",
@@ -4581,7 +4225,7 @@
         "未付款订单不会占用优惠券"
       ],
       "status": "PASS",
-      "candidate_answer": "取消未付款订单后，系统通常会在10分钟内释放被锁定的优惠券。优惠券释放后，只要仍处于有效期内，并满足下一单的使用条件（如金额、商品范围等），就可以在下一单使用。但不能保证一定可以使用，具体还需符合优惠券的使用规则。",
+      "candidate_answer": "取消未付款订单后，系统通常会在10分钟内释放被锁定的优惠券。优惠券释放后，只要满足下一单的使用条件（如订单金额、商品范围和有效期等），就可以正常使用。但不能保证一定可以用于下一单，需视具体使用条件而定。",
       "missing_literal_items": [
         "优惠券锁定",
         "取消后通常10分钟内释放",
@@ -4595,8 +4239,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 核心结论正确，解释了取消订单后优惠券通常会在10分钟内释放，并且不能保证立即可用。同时指出了优惠券的使用还需满足其他条件，没有出现与 Evidence 或 Reference Answer 矛盾的内容。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 核心结论正确，解释了取消订单后优惠券通常会在10分钟内释放，并且不能保证立即可用。同时指出了优惠券的使用还需满足其他条件，没有出现与 Evidence 或 Reference Answer 矛盾的内容。\"\n}"
+        "reason": "Candidate Answer 正确地解释了优惠券在订单取消后的释放机制，指出了通常10分钟内释放，并且强调了不保证立即可用。同时提到了优惠券使用的条件，没有出现与 Evidence 或 Reference Answer 矛盾的情况。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地解释了优惠券在订单取消后的释放机制，指出了通常10分钟内释放，并且强调了不保证立即可用。同时提到了优惠券使用的条件，没有出现与 Evidence 或 Reference Answer 矛盾的情况。\"\n}"
       }
     },
     {
@@ -4621,12 +4265,6 @@
           "section": "商品质量问题",
           "content": "售后服务规则\n商品质量问题\n\n如果收到的商品存在明显质量问题，用户可以通过售后页面提交申请。\n\n申请时应尽量提供能够说明商品问题的图片、视频或者其他证明材料。\n\n商家或者平台会根据提交的信息以及实际商品情况进行审核。",
           "reranker_score": 0.7579735517501831
-        },
-        {
-          "rank": 3,
-          "section": "七天无理由原包装要求",
-          "content": "售后与退款高级规则\n七天无理由原包装要求\n\n申请七天无理由退货时，不要求用户必须保留快递运输使用的外层纸箱或者快递袋。\n\n但是，如果商品自身的原包装、配件、赠品、标签或者说明书属于商品完整性的一部分，则用户应尽量保持完整。\n\n如果缺少这些内容导致商品无法再次正常销售，可能影响七天无理由退货申请。",
-          "reranker_score": 0.6776873469352722
         }
       ],
       "retrieval_debug": {
@@ -4658,8 +4296,7 @@
         "reranker_score": 0.8646537065505981,
         "selected_sections": [
           "退货寄回时限",
-          "商品质量问题",
-          "七天无理由原包装要求"
+          "商品质量问题"
         ]
       },
       "retrieval_top1_section": "退货寄回时限",
@@ -4673,9 +4310,8 @@
         "质量问题售后永远不会关闭"
       ],
       "status": "PASS",
-      "candidate_answer": "商品存在质量问题可以申请售后，但您在收到退货地址超过7天未寄出，售后申请可能受影响，存在被关闭的风险。建议您尽快寄回并填写物流单号，若已超时可联系客服说明情况。",
+      "candidate_answer": "商品存在质量问题不影响您申请售后，但您需在商家提供退货地址后的7个自然日内寄出退货商品。超过时限未寄出，售后申请可能被关闭。如因特殊情况无法按时寄回，建议及时联系客服说明情况。",
       "missing_literal_items": [
-        "7个自然日",
         "超过时限可能关闭售后申请"
       ],
       "forbidden_literal_items": [],
@@ -4686,8 +4322,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 核心结论正确，指出超过7天未寄出商品可能影响售后申请并存在被关闭的风险。回答基于 Evidence 提供的信息，并建议用户尽快寄回商品或联系客服说明情况，符合 Important Semantic Requirements 的要求。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 核心结论正确，指出超过7天未寄出商品可能影响售后申请并存在被关闭的风险。回答基于 Evidence 提供的信息，并建议用户尽快寄回商品或联系客服说明情况，符合 Important Semantic Requirements 的要求。\"\n}"
+        "reason": "Candidate Answer 的核心结论正确，指出用户需在7个自然日内寄出退货商品，超过时限售后申请可能被关闭。同时建议因特殊情况无法按时寄回时联系客服说明情况，符合 Evidence 和 Reference Answer 的内容，并且没有出现重要幻觉或矛盾。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 的核心结论正确，指出用户需在7个自然日内寄出退货商品，超过时限售后申请可能被关闭。同时建议因特殊情况无法按时寄回时联系客服说明情况，符合 Evidence 和 Reference Answer 的内容，并且没有出现重要幻觉或矛盾。\"\n}"
       }
     },
     {
@@ -4712,12 +4348,6 @@
           "section": "原路退款",
           "content": "支付与退款路径规则\n原路退款\n\n平台发起退款后，退款原则上返回用户支付订单时使用的原支付渠道。\n\n使用银行卡支付的订单，退款通常返回原支付银行卡。\n\n使用支付宝或者微信支付的订单，退款通常返回原支付账户。\n\n用户通常不能在退款过程中自行指定其他银行卡或者其他支付账户作为退款接收账户。",
           "reranker_score": 0.16599829494953156
-        },
-        {
-          "rank": 3,
-          "section": "退款原路返回",
-          "content": "售后与退款高级规则\n退款原路返回\n\n平台发起退款后，退款原则上返回用户下单时使用的原支付账户。\n\n例如订单使用银行卡支付，退款通常返回原银行卡；使用支付宝或者微信支付的订单，则返回对应原支付账户。\n\n用户通常不能要求平台将退款主动修改到另一张银行卡、微信账户或者其他非原支付账户。",
-          "reranker_score": 0.1253863126039505
         }
       ],
       "retrieval_debug": {
@@ -4749,8 +4379,7 @@
         "reranker_score": 0.9630919694900513,
         "selected_sections": [
           "退款到账时间",
-          "原路退款",
-          "退款原路返回"
+          "原路退款"
         ]
       },
       "retrieval_top1_section": "退款到账时间",
@@ -4776,8 +4405,8 @@
         "completeness": 1,
         "contradiction": false,
         "hallucination": false,
-        "reason": "核心结论正确，回答由 Evidence 支持，但未明确指出3到7个工作日不是描述退款账户，而是到账时间。",
-        "raw_judge_output": "{\n  \"verdict\": \"PARTIAL\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 1,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"核心结论正确，回答由 Evidence 支持，但未明确指出3到7个工作日不是描述退款账户，而是到账时间。\"\n}"
+        "reason": "Candidate Answer 正确指出了3到7个工作日是退款到账时间，并且钱会退回到原支付银行卡，但没有明确说明这与退款账户无关。因此，在完整性方面有所欠缺。",
+        "raw_judge_output": "{\n  \"verdict\": \"PARTIAL\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 1,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确指出了3到7个工作日是退款到账时间，并且钱会退回到原支付银行卡，但没有明确说明这与退款账户无关。因此，在完整性方面有所欠缺。\"\n}"
       }
     },
     {
@@ -4803,12 +4432,6 @@
           "section": "原路退款",
           "content": "支付与退款路径规则\n原路退款\n\n平台发起退款后，退款原则上返回用户支付订单时使用的原支付渠道。\n\n使用银行卡支付的订单，退款通常返回原支付银行卡。\n\n使用支付宝或者微信支付的订单，退款通常返回原支付账户。\n\n用户通常不能在退款过程中自行指定其他银行卡或者其他支付账户作为退款接收账户。",
           "reranker_score": 0.8070047497749329
-        },
-        {
-          "rank": 3,
-          "section": "退款到账时间",
-          "content": "退款与退货政策\n退款到账时间\n\n用户提交退款申请后，平台通常会在24小时内完成审核。\n\n审核通过后，如果订单尚未发货，退款一般会在1至3个工作日内原路返回。\n\n如果订单已经发货并需要退货，商家收到退回商品并确认商品符合退款条件后，平台会发起退款。\n\n退款发起后，支付宝、微信等支付渠道通常会在1至3个工作日内到账；银行卡退款可能需要3至7个工作日。\n\n具体到账时间可能受到银行、支付机构以及节假日等因素影响。",
-          "reranker_score": 0.3437822163105011
         }
       ],
       "retrieval_debug": {
@@ -4840,8 +4463,7 @@
         "reranker_score": 0.8692712783813477,
         "selected_sections": [
           "退款原路返回",
-          "原路退款",
-          "退款到账时间"
+          "原路退款"
         ]
       },
       "retrieval_top1_section": "退款原路返回",
@@ -4862,13 +4484,13 @@
       "forbidden_literal_items": [],
       "judge": {
         "verdict": "PARTIAL",
-        "correctness": 2,
+        "correctness": 1,
         "groundedness": 2,
-        "completeness": 1,
+        "completeness": 0,
         "contradiction": false,
         "hallucination": false,
-        "reason": "核心结论正确，但没有完全覆盖用户询问的核心问题。Candidate Answer 没有明确指出退回原微信支付账户说明的是退款路径，并不能由此推断退款一定当天到账。",
-        "raw_judge_output": "{\n  \"verdict\": \"PARTIAL\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 1,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"核心结论正确，但没有完全覆盖用户询问的核心问题。Candidate Answer 没有明确指出退回原微信支付账户说明的是退款路径，并不能由此推断退款一定当天到账。\"\n}"
+        "reason": "Candidate Answer 核心结论正确，即不能确认退款一定当天到账。回答也未超出 Evidence 支持范围。但完整性不足，没有明确指出退回原支付账户和退款时间之间的关系，也没有使用 must_include 要求的语义表达。",
+        "raw_judge_output": "{\n  \"verdict\": \"PARTIAL\",\n  \"correctness\": 1,\n  \"groundedness\": 2,\n  \"completeness\": 0,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 核心结论正确，即不能确认退款一定当天到账。回答也未超出 Evidence 支持范围。但完整性不足，没有明确指出退回原支付账户和退款时间之间的关系，也没有使用 must_include 要求的语义表达。\"\n}"
       }
     },
     {
@@ -4893,12 +4515,6 @@
           "section": "商家优惠券叠加",
           "content": "优惠券高级使用规则\n商家优惠券叠加\n\n同一个订单中，同一商家的两张商家优惠券通常不能同时使用。\n\n如果用户拥有多张符合条件的商家优惠券，结算时通常只能选择其中一张。\n\n商家优惠券在活动规则允许的情况下，可以与平台优惠券同时使用。\n\n是否能够组合使用最终以订单结算页面展示结果为准。",
           "reranker_score": 0.9930152893066406
-        },
-        {
-          "rank": 3,
-          "section": "优惠券叠加",
-          "content": "优惠券使用规则\n优惠券叠加\n\n不同类型优惠券是否可以叠加使用，由具体活动规则决定。\n\n一般情况下，同类型平台优惠券在一个订单中只能使用一张。\n\n平台优惠券和商家优惠券在部分活动中可以同时使用，但最终以订单结算页面显示的优惠结果为准。",
-          "reranker_score": 0.9291837811470032
         }
       ],
       "retrieval_debug": {
@@ -4930,8 +4546,7 @@
         "reranker_score": 0.9939963817596436,
         "selected_sections": [
           "跨店凑单规则",
-          "商家优惠券叠加",
-          "优惠券叠加"
+          "商家优惠券叠加"
         ]
       },
       "retrieval_top1_section": "跨店凑单规则",
@@ -4945,7 +4560,7 @@
         "所有优惠券叠加规则都一样"
       ],
       "status": "PARTIAL",
-      "candidate_answer": "同一个商家的两张商家券通常不能一起使用，结算时一般只能选择其中一张。是否能组合使用以订单结算页面显示结果为准。",
+      "candidate_answer": "同一个商家的两张商家券通常不能一起使用，即使在同一订单中，结算时一般也只能选择其中一张。是否能够使用以订单结算页面展示结果为准。",
       "missing_literal_items": [
         "属于不同规则",
         "两张商家优惠券通常不能同时使用"
@@ -4958,8 +4573,8 @@
         "completeness": 1,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 提供了正确的结论，即同一商家的两张商家券通常不能一起使用，并且结算时只能选择其中一张。但是，它没有提到平台券跨店凑单和商家券叠加属于不同规则这一点，这在 Reference Answer 中是关键信息。",
-        "raw_judge_output": "{\n  \"verdict\": \"PARTIAL\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 1,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 提供了正确的结论，即同一商家的两张商家券通常不能一起使用，并且结算时只能选择其中一张。但是，它没有提到平台券跨店凑单和商家券叠加属于不同规则这一点，这在 Reference Answer 中是关键信息。\"\n}"
+        "reason": "核心结论正确，回答基于 Evidence 支持。但遗漏了说明平台券跨店凑单和商家优惠券叠加属于不同规则，未完全覆盖用户询问的核心问题。",
+        "raw_judge_output": "{\n  \"verdict\": \"PARTIAL\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 1,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"核心结论正确，回答基于 Evidence 支持。但遗漏了说明平台券跨店凑单和商家优惠券叠加属于不同规则，未完全覆盖用户询问的核心问题。\"\n}"
       }
     },
     {
@@ -4984,12 +4599,6 @@
           "section": "七天无理由原包装要求",
           "content": "售后与退款高级规则\n七天无理由原包装要求\n\n申请七天无理由退货时，不要求用户必须保留快递运输使用的外层纸箱或者快递袋。\n\n但是，如果商品自身的原包装、配件、赠品、标签或者说明书属于商品完整性的一部分，则用户应尽量保持完整。\n\n如果缺少这些内容导致商品无法再次正常销售，可能影响七天无理由退货申请。",
           "reranker_score": 0.786786675453186
-        },
-        {
-          "rank": 3,
-          "section": "退货运费",
-          "content": "退款与退货政策\n退货运费\n\n因商品质量问题、商品破损、错发或者漏发导致的退货，退货运费由商家承担。\n\n七天无理由退货且商品不存在质量问题时，退货运费原则上由用户承担。\n\n如果订单购买了退货运费保障服务，则按照对应保障规则进行赔付。",
-          "reranker_score": 0.6447844505310059
         }
       ],
       "retrieval_debug": {
@@ -5021,8 +4630,7 @@
         "reranker_score": 0.9990781545639038,
         "selected_sections": [
           "退货举证材料",
-          "七天无理由原包装要求",
-          "退货运费"
+          "七天无理由原包装要求"
         ]
       },
       "retrieval_top1_section": "退货举证材料",
@@ -5036,7 +4644,7 @@
         "所有售后都不需要举证"
       ],
       "status": "PASS",
-      "candidate_answer": "商品质量问题退货需要提供能够清楚展示问题的照片或视频等证据，平台或商家可能要求用户上传相关材料，不能保证一定不需要提供任何证据。",
+      "candidate_answer": "商品质量问题退货需要提供能够清楚展示问题的照片或视频等证据，平台或商家可能要求用户上传相关材料，因此不是什么证据都不用提供。",
       "missing_literal_items": [
         "质量问题可能需要证据"
       ],
@@ -5048,8 +4656,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 准确地指出了商品质量问题退货可能需要提供证据（照片或视频），并且说明了平台或商家可能会要求上传相关材料。回答没有出现与 Evidence 或 Reference Answer 矛盾的情况，也没有重要信息遗漏。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 准确地指出了商品质量问题退货可能需要提供证据（照片或视频），并且说明了平台或商家可能会要求上传相关材料。回答没有出现与 Evidence 或 Reference Answer 矛盾的情况，也没有重要信息遗漏。\"\n}"
+        "reason": "Candidate Answer 正确地指出商品质量问题退货需要提供证据，且明确提到照片或视频等材料。回答基于 Evidence，并完整覆盖了用户询问的核心问题和 Reference Answer 的关键语义。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地指出商品质量问题退货需要提供证据，且明确提到照片或视频等材料。回答基于 Evidence，并完整覆盖了用户询问的核心问题和 Reference Answer 的关键语义。\"\n}"
       }
     },
     {
@@ -5072,12 +4680,6 @@
           "section": "退货运费金额规则",
           "content": "售后与退款高级规则\n退货运费金额规则\n\n七天无理由退货且商品不存在质量问题时，退货运费原则上由用户承担。\n\n用户承担的是实际发生的合理退货物流费用，平台不设置统一的固定最高金额限制。\n\n因商品质量问题、商品破损、错发或者漏发导致的退货，符合售后条件时退货运费由商家承担。",
           "reranker_score": 0.019568676128983498
-        },
-        {
-          "rank": 3,
-          "section": "原路退款",
-          "content": "支付与退款路径规则\n原路退款\n\n平台发起退款后，退款原则上返回用户支付订单时使用的原支付渠道。\n\n使用银行卡支付的订单，退款通常返回原支付银行卡。\n\n使用支付宝或者微信支付的订单，退款通常返回原支付账户。\n\n用户通常不能在退款过程中自行指定其他银行卡或者其他支付账户作为退款接收账户。",
-          "reranker_score": 0.01287075038999319
         }
       ],
       "retrieval_debug": {
@@ -5109,8 +4711,7 @@
         "reranker_score": 0.14866411685943604,
         "selected_sections": [
           "退款到账时间",
-          "退货运费金额规则",
-          "原路退款"
+          "退货运费金额规则"
         ]
       },
       "retrieval_top1_section": "退款到账时间",
@@ -5132,8 +4733,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 正确地表示了当前知识库无法确认该问题，符合 answerable=false 的要求。没有出现任何与 Evidence 或 Reference Answer 矛盾的内容。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地表示了当前知识库无法确认该问题，符合 answerable=false 的要求。没有出现任何与 Evidence 或 Reference Answer 矛盾的内容。\"\n}"
+        "reason": "Candidate Answer 正确地表示了当前知识库无法确认该问题，符合 answerable=false 的要求，并且没有出现任何与 Evidence 或 Reference Answer 矛盾的内容。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地表示了当前知识库无法确认该问题，符合 answerable=false 的要求，并且没有出现任何与 Evidence 或 Reference Answer 矛盾的内容。\"\n}"
       }
     },
     {
@@ -5156,12 +4757,6 @@
           "section": "优惠券叠加",
           "content": "优惠券使用规则\n优惠券叠加\n\n不同类型优惠券是否可以叠加使用，由具体活动规则决定。\n\n一般情况下，同类型平台优惠券在一个订单中只能使用一张。\n\n平台优惠券和商家优惠券在部分活动中可以同时使用，但最终以订单结算页面显示的优惠结果为准。",
           "reranker_score": 0.07172112911939621
-        },
-        {
-          "rank": 3,
-          "section": "优惠券有效期",
-          "content": "优惠券使用规则\n优惠券有效期\n\n优惠券只能在标注的有效期内使用。\n\n超过有效期后，优惠券会自动失效，一般无法恢复。\n\n用户可以在个人账户的优惠券页面查看优惠券的具体有效时间和使用条件。",
-          "reranker_score": 0.05023736134171486
         }
       ],
       "retrieval_debug": {
@@ -5193,8 +4788,7 @@
         "reranker_score": 0.5891255140304565,
         "selected_sections": [
           "优惠券锁定与释放",
-          "优惠券叠加",
-          "优惠券有效期"
+          "优惠券叠加"
         ]
       },
       "retrieval_top1_section": "优惠券锁定与释放",
@@ -5215,8 +4809,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 正确地拒答了问题，明确表示根据当前知识库无法确认，符合 answerable=false 的要求。没有出现必须避免的语义内容，也没有引入任何未经证实的信息。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地拒答了问题，明确表示根据当前知识库无法确认，符合 answerable=false 的要求。没有出现必须避免的语义内容，也没有引入任何未经证实的信息。\"\n}"
+        "reason": "Candidate Answer 正确地表示了根据当前知识库无法确认该问题，符合 answerable=false 的要求，并且没有出现任何与 Evidence 或 Reference Answer 矛盾的内容。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地表示了根据当前知识库无法确认该问题，符合 answerable=false 的要求，并且没有出现任何与 Evidence 或 Reference Answer 矛盾的内容。\"\n}"
       }
     },
     {
@@ -5239,12 +4833,6 @@
           "section": "退货运费",
           "content": "退款与退货政策\n退货运费\n\n因商品质量问题、商品破损、错发或者漏发导致的退货，退货运费由商家承担。\n\n七天无理由退货且商品不存在质量问题时，退货运费原则上由用户承担。\n\n如果订单购买了退货运费保障服务，则按照对应保障规则进行赔付。",
           "reranker_score": 0.4749051034450531
-        },
-        {
-          "rank": 3,
-          "section": "商品质量问题",
-          "content": "售后服务规则\n商品质量问题\n\n如果收到的商品存在明显质量问题，用户可以通过售后页面提交申请。\n\n申请时应尽量提供能够说明商品问题的图片、视频或者其他证明材料。\n\n商家或者平台会根据提交的信息以及实际商品情况进行审核。",
-          "reranker_score": 0.07807816565036774
         }
       ],
       "retrieval_debug": {
@@ -5276,8 +4864,7 @@
         "reranker_score": 0.4939463436603546,
         "selected_sections": [
           "退货运费金额规则",
-          "退货运费",
-          "商品质量问题"
+          "退货运费"
         ]
       },
       "retrieval_top1_section": "退货运费金额规则",
@@ -5298,8 +4885,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 正确地表示了根据当前知识库无法确认该问题，符合 answerable=false 的要求。没有出现任何与 Evidence 或 Reference Answer 矛盾的内容，也没有提供无依据的确定性答案。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地表示了根据当前知识库无法确认该问题，符合 answerable=false 的要求。没有出现任何与 Evidence 或 Reference Answer 矛盾的内容，也没有提供无依据的确定性答案。\"\n}"
+        "reason": "Candidate Answer 正确地表示了根据当前知识库无法确认问题，符合 answerable=false 的要求。没有出现 Evidence 中不存在的事实性断言，也没有与 Reference Answer 或其他标注矛盾。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地表示了根据当前知识库无法确认问题，符合 answerable=false 的要求。没有出现 Evidence 中不存在的事实性断言，也没有与 Reference Answer 或其他标注矛盾。\"\n}"
       }
     },
     {
@@ -5322,12 +4909,6 @@
           "section": "物流长时间未更新",
           "content": "发货与物流政策\n物流长时间未更新\n\n如果物流信息超过48小时没有更新，用户可以先通过订单详情查看物流公司的最新运输状态。\n\n如果物流信息长时间没有变化，可以联系平台客服，由客服协助向物流公司查询。\n\n如果确认商品发生丢失，平台会根据订单情况安排补发或者退款。",
           "reranker_score": 0.6302298903465271
-        },
-        {
-          "rank": 3,
-          "section": "物流丢件补发时效",
-          "content": "物流高级处理规则\n物流丢件补发时效\n\n如果平台或物流公司确认商品在运输过程中丢失，平台可以根据订单情况安排退款或者重新补发商品。\n\n选择补发时，平台通常会在确认丢件后的48小时内创建新的补发订单。\n\n这里的48小时是指安排并创建补发订单的时间，不代表用户一定能够在48小时内收到新的商品。\n\n补发商品的实际送达时间取决于新的物流运输过程。",
-          "reranker_score": 0.0511774942278862
         }
       ],
       "retrieval_debug": {
@@ -5359,8 +4940,7 @@
         "reranker_score": 0.8294920325279236,
         "selected_sections": [
           "发货超时处理",
-          "物流长时间未更新",
-          "物流丢件补发时效"
+          "物流长时间未更新"
         ]
       },
       "retrieval_top1_section": "发货超时处理",
@@ -5381,8 +4961,8 @@
         "completeness": 2,
         "contradiction": false,
         "hallucination": false,
-        "reason": "Candidate Answer 正确地表示了根据当前知识库无法确认该问题，符合 answerable=false 的要求。没有出现 Evidence 中不存在的事实性断言，也没有与 Reference Answer 或 Evidence 矛盾。",
-        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地表示了根据当前知识库无法确认该问题，符合 answerable=false 的要求。没有出现 Evidence 中不存在的事实性断言，也没有与 Reference Answer 或 Evidence 矛盾。\"\n}"
+        "reason": "Candidate Answer 正确地表示了根据当前知识库信息无法确认该问题，符合 answerable=false 的要求。没有出现必须避免的语义内容。",
+        "raw_judge_output": "{\n  \"verdict\": \"PASS\",\n  \"correctness\": 2,\n  \"groundedness\": 2,\n  \"completeness\": 2,\n  \"contradiction\": false,\n  \"hallucination\": false,\n  \"reason\": \"Candidate Answer 正确地表示了根据当前知识库信息无法确认该问题，符合 answerable=false 的要求。没有出现必须避免的语义内容。\"\n}"
       }
     }
   ]

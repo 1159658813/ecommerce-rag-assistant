@@ -51,6 +51,9 @@ CHECKPOINT_PATH = PROJECT_ROOT / "evaluation" / "generation_results_v1.checkpoin
 EVIDENCE_MODE = os.getenv("GENERATION_EVIDENCE_MODE", "oracle").strip().lower()
 
 CANDIDATE_K = int(os.getenv("GENERATION_CANDIDATE_K", "10"))
+RERANKER_EVIDENCE_K = int(
+    os.getenv("GENERATION_RERANKER_EVIDENCE_K", "1")
+)
 
 RERANKER_MODEL_NAME = os.getenv(
     "RERANKER_MODEL_NAME",
@@ -139,6 +142,15 @@ def validate_environment():
     if EVIDENCE_MODE == "reranker_top1" and not INDEX_PATH.exists():
         raise FileNotFoundError(f"找不到 FAISS Index：{INDEX_PATH}")
 
+    if RERANKER_EVIDENCE_K < 1:
+        raise ValueError(
+            "GENERATION_RERANKER_EVIDENCE_K 必须 >= 1。"
+        )
+
+    if RERANKER_EVIDENCE_K > CANDIDATE_K:
+        raise ValueError(
+            "GENERATION_RERANKER_EVIDENCE_K 不能大于 GENERATION_CANDIDATE_K。"
+        )
 
 def validate_dataset(questions):
     if not isinstance(questions, list) or not questions:
@@ -422,7 +434,7 @@ def get_oracle_evidences(expected_sections):
     return evidences, missing_sections
 
 
-def get_reranker_top1_evidence(question):
+def get_reranker_evidences(question):
     dense_results = retriever.retrieve(query=question, top_k=CANDIDATE_K)
     reranked_results = rerank(query=question, dense_results=dense_results)
 
@@ -442,18 +454,33 @@ def get_reranker_top1_evidence(question):
     if not reranked_results:
         return [], debug_info
 
-    top1 = reranked_results[0]
-    document = top1["document"]
+    selected_results = reranked_results[:RERANKER_EVIDENCE_K]
 
-    evidence = {
-        "section": document["section"],
-        "content": document["text"],
-    }
+    evidences = []
 
-    debug_info["top1_section"] = evidence["section"]
+    for rank, result in enumerate(selected_results, start=1):
+        document = result["document"]
+
+        evidences.append(
+            {
+                "rank": rank,
+                "section": document["section"],
+                "content": document["text"],
+                "reranker_score": result["reranker_score"],
+            }
+        )
+
+    top1 = selected_results[0]
+
+    debug_info["top1_section"] = top1["document"]["section"]
     debug_info["reranker_score"] = top1["reranker_score"]
 
-    return [evidence], debug_info
+    debug_info["selected_sections"] = [
+        result["document"]["section"]
+        for result in selected_results
+    ]
+
+    return evidences, debug_info
 
 
 # ============================================================
@@ -863,6 +890,7 @@ def save_checkpoint(records):
             "candidate_k": CANDIDATE_K,
             "reranker_model": RERANKER_MODEL_NAME,
             "judge_model": JUDGE_MODEL,
+            "reranker_evidence_k": RERANKER_EVIDENCE_K,
         },
         "records": records,
     }
@@ -939,7 +967,7 @@ for index, item in enumerate(questions, start=1):
             evidences = []
 
     else:  # reranker_top1
-        evidences, retrieval_debug = get_reranker_top1_evidence(question)
+        evidences, retrieval_debug = get_reranker_evidences(question)
         top1_section = retrieval_debug.get("top1_section")
 
         # 对 answerable=true 才计算“Top-1 是否命中 expected section”。
@@ -1242,6 +1270,7 @@ output_data = {
         "judge_timeout_seconds": JUDGE_TIMEOUT_SECONDS,
         "judge_max_retries": JUDGE_MAX_RETRIES,
         "generator_max_retries": GENERATOR_MAX_RETRIES,
+        "reranker_evidence_k": RERANKER_EVIDENCE_K,
     },
     "summary": summary,
     "records": records,
