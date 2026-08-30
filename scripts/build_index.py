@@ -2,20 +2,20 @@ from pathlib import Path
 
 from transformers import AutoTokenizer
 
-from src.document_loader import (
-    load_markdown_documents
+from src.ingestion.document_loader import (
+    load_markdown_documents,
 )
 
-from src.markdown_splitter import (
-    MarkdownChunker
+from src.ingestion.markdown_splitter import (
+    MarkdownChunker,
 )
 
-from src.embedding_model import (
-    EmbeddingModel
+from src.retrieval.embedding_model import (
+    EmbeddingModel,
 )
 
-from src.vector_store import (
-    FaissVectorStore
+from src.retrieval.vector_store import (
+    FaissVectorStore,
 )
 
 

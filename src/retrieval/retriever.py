@@ -1,5 +1,5 @@
-from src.embedding_model import EmbeddingModel
-from src.vector_store import FaissVectorStore
+from src.retrieval.embedding_model import EmbeddingModel
+from src.retrieval.vector_store import FaissVectorStore
 
 
 class Retriever:

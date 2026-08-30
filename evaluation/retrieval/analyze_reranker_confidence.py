@@ -3,11 +3,13 @@ import statistics
 from pathlib import Path
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 RESULT_PATH = (
     PROJECT_ROOT
     / "evaluation"
+    / "results"
+    / "generation"
     / "generation_results_v1.json"
 )
 

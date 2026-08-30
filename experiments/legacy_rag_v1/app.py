@@ -1,9 +1,7 @@
 from pathlib import Path
-
-from src.retriever import Retriever
-from src.llm import QwenGenerator
-from src.rag import RAGSystem
-
+from src.retrieval.retriever import Retriever
+from experiments.legacy_rag_v1.llm import QwenGenerator
+from experiments.legacy_rag_v1.rag import RAGSystem
 
 PROJECT_ROOT = (
     Path(__file__)

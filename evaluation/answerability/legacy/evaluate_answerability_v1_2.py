@@ -18,10 +18,10 @@ if str(PROJECT_ROOT) not in sys.path:
         str(PROJECT_ROOT),
     )
 
-from src.answerability_verifier import (
+from src.verification.answerability_verifier_v1 import (
     AnswerabilityVerifier,
 )
-from src.answerability_verifier_v1_1 import (
+from src.verification.answerability_verifier_v1_1 import (
     AnswerabilityVerifierV11,
 )
 

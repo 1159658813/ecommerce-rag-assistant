@@ -1,8 +1,14 @@
 from pathlib import Path
 
-from src.retriever import Retriever
-from src.reranker import BGEReranker
-from src.two_stage_retriever import (
+from src.retrieval.retriever import (
+    Retriever
+)
+
+from src.retrieval.reranker import (
+    BGEReranker
+)
+
+from src.retrieval.two_stage_retriever import (
     TwoStageRetriever
 )
 

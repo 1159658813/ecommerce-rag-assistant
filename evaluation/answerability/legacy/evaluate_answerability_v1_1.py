@@ -18,14 +18,8 @@ if str(PROJECT_ROOT) not in sys.path:
         str(PROJECT_ROOT),
     )
 
-from src.answerability_verifier import (
+from src.verification.answerability_verifier_v1 import (
     AnswerabilityVerifier,
-)
-from src.answerability_verifier_v1_1 import (
-    AnswerabilityVerifierV11,
-)
-from src.answerability_verifier_v1_2 import (
-    AnswerabilityVerifierV12,
 )
 
 
@@ -47,36 +41,26 @@ LABELS_PATH = (
     / "evidence_sufficiency_labels_v1.json"
 )
 
-# ============================================================
-# Configuration
-# ============================================================
-
-VERIFIER_VERSION = os.getenv(
-    "ANSWERABILITY_VERIFIER_VERSION",
-    "v1_2",
-).strip().lower()
-
-VERIFIER_MODEL = os.getenv(
-    "ANSWERABILITY_VERIFIER_MODEL",
-    "qwen-max",
-)
-
-if VERIFIER_VERSION not in {"v1", "v1_1", "v1_2"}:
-    raise ValueError(
-        "ANSWERABILITY_VERIFIER_VERSION 只能是 "
-        "'v1'、'v1_1' 或 'v1_2'。"
-    )
-
 OUTPUT_PATH = (
     PROJECT_ROOT
     / "evaluation"
-    / f"answerability_results_{VERIFIER_VERSION}.json"
+    / "answerability_results_v1_1.json"
 )
 
 CHECKPOINT_PATH = (
     PROJECT_ROOT
     / "evaluation"
-    / f"answerability_results_{VERIFIER_VERSION}.checkpoint.json"
+    / "answerability_results_v1_1.checkpoint.json"
+)
+
+
+# ============================================================
+# Configuration
+# ============================================================
+
+VERIFIER_MODEL = os.getenv(
+    "ANSWERABILITY_VERIFIER_MODEL",
+    "qwen-max",
 )
 
 VERIFIER_TIMEOUT_SECONDS = float(
@@ -676,8 +660,6 @@ def save_checkpoint(
             "labels_path": str(
                 LABELS_PATH
             ),
-            "verifier_version":
-                VERIFIER_VERSION,
             "verifier_model":
                 VERIFIER_MODEL,
             "expected_evidence_k":
@@ -834,11 +816,6 @@ print(
 )
 
 print(
-    "Verifier Version:",
-    VERIFIER_VERSION,
-)
-
-print(
     "Verifier Model:",
     VERIFIER_MODEL,
 )
@@ -887,15 +864,8 @@ print(
     "AnswerabilityVerifier..."
 )
 
-if VERIFIER_VERSION == "v1":
-    verifier_class = AnswerabilityVerifier
-elif VERIFIER_VERSION == "v1_1":
-    verifier_class = AnswerabilityVerifierV11
-else:
-    verifier_class = AnswerabilityVerifierV12
-
 verifier = (
-    verifier_class(
+    AnswerabilityVerifier(
         model=VERIFIER_MODEL,
         timeout_seconds=(
             VERIFIER_TIMEOUT_SECONDS
@@ -1335,8 +1305,6 @@ output_data = {
         "labels_path": str(
             LABELS_PATH
         ),
-        "verifier_version":
-            VERIFIER_VERSION,
         "verifier_model":
             VERIFIER_MODEL,
         "verifier_timeout_seconds":

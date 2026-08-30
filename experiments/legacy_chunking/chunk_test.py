@@ -1,8 +1,8 @@
 from pathlib import Path
 from transformers import AutoTokenizer
 
-from src.document_loader import load_markdown_documents
-from src.text_splitter import TokenTextSplitter
+from src.ingestion.document_loader import load_markdown_documents
+from experiments.legacy_chunking.text_splitter import TokenTextSplitter
 
 
 MODEL_NAME = "Qwen/Qwen2.5-0.5B-Instruct"
