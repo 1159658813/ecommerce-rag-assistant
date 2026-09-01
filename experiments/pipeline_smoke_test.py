@@ -3,9 +3,9 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from src.retrieval.retriever import Retriever
-from src.retrieval.reranker import BGEReranker
-from src.retrieval.two_stage_retriever import (
+from src.retrieval import (
+    Retriever,
+    BGEReranker,
     TwoStageRetriever,
 )
 
