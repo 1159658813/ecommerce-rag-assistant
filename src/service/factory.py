@@ -1,7 +1,4 @@
-import os
-from pathlib import Path
-
-from dotenv import load_dotenv
+from src.config import settings
 
 from src.retrieval import (
     Retriever,
@@ -13,53 +10,33 @@ from src.generation import AnswerGenerator
 from src.pipeline import RAGPipeline
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
-
-load_dotenv(
-    PROJECT_ROOT / ".env"
-)
-
-
-INDEX_PATH = (
-    PROJECT_ROOT
-    / "data"
-    / "index"
-    / "knowledge.faiss"
-)
-
-METADATA_PATH = (
-    PROJECT_ROOT
-    / "data"
-    / "index"
-    / "chunks.json"
-)
-
-
 def build_pipeline():
 
-    verifier_model = os.getenv(
-        "ANSWERABILITY_VERIFIER_MODEL",
-        "qwen3.6-plus",
-    )
-
     dense_retriever = Retriever(
-        index_path=INDEX_PATH,
-        metadata_path=METADATA_PATH,
+        index_path=settings.index_path,
+        metadata_path=settings.metadata_path,
     )
 
-    reranker = BGEReranker()
+    reranker = BGEReranker(
+        model_name=settings.reranker_model,
+        max_length=settings.reranker_max_length,
+    )
 
     retriever = TwoStageRetriever(
         dense_retriever=dense_retriever,
         reranker=reranker,
-        candidate_k=10,
-        final_k=3,
+        candidate_k=settings.candidate_k,
+        final_k=settings.evidence_k,
     )
 
     verifier = AnswerabilityVerifier(
-        model=verifier_model,
-        timeout_seconds=60,
-        max_retries=3,
+        model=settings.verifier_model,
+        timeout_seconds=(
+            settings.verifier_timeout_seconds
+        ),
+        max_retries=(
+            settings.verifier_max_retries
+        ),
     )
 
     generator = AnswerGenerator()
@@ -68,6 +45,6 @@ def build_pipeline():
         retriever=retriever,
         verifier=verifier,
         generator=generator,
-        candidate_k=10,
-        evidence_k=3,
+        candidate_k=settings.candidate_k,
+        evidence_k=settings.evidence_k,
     )
