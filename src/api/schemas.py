@@ -39,3 +39,15 @@ class QueryResponse(BaseModel):
 class HealthResponse(BaseModel):
 
     status: str
+
+
+class ErrorDetail(BaseModel):
+
+    code: str
+    message: str
+    request_id: str
+
+
+class ErrorResponse(BaseModel):
+
+    error: ErrorDetail

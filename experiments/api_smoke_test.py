@@ -23,6 +23,16 @@ from src.api import app
 # ============================================================
 # Helpers
 # ============================================================
+class FailingRAGService:
+
+    def ask(
+        self,
+        question,
+    ):
+
+        raise RuntimeError(
+            "forced smoke test failure"
+        )
 
 def assert_equal(
     actual,
@@ -42,7 +52,62 @@ def print_pass(name):
         f"[PASS] {name}"
     )
 
+def assert_error_response(
+    response,
+    expected_status,
+    expected_code,
+):
 
+    assert_equal(
+        response.status_code,
+        expected_status,
+        "error status code",
+    )
+
+    data = response.json()
+
+    if "error" not in data:
+        raise AssertionError(
+            "error response missing "
+            "'error' field"
+        )
+
+    error = data[
+        "error"
+    ]
+
+    assert_equal(
+        error.get(
+            "code"
+        ),
+        expected_code,
+        "error code",
+    )
+
+    if not error.get(
+        "message"
+    ):
+        raise AssertionError(
+            "error message is empty"
+        )
+
+    request_id = error.get(
+        "request_id"
+    )
+
+    if not request_id:
+        raise AssertionError(
+            "error response missing "
+            "request_id"
+        )
+
+    assert_equal(
+        response.headers.get(
+            "X-Request-ID"
+        ),
+        request_id,
+        "error request id header",
+    )
 # ============================================================
 # Smoke Test
 # ============================================================
@@ -234,6 +299,41 @@ with TestClient(app) as client:
         "abstention"
     )
 
+    original_service = (
+        client.app.state.rag_service
+    )
+
+    try:
+
+        client.app.state.rag_service = (
+            FailingRAGService()
+        )
+
+        response = client.post(
+            "/api/v1/query",
+            json={
+                "question":
+                    "测试内部异常"
+            },
+        )
+
+    finally:
+
+        client.app.state.rag_service = (
+            original_service
+        )
+
+    assert_error_response(
+        response=response,
+        expected_status=500,
+        expected_code="RAG_SERVICE_ERROR",
+    )
+
+    print_pass(
+        "POST /api/v1/query "
+        "service error"
+    )
+
 
     # --------------------------------------------------------
     # Case 4: Invalid Input
@@ -246,16 +346,37 @@ with TestClient(app) as client:
         },
     )
 
-    assert_equal(
-        response.status_code,
-        422,
-        "invalid input status code",
+    assert_error_response(
+        response=response,
+        expected_status=422,
+        expected_code="VALIDATION_ERROR",
     )
 
     print_pass(
         "POST /api/v1/query "
-        "invalid input"
+        "validation error"
     )
+
+
+    response = client.post(
+        "/api/v1/query",
+        json={
+            "question": "   "
+        },
+    )
+
+    assert_error_response(
+        response=response,
+        expected_status=400,
+        expected_code="INVALID_REQUEST",
+    )
+
+    print_pass(
+        "POST /api/v1/query "
+        "invalid request"
+    )
+
+
 
 
 print(

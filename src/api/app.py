@@ -6,10 +6,19 @@ from fastapi import (
     Request,
 )
 
+from fastapi.exceptions import (
+    RequestValidationError,
+)
+
+from fastapi.responses import (
+    JSONResponse,
+)
+
 from src.api.schemas import (
     HealthResponse,
     QueryRequest,
     QueryResponse,
+    ErrorResponse,
 )
 from src.service import build_rag_service
 
@@ -30,6 +39,19 @@ configure_logging(
 logger = get_logger(
     "api"
 )
+
+def get_request_id(
+    request: Request,
+):
+
+    return (
+        getattr(
+            request.state,
+            "request_id",
+            None,
+        )
+        or uuid.uuid4().hex
+    )
 
 
 @asynccontextmanager
@@ -66,6 +88,158 @@ app = FastAPI(
     ),
     lifespan=lifespan,
 )
+
+@app.exception_handler(
+    RequestValidationError
+)
+async def validation_exception_handler(
+    request: Request,
+    error: RequestValidationError,
+):
+
+    request_id = get_request_id(
+        request
+    )
+
+    logger.warning(
+        "request_validation_failed "
+        "request_id=%s "
+        "path=%s",
+        request_id,
+        request.url.path,
+    )
+
+    return JSONResponse(
+        status_code=422,
+        content={
+            "error": {
+                "code":
+                    "VALIDATION_ERROR",
+
+                "message":
+                    "Request validation failed.",
+
+                "request_id":
+                    request_id,
+            }
+        },
+        headers={
+            "X-Request-ID":
+                request_id,
+        },
+    )
+
+@app.exception_handler(
+    HTTPException
+)
+async def http_exception_handler(
+    request: Request,
+    error: HTTPException,
+):
+
+    request_id = get_request_id(
+        request
+    )
+
+    detail = error.detail
+
+    if isinstance(
+        detail,
+        dict,
+    ):
+
+        code = str(
+            detail.get(
+                "code",
+                "HTTP_ERROR",
+            )
+        )
+
+        message = str(
+            detail.get(
+                "message",
+                "Request failed.",
+            )
+        )
+
+    else:
+
+        code = "HTTP_ERROR"
+
+        message = str(
+            detail
+        )
+
+    headers = dict(
+        error.headers
+        or {}
+    )
+
+    headers[
+        "X-Request-ID"
+    ] = request_id
+
+    return JSONResponse(
+        status_code=error.status_code,
+        content={
+            "error": {
+                "code":
+                    code,
+
+                "message":
+                    message,
+
+                "request_id":
+                    request_id,
+            }
+        },
+        headers=headers,
+    )
+
+@app.exception_handler(
+    Exception
+)
+async def unexpected_exception_handler(
+    request: Request,
+    error: Exception,
+):
+
+    request_id = get_request_id(
+        request
+    )
+
+    logger.error(
+        "unexpected_error "
+        "request_id=%s "
+        "path=%s",
+        request_id,
+        request.url.path,
+        exc_info=(
+            type(error),
+            error,
+            error.__traceback__,
+        ),
+    )
+
+    return JSONResponse(
+        status_code=500,
+        content={
+            "error": {
+                "code":
+                    "INTERNAL_SERVER_ERROR",
+
+                "message":
+                    "Internal server error.",
+
+                "request_id":
+                    request_id,
+            }
+        },
+        headers={
+            "X-Request-ID":
+                request_id,
+        },
+    )
 
 @app.middleware(
     "http"
@@ -167,6 +341,31 @@ def health():
 @app.post(
     "/api/v1/query",
     response_model=QueryResponse,
+    responses={
+        400: {
+            "model":
+                ErrorResponse,
+
+            "description":
+                "Invalid request",
+        },
+
+        422: {
+            "model":
+                ErrorResponse,
+
+            "description":
+                "Validation error",
+        },
+
+        500: {
+            "model":
+                ErrorResponse,
+
+            "description":
+                "RAG service error",
+        },
+    },
 )
 def query(
     payload: QueryRequest,
@@ -209,6 +408,7 @@ def query(
         )
 
     except ValueError as error:
+
         logger.warning(
             "rag_invalid_request "
             "request_id=%s "
@@ -219,12 +419,17 @@ def query(
 
         raise HTTPException(
             status_code=400,
-            detail=str(error),
+            detail={
+                "code":
+                    "INVALID_REQUEST",
+
+                "message":
+                    str(error),
+            },
         ) from error
 
-
-
     except Exception as error:
+
         logger.exception(
             "rag_failed "
             "request_id=%s",
@@ -233,10 +438,18 @@ def query(
 
         raise HTTPException(
             status_code=500,
-            detail=(
-                "RAG service failed "
-                "to process the request."
-            ),
+            detail={
+                "code":
+                    "RAG_SERVICE_ERROR",
+
+                "message":
+                    (
+                        "RAG service failed "
+                        "to process the request."
+                    ),
+            },
         ) from error
+
+    return result
 
     return result
