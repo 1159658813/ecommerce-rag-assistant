@@ -4,9 +4,17 @@ import torch
 
 from transformers import AutoTokenizer
 
-from src.document_loader import load_markdown_documents
-from src.markdown_splitter import MarkdownChunker
-from src.embedding_model import EmbeddingModel
+from src.ingestion.document_loader import (
+    load_markdown_documents
+)
+
+from src.ingestion.markdown_splitter import (
+    MarkdownChunker
+)
+
+from src.retrieval.embedding_model import (
+    EmbeddingModel
+)
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]

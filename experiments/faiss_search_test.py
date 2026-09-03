@@ -1,10 +1,10 @@
 from pathlib import Path
 
-from src.embedding_model import (
+from src.retrieval.embedding_model import (
     EmbeddingModel
 )
 
-from src.vector_store import (
+from src.retrieval.vector_store import (
     FaissVectorStore
 )
 

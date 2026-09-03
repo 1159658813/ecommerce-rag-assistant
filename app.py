@@ -1,90 +1,45 @@
-from pathlib import Path
-
-from src.retriever import Retriever
-from src.llm import QwenGenerator
-from src.rag import RAGSystem
+from src.service import build_rag_service
 
 
-PROJECT_ROOT = (
-    Path(__file__)
-    .resolve()
-    .parent
-)
+def main():
 
+    service = build_rag_service()
 
-INDEX_PATH = (
-    PROJECT_ROOT
-    / "data"
-    / "index"
-    / "knowledge.faiss"
-)
+    while True:
 
+        question = input(
+            "\nUser: "
+        ).strip()
 
-METADATA_PATH = (
-    PROJECT_ROOT
-    / "data"
-    / "index"
-    / "chunks.json"
-)
+        if question.lower() in {
+            "exit",
+            "quit",
+        }:
+            break
 
+        try:
 
-print("正在加载 Embedding Model...")
+            result = service.ask(
+                question
+            )
 
-retriever = Retriever(
-    index_path=INDEX_PATH,
-    metadata_path=METADATA_PATH
-)
+        except ValueError as error:
 
+            print(
+                "\nError:",
+                str(error),
+            )
 
-print("正在加载 Qwen...")
-
-generator = QwenGenerator()
-
-
-rag = RAGSystem(
-    retriever=retriever,
-    generator=generator
-)
-
-
-print("\n电商 RAG 智能客服启动成功")
-print("输入 exit 退出\n")
-
-
-while True:
-
-    query = input("用户：").strip()
-
-    if query.lower() == "exit":
-        break
-
-    if not query:
-        continue
-
-    result = rag.ask(
-        query=query,
-        candidate_k=3
-    )
-
-
-    print("\n客服：")
-    print(result["answer"])
-
-
-    print("\n--- 检索来源 ---")
-
-    for rank, retrieval in enumerate(
-        result["retrieval_results"],
-        start=1
-    ):
-
-        doc = retrieval["document"]
+            continue
 
         print(
-            f"[资料{rank}] "
-            f"{doc['source']} > "
-            f"{doc['section']} "
-            f"(score={retrieval['score']:.4f})"
+            "\nAssistant:"
         )
 
-    print("\n" + "=" * 80 + "\n")
+        print(
+            result["answer"]
+        )
+
+
+if __name__ == "__main__":
+    main()

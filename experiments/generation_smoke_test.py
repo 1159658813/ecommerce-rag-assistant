@@ -1,6 +1,4 @@
-from generation.answer_generator import (
-    AnswerGenerator
-)
+from src.generation import AnswerGenerator
 
 
 generator = AnswerGenerator()

@@ -7,7 +7,7 @@ from pathlib import Path
 # Project Path
 # ============================================================
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(
@@ -16,7 +16,7 @@ if str(PROJECT_ROOT) not in sys.path:
     )
 
 
-from src.retriever import Retriever
+from src.retrieval.retriever import Retriever
 
 
 # ============================================================
@@ -26,6 +26,7 @@ from src.retriever import Retriever
 QUESTIONS_PATH = (
     PROJECT_ROOT
     / "evaluation"
+    / "datasets"
     / "questions.json"
 )
 

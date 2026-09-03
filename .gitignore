@@ -99,3 +99,14 @@ wandb/
 *.tmp
 *.bak
 *.swp
+
+
+# Evaluation temporary checkpoints
+evaluation/results/**/*.checkpoint.json
+
+# Python cache
+__pycache__/
+*.pyc
+
+# IDE
+.idea/

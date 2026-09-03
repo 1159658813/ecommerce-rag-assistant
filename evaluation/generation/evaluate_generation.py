@@ -15,13 +15,13 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer
 # Project Root / Imports
 # ============================================================
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from src.retriever import Retriever
-from generation.answer_generator import AnswerGenerator
+from src.retrieval.retriever import Retriever
+from src.generation import AnswerGenerator
 
 
 # ============================================================
@@ -30,11 +30,42 @@ from generation.answer_generator import AnswerGenerator
 
 load_dotenv(PROJECT_ROOT / ".env")
 
-QUESTIONS_PATH = PROJECT_ROOT / "evaluation" / "generation_questions_v1.json"
-INDEX_PATH = PROJECT_ROOT / "data" / "index" / "knowledge.faiss"
-METADATA_PATH = PROJECT_ROOT / "data" / "index" / "chunks.json"
-OUTPUT_PATH = PROJECT_ROOT / "evaluation" / "generation_results_v1.json"
-CHECKPOINT_PATH = PROJECT_ROOT / "evaluation" / "generation_results_v1.checkpoint.json"
+QUESTIONS_PATH = (
+    PROJECT_ROOT
+    / "evaluation"
+    / "datasets"
+    / "generation_questions_v1.json"
+)
+
+INDEX_PATH = (
+    PROJECT_ROOT
+    / "data"
+    / "index"
+    / "knowledge.faiss"
+)
+
+METADATA_PATH = (
+    PROJECT_ROOT
+    / "data"
+    / "index"
+    / "chunks.json"
+)
+
+OUTPUT_PATH = (
+    PROJECT_ROOT
+    / "evaluation"
+    / "results"
+    / "generation"
+    / "generation_results_v1.json"
+)
+
+CHECKPOINT_PATH = (
+    PROJECT_ROOT
+    / "evaluation"
+    / "results"
+    / "generation"
+    / "generation_results_v1.checkpoint.json"
+)
 
 
 # ============================================================

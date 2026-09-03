@@ -16,9 +16,12 @@ if str(PROJECT_ROOT) not in sys.path:
     )
 
 
-from src.retriever import Retriever
-from src.llm import QwenGenerator
-from src.evidence_judge import EvidenceJudge
+from src.retrieval.retriever import Retriever
+from experiments.legacy_rag_v1.llm import QwenGenerator
+
+from src.verification.evidence_judge import (
+    EvidenceJudge,
+)
 
 
 # ============================================================

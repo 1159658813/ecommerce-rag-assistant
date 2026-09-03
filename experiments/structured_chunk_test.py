@@ -2,11 +2,11 @@ from pathlib import Path
 
 from transformers import AutoTokenizer
 
-from src.document_loader import (
+from src.ingestion.document_loader import (
     load_markdown_documents
 )
 
-from src.markdown_splitter import (
+from src.ingestion.markdown_splitter import (
     MarkdownChunker
 )
 

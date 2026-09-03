@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 from openai import OpenAI
 
-from generation.prompt import (
+from .prompt import (
     SYSTEM_PROMPT,
     build_answer_prompt
 )
