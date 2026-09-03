@@ -68,6 +68,44 @@ with TestClient(app) as client:
         "/health"
     )
 
+    request_id = response.headers.get(
+        "X-Request-ID"
+    )
+
+    if not request_id:
+        raise AssertionError(
+            "response missing X-Request-ID"
+        )
+
+    print_pass(
+        "response request id"
+    )
+    response = client.get(
+        "/health",
+        headers={
+            "X-Request-ID":
+                "smoke-test-request-id"
+        },
+    )
+
+    assert_equal(
+        response.status_code,
+        200,
+        "custom request id status",
+    )
+
+    assert_equal(
+        response.headers.get(
+            "X-Request-ID"
+        ),
+        "smoke-test-request-id",
+        "custom request id",
+    )
+
+    print_pass(
+        "custom X-Request-ID"
+    )
+
     assert_equal(
         response.status_code,
         200,

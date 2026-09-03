@@ -69,6 +69,12 @@ class RAGSettings:
         / "chunks.json"
     )
 
+    # --------------------------------------------------------
+    # Observability
+    # --------------------------------------------------------
+
+    log_level: str = "INFO"
+
 
 def load_settings():
 
@@ -116,6 +122,10 @@ def load_settings():
                 "ANSWERABILITY_VERIFIER_MAX_RETRIES",
                 "3",
             )
+        ),
+        log_level=os.getenv(
+            "LOG_LEVEL",
+            "INFO",
         ),
     )
 
