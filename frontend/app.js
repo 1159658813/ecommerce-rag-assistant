@@ -20,7 +20,9 @@ new Vue({
                         "你好，我是 Ecommerce RAG Assistant。\n" +
                         "你可以询问优惠券、活动规则、退款、物流以及售后相关问题。"
                 }
-            ]
+            ],
+            serviceHealthy: null,
+            lastLatency: null
         };
     },
 
@@ -41,6 +43,7 @@ new Vue({
             this.sending = true;
 
             this.scrollToBottom();
+            const startedAt = performance.now();
 
             try {
                 const response = await axios.post(
@@ -49,8 +52,11 @@ new Vue({
                         question: text
                     }
                 );
+                const latencyMs =
+                    performance.now() - startedAt;
 
                 const data = response.data;
+
 
                 this.messages.push({
                     role: "assistant",
@@ -76,7 +82,8 @@ new Vue({
                     requestId:
                         response.headers[
                             "x-request-id"
-                            ]
+                            ],
+                    latencyMs: latencyMs
                 });
 
             } catch (error) {
@@ -155,6 +162,52 @@ new Vue({
                 container.scrollTop =
                     container.scrollHeight;
             });
+        },
+        checkHealth: async function () {
+            try {
+                await axios.get("/health");
+
+                this.serviceHealthy = true;
+            } catch (error) {
+                this.serviceHealthy = false;
+            }
+        },
+        formatAbstainReason: function (reason) {
+            const reasonMap = {
+                evidence_insufficient:
+                    "当前知识库中的证据不足以可靠回答该问题。"
+            };
+
+            return (
+                reasonMap[reason] ||
+                reason ||
+                "当前证据不足，系统已主动停止生成答案。"
+            );
+        },
+        clearConversation: function () {
+            this.messages = [
+                {
+                    role: "assistant",
+                    content:
+                        "你好，我是 Ecommerce RAG Assistant。\n" +
+                        "你可以询问优惠券、活动规则、退款、物流以及售后相关问题。"
+                }
+            ];
+
+            this.question = "";
+            this.activeEvidence = [];
+
+            this.$message({
+                message: "当前会话已清空",
+                type: "success",
+                duration: 1600
+            });
+
+            this.scrollToBottom();
         }
+    },
+
+    mounted: function () {
+        this.checkHealth();
     }
 });

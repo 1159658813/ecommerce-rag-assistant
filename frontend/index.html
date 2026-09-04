@@ -45,10 +45,50 @@
 
             </div>
 
-            <div class="system-status">
-                <span class="status-dot"></span>
-                RAG Service
+          <div class="header-actions">
+
+            <el-tooltip
+                    content="清空当前对话"
+                    placement="bottom"
+            >
+              <el-button
+                      class="clear-button"
+                      size="mini"
+                      round
+                      icon="el-icon-delete"
+                      @click="clearConversation"
+              >
+                清空会话
+              </el-button>
+            </el-tooltip>
+
+            <div
+                    class="system-status"
+                    :class="{
+            'status-ok':
+                serviceHealthy === true,
+            'status-error':
+                serviceHealthy === false,
+            'status-loading':
+                serviceHealthy === null
+        }"
+            >
+              <span class="status-dot"></span>
+
+              <span v-if="serviceHealthy === null">
+            检查服务
+        </span>
+
+              <span v-else-if="serviceHealthy">
+            服务正常
+        </span>
+
+              <span v-else>
+            服务异常
+        </span>
             </div>
+
+          </div>
 
         </header>
 
@@ -189,35 +229,70 @@
                         message.verdict
                     "
                 >
+                  <div class="rag-status-row">
 
                     <div class="answer-meta">
 
-                        <el-tag
-                            v-if="!message.abstained"
-                            type="success"
-                            size="small"
-                            effect="light"
-                        >
-                            ✓ Evidence Sufficient
-                        </el-tag>
+                      <el-tag
+                              v-if="!message.abstained"
+                              type="success"
+                              size="small"
+                              effect="light"
+                      >
+                        ✓ Evidence Sufficient
+                      </el-tag>
 
-                        <el-tag
-                            v-else
-                            type="warning"
-                            size="small"
-                            effect="light"
-                        >
-                            Evidence Insufficient
-                        </el-tag>
+                      <el-tag
+                              v-else
+                              type="warning"
+                              size="small"
+                              effect="light"
+                      >
+                        Evidence Insufficient
+                      </el-tag>
 
-                        <el-tag
-                            size="small"
-                            effect="plain"
-                        >
-                            {{ message.verdict }}
-                        </el-tag>
+                      <el-tag
+                              size="small"
+                              effect="plain"
+                      >
+                        {{ message.verdict }}
+                      </el-tag>
 
                     </div>
+
+
+                    <div class="request-meta">
+
+        <span
+                v-if="message.latencyMs"
+        >
+            响应
+            {{
+            (
+                    message.latencyMs /
+                    1000
+            ).toFixed(2)
+          }}s
+        </span>
+
+
+                      <el-tooltip
+                              v-if="message.requestId"
+                              :content="
+                'Request ID: ' +
+                message.requestId
+            "
+                              placement="top"
+                      >
+            <span class="request-trace">
+                · 追踪信息
+                <i class="el-icon-info"></i>
+            </span>
+                      </el-tooltip>
+
+                    </div>
+
+                  </div>
 
                     <el-alert
                             v-if="
@@ -226,7 +301,11 @@
     "
                             class="abstain-alert"
                             title="当前证据不足"
-                            :description="message.abstainReason"
+                            :description="
+    formatAbstainReason(
+        message.abstainReason
+    )
+"
                             type="warning"
                             :closable="false"
                             show-icon
@@ -251,8 +330,12 @@
                             <template slot="title">
 
                                 <span class="evidence-title">
-                                    📚 查看回答依据
-                                </span>
+    {{
+                                        message.abstained
+                                                ? "📚 查看已检索证据"
+                                                : "📚 查看回答依据"
+                                    }}
+</span>
 
                                 <el-badge
                                     :value="
@@ -271,29 +354,64 @@
                                 class="evidence-card"
                             >
 
+                              <div
+                                      v-for="evidence in message.evidences"
+                                      :key="evidence.rank"
+                                      class="evidence-card"
+                              >
+
                                 <div class="evidence-header">
 
+                                  <div class="evidence-rank">
+
+            <span class="evidence-number">
+                {{ evidence.rank }}
+            </span>
+
                                     <strong>
-                                        Evidence #{{ evidence.rank }}
+                                      Evidence
                                     </strong>
 
-                                    <el-tag
-                                            v-if="
-        evidence.reranker_score !== null &&
-        evidence.reranker_score !== undefined
-    "
-                                            size="mini"
-                                            type="info"
-                                    >
-                                        Score
-                                        {{
-                                            Number(
-                                                    evidence.reranker_score
-                                            ).toFixed(2)
-                                        }}
-                                    </el-tag>
+                                  </div>
+
+                                  <el-tag
+                                          v-if="
+                evidence.reranker_score !== null &&
+                evidence.reranker_score !== undefined
+            "
+                                          size="mini"
+                                          type="info"
+                                          effect="plain"
+                                  >
+                                    Rerank
+                                    {{
+                                      Number(
+                                              evidence.reranker_score
+                                      ).toFixed(2)
+                                    }}
+                                  </el-tag>
 
                                 </div>
+
+
+                                <div class="evidence-source">
+
+                                  <i class="el-icon-document"></i>
+
+                                  {{ evidence.source }}
+
+                                  <span v-if="evidence.section">
+            · {{ evidence.section }}
+        </span>
+
+                                </div>
+
+
+                                <p>
+                                  {{ evidence.content }}
+                                </p>
+
+                              </div>
 
 
                                 <div class="evidence-source">
