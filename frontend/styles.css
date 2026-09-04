@@ -726,3 +726,15 @@ body {
             16px;
     }
 }
+
+.abstain-alert {
+    margin-top: 14px;
+
+    border-radius: 10px;
+}
+
+.error-bubble {
+    border-color: #f3d4d4;
+
+    background: #fff7f7;
+}

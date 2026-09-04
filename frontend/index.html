@@ -164,12 +164,17 @@
 
 
             <div
-                class="message-bubble"
-                :class="
-                    message.role === 'assistant'
-                        ? 'assistant-bubble'
-                        : 'user-bubble'
-                "
+                    class="message-bubble"
+                    :class="[
+        message.role === 'assistant'
+            ? 'assistant-bubble'
+            : 'user-bubble',
+
+        {
+            'error-bubble':
+                message.isError
+        }
+    ]"
             >
 
                 <div class="message-content">
@@ -213,6 +218,20 @@
                         </el-tag>
 
                     </div>
+
+                    <el-alert
+                            v-if="
+        message.abstained &&
+        message.abstainReason
+    "
+                            class="abstain-alert"
+                            title="当前证据不足"
+                            :description="message.abstainReason"
+                            type="warning"
+                            :closable="false"
+                            show-icon
+                    >
+                    </el-alert>
 
 
                     <!-- Evidence -->
@@ -259,13 +278,17 @@
                                     </strong>
 
                                     <el-tag
-                                        size="mini"
-                                        type="info"
+                                            v-if="
+        evidence.reranker_score !== null &&
+        evidence.reranker_score !== undefined
+    "
+                                            size="mini"
+                                            type="info"
                                     >
                                         Score
                                         {{
                                             Number(
-                                                evidence.reranker_score
+                                                    evidence.reranker_score
                                             ).toFixed(2)
                                         }}
                                     </el-tag>
@@ -409,6 +432,9 @@
 
 <!-- Element UI -->
 <script src="https://unpkg.com/element-ui@2.15.14/lib/index.js"></script>
+
+<!-- Axios -->
+<script src="https://unpkg.com/axios@1.12.2/dist/axios.min.js"></script>
 
 <script src="/frontend/app.js"></script>
 

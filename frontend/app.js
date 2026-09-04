@@ -25,7 +25,7 @@ new Vue({
     },
 
     methods: {
-        sendMessage: function () {
+        sendMessage: async function () {
             const text = this.question.trim();
 
             if (!text || this.sending) {
@@ -42,16 +42,89 @@ new Vue({
 
             this.scrollToBottom();
 
-            // M2 暂时模拟模型请求
-            setTimeout(() => {
-                this.messages.push(
-                    this.createMockAnswer(text)
+            try {
+                const response = await axios.post(
+                    "/api/v1/query",
+                    {
+                        question: text
+                    }
                 );
 
+                const data = response.data;
+
+                this.messages.push({
+                    role: "assistant",
+
+                    content:
+                        data.answer ||
+                        "系统没有返回回答内容。",
+
+                    verdict:
+                    data.verdict,
+
+                    abstained:
+                        Boolean(data.abstained),
+
+                    abstainReason:
+                    data.abstain_reason,
+
+                    evidences:
+                        Array.isArray(data.evidences)
+                            ? data.evidences
+                            : [],
+
+                    requestId:
+                        response.headers[
+                            "x-request-id"
+                            ]
+                });
+
+            } catch (error) {
+                this.handleRequestError(error);
+            } finally {
                 this.sending = false;
 
                 this.scrollToBottom();
-            }, 900);
+            }
+        },
+        handleRequestError: function (error) {
+            let message =
+                "请求失败，请稍后重试。";
+
+            let requestId = null;
+
+            if (
+                error.response &&
+                error.response.data &&
+                error.response.data.error
+            ) {
+                const errorData =
+                    error.response.data.error;
+
+                message =
+                    errorData.message ||
+                    message;
+
+                requestId =
+                    errorData.request_id;
+            } else if (error.request) {
+                message =
+                    "无法连接到 RAG 服务，请确认后端已经启动。";
+            }
+
+            this.messages.push({
+                role: "assistant",
+
+                content: message,
+
+                isError: true,
+
+                requestId: requestId
+            });
+
+            this.$message.error(
+                "RAG 请求失败"
+            );
         },
 
         handleKeydown: function (event) {
@@ -69,41 +142,6 @@ new Vue({
             this.sendMessage();
         },
 
-        createMockAnswer: function (question) {
-            return {
-                role: "assistant",
-
-                content:
-                    "这是当前 M2 阶段的前端模拟回答。\n" +
-                    "下一阶段我们会把这里替换为真实的 RAG Pipeline 返回结果。",
-
-                verdict: "SUFFICIENT",
-
-                abstained: false,
-
-                evidences: [
-                    {
-                        rank: 1,
-                        source: "优惠券政策.md",
-                        section: "优惠门槛计算规则",
-                        content:
-                            "优惠券门槛按照活动后的实际商品金额进行计算，" +
-                            "运费不参与优惠门槛计算。",
-                        reranker_score: 8.42
-                    },
-                    {
-                        rank: 2,
-                        source: "活动规则.md",
-                        section: "实际支付金额",
-                        content:
-                            "活动优惠后的商品金额用于判断优惠券使用门槛。",
-                        reranker_score: 7.93
-                    }
-                ],
-
-                debugQuestion: question
-            };
-        },
 
         scrollToBottom: function () {
             this.$nextTick(() => {
