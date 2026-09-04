@@ -1,0 +1,623 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+}
+
+body {
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "PingFang SC",
+        "Microsoft YaHei",
+        sans-serif;
+
+    color: #253238;
+
+    background:
+        radial-gradient(
+            circle at 15% 10%,
+            rgba(64, 201, 180, 0.14),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(70, 135, 255, 0.10),
+            transparent 30%
+        ),
+        #f5f8fa;
+}
+
+
+/* =========================
+   整体布局
+   ========================= */
+
+#app {
+    min-height: 100vh;
+    padding: 28px;
+}
+
+.app-shell {
+    width: min(1120px, 100%);
+    min-height: calc(100vh - 56px);
+
+    margin: 0 auto;
+
+    background: rgba(255, 255, 255, 0.96);
+
+    border: 1px solid rgba(35, 90, 85, 0.08);
+    border-radius: 22px;
+
+    box-shadow:
+        0 24px 70px rgba(30, 65, 70, 0.10);
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================
+   顶部
+   ========================= */
+
+.top-bar {
+    height: 78px;
+
+    padding: 0 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background:
+        linear-gradient(
+            120deg,
+            #20bfa9,
+            #39c4b0
+        );
+
+    color: white;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.brand-logo {
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background: rgba(255, 255, 255, 0.18);
+
+    border: 1px solid rgba(255, 255, 255, 0.28);
+
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.brand-title {
+    font-size: 17px;
+    font-weight: 650;
+}
+
+.brand-subtitle {
+    margin-top: 3px;
+
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.system-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 7px 12px;
+
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.15);
+
+    font-size: 12px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: #d8fff1;
+
+    box-shadow:
+        0 0 0 4px rgba(216, 255, 241, 0.14);
+}
+
+
+/* =========================
+   Chat 主体
+   ========================= */
+
+.chat-panel {
+    flex: 1;
+
+    width: min(860px, calc(100% - 40px));
+    margin: 0 auto;
+
+    padding-bottom: 40px;
+}
+
+
+/* =========================
+   Hero
+   ========================= */
+
+.hero {
+    text-align: center;
+
+    padding:
+        46px
+        30px
+        34px;
+}
+
+.hero-icon {
+    width: 48px;
+    height: 48px;
+
+    margin: 0 auto 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 15px;
+
+    color: #17aa95;
+
+    background: #eafaf7;
+
+    font-size: 25px;
+}
+
+.hero h1 {
+    margin: 0;
+
+    font-size: 26px;
+    font-weight: 650;
+
+    letter-spacing: -0.5px;
+}
+
+.hero p {
+    max-width: 590px;
+
+    margin: 12px auto 17px;
+
+    color: #7b8a90;
+
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.hero-tags {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+
+/* =========================
+   Messages
+   ========================= */
+
+.messages {
+    display: flex;
+    flex-direction: column;
+
+    gap: 28px;
+
+    padding: 10px 4px 20px;
+}
+
+.message-row {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 13px;
+}
+
+.message-row.user {
+    justify-content: flex-end;
+}
+
+.avatar {
+    flex-shrink: 0;
+
+    width: 38px;
+    height: 38px;
+
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.ai-avatar {
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #18b99f,
+            #52cdb8
+        );
+
+    box-shadow:
+        0 8px 20px rgba(30, 190, 160, 0.22);
+}
+
+.user-avatar {
+    color: #54656b;
+    background: #eef2f4;
+}
+
+.message-container {
+    max-width: 690px;
+}
+
+.answer-container {
+    width: min(690px, calc(100% - 50px));
+}
+
+.message-author {
+    margin:
+        0
+        0
+        7px
+        4px;
+
+    color: #7e8d92;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.user-author {
+    text-align: right;
+    margin-right: 4px;
+}
+
+.message-bubble {
+    padding: 16px 18px;
+
+    border-radius: 16px;
+
+    font-size: 14px;
+    line-height: 1.75;
+}
+
+.message-bubble p {
+    margin:
+        0
+        0
+        10px;
+}
+
+.message-bubble p:last-child {
+    margin-bottom: 0;
+}
+
+.assistant-bubble {
+    background: #f7f9fa;
+
+    border:
+        1px solid
+        #edf0f1;
+
+    border-top-left-radius: 5px;
+}
+
+.user-bubble {
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #20bfa9,
+            #36c7b0
+        );
+
+    border-top-right-radius: 5px;
+
+    box-shadow:
+        0 8px 24px
+        rgba(32, 191, 169, 0.16);
+}
+
+.answer-text {
+    font-weight: 650;
+    color: #26363a;
+}
+
+
+/* =========================
+   Verifier / Evidence
+   ========================= */
+
+.answer-meta {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 17px;
+    padding-top: 15px;
+
+    border-top:
+        1px solid
+        #e9eeee;
+}
+
+.evidence-collapse {
+    margin-top: 13px;
+
+    border-top: none;
+    border-bottom: none;
+}
+
+.evidence-collapse .el-collapse-item__header {
+    height: 44px;
+
+    border-bottom: none;
+
+    background: transparent;
+
+    color: #50646a;
+
+    font-size: 13px;
+}
+
+.evidence-collapse .el-collapse-item__wrap {
+    background: transparent;
+}
+
+.evidence-title {
+    font-weight: 600;
+}
+
+.evidence-badge {
+    margin-left: 14px;
+}
+
+.evidence-card {
+    padding: 14px 16px;
+
+    border: 1px solid #e4eeee;
+    border-radius: 12px;
+
+    background: white;
+}
+
+.evidence-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 7px;
+}
+
+.evidence-source {
+    color: #87969b;
+    font-size: 12px;
+
+    margin-bottom: 9px;
+}
+
+.evidence-card p {
+    margin: 0;
+
+    color: #56676d;
+
+    font-size: 13px;
+    line-height: 1.75;
+}
+
+
+/* =========================
+   Composer
+   ========================= */
+
+.composer {
+    padding:
+        18px
+        28px
+        14px;
+
+    background: rgba(255, 255, 255, 0.96);
+
+    border-top:
+        1px solid
+        #edf1f2;
+}
+
+.composer-inner {
+    width: min(860px, 100%);
+
+    margin: 0 auto;
+
+    display: flex;
+    align-items: flex-end;
+
+    gap: 12px;
+}
+
+.composer .el-textarea__inner {
+    min-height: 62px !important;
+
+    padding: 14px 15px;
+
+    border-radius: 14px;
+
+    border-color: #dde7e8;
+
+    font-family: inherit;
+
+    line-height: 1.55;
+
+    transition: all 0.2s ease;
+}
+
+.composer .el-textarea__inner:focus {
+    border-color: #20bfa9;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(32, 191, 169, 0.08);
+}
+
+.send-button {
+    height: 44px;
+
+    padding:
+        0
+        22px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1ebba5,
+            #32c6ae
+        );
+}
+
+.send-button:hover,
+.send-button:focus {
+    background:
+        linear-gradient(
+            135deg,
+            #17ad98,
+            #28b9a3
+        );
+}
+
+.composer-hint {
+    width: min(860px, 100%);
+
+    margin:
+        10px
+        auto
+        0;
+
+    text-align: center;
+
+    color: #a1abad;
+    font-size: 11px;
+}
+
+
+/* =========================
+   Element UI 微调
+   ========================= */
+
+.el-tag {
+    border-radius: 7px;
+}
+
+.el-tag--success {
+    background: #ebfaf5;
+    border-color: #cef0e4;
+    color: #209b79;
+}
+
+
+/* =========================
+   Responsive
+   ========================= */
+
+@media (max-width: 700px) {
+
+    #app {
+        padding: 0;
+    }
+
+    .app-shell {
+        min-height: 100vh;
+
+        border-radius: 0;
+        border: none;
+    }
+
+    .top-bar {
+        padding: 0 18px;
+    }
+
+    .brand-subtitle {
+        display: none;
+    }
+
+    .system-status {
+        font-size: 0;
+
+        padding: 9px;
+    }
+
+    .chat-panel {
+        width:
+            calc(100% - 28px);
+    }
+
+    .hero {
+        padding:
+            34px
+            10px
+            28px;
+    }
+
+    .hero h1 {
+        font-size: 23px;
+    }
+
+    .message-container {
+        max-width: calc(100vw - 90px);
+    }
+
+    .composer {
+        padding:
+            14px
+            14px
+            10px;
+    }
+
+    .send-button {
+        padding:
+            0
+            16px;
+    }
+}

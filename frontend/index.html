@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ecommerce RAG Assistant</title>
+
+    <!-- Element UI -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/element-ui@2.15.14/lib/theme-chalk/index.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/frontend/styles.css"
+    >
+</head>
+
+<body>
+
+<div id="app">
+
+    <div class="app-shell">
+
+        <!-- 顶部栏 -->
+        <header class="top-bar">
+
+            <div class="brand">
+
+                <div class="brand-logo">
+                    AI
+                </div>
+
+                <div>
+                    <div class="brand-title">
+                        Ecommerce RAG Assistant
+                    </div>
+
+                    <div class="brand-subtitle">
+                        Evidence-grounded Customer Support
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="system-status">
+                <span class="status-dot"></span>
+                RAG Service
+            </div>
+
+        </header>
+
+
+        <!-- 主体 -->
+        <main class="chat-panel">
+
+            <!-- 欢迎区域 -->
+            <section class="hero">
+
+                <div class="hero-icon">
+                    ✦
+                </div>
+
+                <h1>
+                    智能电商客服助手
+                </h1>
+
+                <p>
+                    基于检索增强生成（RAG），为优惠、退款、物流、
+                    售后与活动规则问题提供基于证据的回答
+                </p>
+
+                <div class="hero-tags">
+
+                    <el-tag size="small" effect="plain">
+                        优惠规则
+                    </el-tag>
+
+                    <el-tag size="small" effect="plain">
+                        退款售后
+                    </el-tag>
+
+                    <el-tag size="small" effect="plain">
+                        物流政策
+                    </el-tag>
+
+                    <el-tag size="small" effect="plain">
+                        Evidence Verification
+                    </el-tag>
+
+                </div>
+
+            </section>
+
+
+            <!-- 聊天消息区域 -->
+            <section class="messages">
+
+                <!-- AI 消息 -->
+                <div class="message-row assistant">
+
+                    <div class="avatar ai-avatar">
+                        AI
+                    </div>
+
+                    <div class="message-container">
+
+                        <div class="message-author">
+                            Ecommerce AI
+                        </div>
+
+                        <div class="message-bubble assistant-bubble">
+
+                            <p>
+                                你好，我是 Ecommerce RAG Assistant。
+                            </p>
+
+                            <p>
+                                你可以询问优惠券、活动规则、退款、
+                                物流以及售后相关问题。
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 用户消息 -->
+                <div class="message-row user">
+
+                    <div class="message-container">
+
+                        <div class="message-author user-author">
+                            You
+                        </div>
+
+                        <div class="message-bubble user-bubble">
+                            商品原价120元，活动以后98元，
+                            还有10元运费，能不能算满100用满100减20？
+                        </div>
+
+                    </div>
+
+                    <div class="avatar user-avatar">
+                        U
+                    </div>
+
+                </div>
+
+
+                <!-- AI 回答 -->
+                <div class="message-row assistant">
+
+                    <div class="avatar ai-avatar">
+                        AI
+                    </div>
+
+                    <div class="message-container answer-container">
+
+                        <div class="message-author">
+                            Ecommerce AI
+                        </div>
+
+                        <div class="message-bubble assistant-bubble">
+
+                            <p class="answer-text">
+                                不可以使用满100减20优惠券。
+                            </p>
+
+                            <p>
+                                优惠门槛按照活动后的实际商品金额计算，
+                                活动后金额为98元，没有达到100元门槛；
+                                运费不计入优惠门槛。
+                            </p>
+
+
+                            <!-- Verifier 状态 -->
+                            <div class="answer-meta">
+
+                                <el-tag
+                                    type="success"
+                                    size="small"
+                                    effect="light"
+                                >
+                                    ✓ Evidence Sufficient
+                                </el-tag>
+
+                                <el-tag
+                                    size="small"
+                                    effect="plain"
+                                >
+                                    SUFFICIENT
+                                </el-tag>
+
+                            </div>
+
+
+                            <!-- Evidence -->
+                            <el-collapse
+                                v-model="activeEvidence"
+                                class="evidence-collapse"
+                            >
+
+                                <el-collapse-item
+                                    name="evidence"
+                                >
+
+                                    <template slot="title">
+
+                                        <span class="evidence-title">
+                                            📚 查看回答依据
+                                        </span>
+
+                                        <el-badge
+                                            :value="3"
+                                            class="evidence-badge"
+                                        >
+                                        </el-badge>
+
+                                    </template>
+
+
+                                    <div class="evidence-card">
+
+                                        <div class="evidence-header">
+
+                                            <strong>
+                                                Evidence #1
+                                            </strong>
+
+                                            <el-tag
+                                                size="mini"
+                                                type="info"
+                                            >
+                                                Score 8.42
+                                            </el-tag>
+
+                                        </div>
+
+                                        <div class="evidence-source">
+                                            优惠券政策 · 优惠门槛计算规则
+                                        </div>
+
+                                        <p>
+                                            优惠券使用门槛按照活动优惠后的
+                                            实际商品金额进行计算，运费不参与
+                                            优惠门槛计算。
+                                        </p>
+
+                                    </div>
+
+                                </el-collapse-item>
+
+                            </el-collapse>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+
+        <!-- 输入区 -->
+        <footer class="composer">
+
+            <div class="composer-inner">
+
+                <el-input
+                    v-model="question"
+                    type="textarea"
+                    :rows="2"
+                    resize="none"
+                    maxlength="2000"
+                    placeholder="请输入有关优惠、退款、物流、售后等问题..."
+                >
+                </el-input>
+
+                <el-button
+                    type="primary"
+                    class="send-button"
+                    :disabled="!question.trim()"
+                >
+                    发送
+                    <i class="el-icon-s-promotion"></i>
+                </el-button>
+
+            </div>
+
+            <div class="composer-hint">
+                AI 回答仅基于当前知识库证据生成 · Evidence insufficient 时系统会主动拒答
+            </div>
+
+        </footer>
+
+    </div>
+
+</div>
+
+
+<!-- Vue 2 -->
+<script src="https://unpkg.com/vue@2.7.16/dist/vue.js"></script>
+
+<!-- Element UI -->
+<script src="https://unpkg.com/element-ui@2.15.14/lib/index.js"></script>
+
+<script src="/frontend/app.js"></script>
+
+</body>
+</html>
