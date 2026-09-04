@@ -45,7 +45,7 @@ body {
 
 .app-shell {
     width: min(1120px, 100%);
-    min-height: calc(100vh - 56px);
+    height: calc(100vh - 56px);
 
     margin: 0 auto;
 
@@ -160,7 +160,10 @@ body {
     width: min(860px, calc(100% - 40px));
     margin: 0 auto;
 
-    padding-bottom: 40px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    scrollbar-width: thin;
 }
 
 
@@ -228,6 +231,106 @@ body {
 /* =========================
    Messages
    ========================= */
+.message-content {
+    white-space: pre-line;
+}
+
+.quick-questions {
+    margin-top: 20px;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    gap: 8px;
+}
+
+.quick-label {
+    margin-right: 4px;
+
+    color: #9aa6aa;
+    font-size: 12px;
+}
+
+.quick-questions .el-button {
+    margin-left: 0;
+
+    color: #536b70;
+
+    border-color: #dde9e8;
+
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.quick-questions .el-button:hover {
+    color: #17aa95;
+
+    border-color: #9cddd2;
+
+    background: #effbf8;
+}
+
+
+/* AI Thinking */
+
+.thinking-bubble {
+    display: flex;
+    align-items: center;
+
+    min-height: 50px;
+}
+
+.thinking-dot {
+    width: 7px;
+    height: 7px;
+
+    margin-right: 5px;
+
+    border-radius: 50%;
+
+    background: #35bca6;
+
+    animation: thinkingPulse 1.2s infinite ease-in-out;
+}
+
+.thinking-dot:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.thinking-dot:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.thinking-text {
+    margin-left: 6px;
+
+    color: #87969b;
+
+    font-size: 12px;
+}
+
+@keyframes thinkingPulse {
+
+    0%,
+    60%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.35;
+    }
+
+    30% {
+        transform: translateY(-4px);
+        opacity: 1;
+    }
+}
+
+
+/* Evidence 多条间距 */
+
+.evidence-card + .evidence-card {
+    margin-top: 10px;
+}
 
 .messages {
     display: flex;
@@ -457,6 +560,7 @@ body {
         14px;
 
     background: rgba(255, 255, 255, 0.96);
+    flex-shrink: 0;
 
     border-top:
         1px solid
@@ -568,7 +672,7 @@ body {
     }
 
     .app-shell {
-        min-height: 100vh;
+        height: 100vh;
 
         border-radius: 0;
         border: none;
@@ -576,6 +680,7 @@ body {
 
     .top-bar {
         padding: 0 18px;
+        flex-shrink: 0;
     }
 
     .brand-subtitle {
