@@ -1,19 +1,5 @@
 from contextlib import asynccontextmanager
 
-from fastapi import (
-    FastAPI,
-    HTTPException,
-    Request,
-)
-
-from fastapi.exceptions import (
-    RequestValidationError,
-)
-
-from fastapi.responses import (
-    JSONResponse,
-)
-
 from src.api.schemas import (
     HealthResponse,
     QueryRequest,
@@ -31,6 +17,25 @@ from src.observability import (
     configure_logging,
     get_logger,
 )
+
+from pathlib import Path
+
+from fastapi import (
+    FastAPI,
+    HTTPException,
+    Request,
+)
+
+from fastapi.exceptions import (
+    RequestValidationError,
+)
+
+from fastapi.responses import (
+    FileResponse,
+    JSONResponse,
+)
+
+from fastapi.staticfiles import StaticFiles
 
 configure_logging(
     settings.log_level
@@ -88,6 +93,39 @@ app = FastAPI(
     ),
     lifespan=lifespan,
 )
+
+PROJECT_ROOT = (
+    Path(__file__)
+    .resolve()
+    .parents[2]
+)
+
+FRONTEND_DIR = (
+    PROJECT_ROOT
+    / "frontend"
+)
+
+app.mount(
+    "/frontend",
+    StaticFiles(
+        directory=str(
+            FRONTEND_DIR
+        )
+    ),
+    name="frontend",
+)
+
+
+@app.get(
+    "/",
+    include_in_schema=False,
+)
+def frontend_home():
+
+    return FileResponse(
+        FRONTEND_DIR
+        / "index.html"
+    )
 
 @app.exception_handler(
     RequestValidationError
