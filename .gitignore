@@ -110,3 +110,8 @@ __pycache__/
 
 # IDE
 .idea/
+
+# Local SQLite databases
+data/database/*.db
+data/database/*.db-shm
+data/database/*.db-wal

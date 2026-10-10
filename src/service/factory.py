@@ -39,7 +39,9 @@ def build_pipeline():
         ),
     )
 
-    generator = AnswerGenerator()
+    generator = AnswerGenerator(
+        model=settings.generator_model,
+    )
 
     return RAGPipeline(
         retriever=retriever,
