@@ -60,6 +60,52 @@ def create_tables(conn: sqlite3.Connection) -> None:
         )
         """
     )
+    # --------------------------------------------------------
+    # conversations
+    # --------------------------------------------------------
+
+    cursor.execute(
+        """
+        CREATE TABLE IF NOT EXISTS conversations (
+            conversation_id TEXT PRIMARY KEY,
+            user_id TEXT NOT NULL,
+            active_order_id TEXT,
+            last_intent TEXT,
+            created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+        )
+        """
+    )
+
+    # --------------------------------------------------------
+    # conversation_messages
+    # --------------------------------------------------------
+
+    cursor.execute(
+        """
+        CREATE TABLE IF NOT EXISTS conversation_messages (
+            message_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            conversation_id TEXT NOT NULL,
+            role TEXT NOT NULL,
+            content TEXT NOT NULL,
+            created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+            FOREIGN KEY (conversation_id)
+                REFERENCES conversations(conversation_id)
+                ON DELETE CASCADE,
+
+            CHECK (role IN ('user', 'assistant'))
+        )
+        """
+    )
+
+    cursor.execute(
+        """
+        CREATE INDEX IF NOT EXISTS
+        idx_conversation_messages_conversation_id
+        ON conversation_messages(conversation_id)
+        """
+    )
 
     conn.commit()
 
