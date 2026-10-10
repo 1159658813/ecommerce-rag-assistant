@@ -47,6 +47,13 @@ class RAGSettings:
     generator_model: str = (
         "qwen3.6-flash"
     )
+    # --------------------------------------------------------
+    # Intent Router
+    # --------------------------------------------------------
+
+    intent_router_model: str = (
+        "qwen3.6-flash"
+    )
 
     # --------------------------------------------------------
     # Answerability Verifier
@@ -114,6 +121,10 @@ def load_settings():
         ),
         generator_model=os.getenv(
             "DASHSCOPE_MODEL",
+            "qwen3.6-flash",
+        ),
+        intent_router_model=os.getenv(
+            "INTENT_ROUTER_MODEL",
             "qwen3.6-flash",
         ),
 
