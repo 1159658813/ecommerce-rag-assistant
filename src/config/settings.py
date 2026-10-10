@@ -41,6 +41,14 @@ class RAGSettings:
     reranker_max_length: int = 512
 
     # --------------------------------------------------------
+    # Generation
+    # --------------------------------------------------------
+
+    generator_model: str = (
+        "qwen3.6-flash"
+    )
+
+    # --------------------------------------------------------
     # Answerability Verifier
     # --------------------------------------------------------
 
@@ -103,6 +111,10 @@ def load_settings():
                 "RERANKER_MAX_LENGTH",
                 "512",
             )
+        ),
+        generator_model=os.getenv(
+            "DASHSCOPE_MODEL",
+            "qwen3.6-flash",
         ),
 
         verifier_model=os.getenv(
