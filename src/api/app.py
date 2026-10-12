@@ -106,7 +106,7 @@ async def lifespan(
 
 app = FastAPI(
     title="Ecommerce RAG Assistant",
-    version="1.0.0",
+    version="2.0.0",
     description=(
         "RAG service for Chinese "
         "e-commerce customer support."

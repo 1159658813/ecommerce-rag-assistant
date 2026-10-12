@@ -1,10 +1,23 @@
 # Ecommerce RAG Assistant
 
-面向中文电商客服场景的工程化 RAG（Retrieval-Augmented Generation）系统。
+面向中文电商客服场景的 Agentic RAG 智能客服系统。
 
-项目核心不是“尽量回答”，而是：
+项目在 Evidence-grounded RAG 基础上进一步引入：
 
-> **只有当当前检索证据足够支持答案时才生成回答；证据不足时主动拒答。**
+- Intent Routing
+- Native Tool Calling
+- SQLite 订单业务数据
+- Conversation Memory
+- Context Resolution
+- Multi-turn Chat API
+- Mixed Query（订单事实 + RAG 政策证据）
+
+系统不会让大语言模型直接编造订单或政策事实：
+
+- 订单事实来自结构化业务数据库；
+- 政策事实来自经过 Evidence Verification 的 RAG；
+- Evidence 不足时主动拒答；
+- Mixed Query 仅基于已验证的订单数据和知识库证据进行联合回答。
 
 系统包含 Dense Retrieval、FAISS、Cross-Encoder Reranking、Evidence Sufficiency Verification、Grounded Generation、Abstention、FastAPI、结构化日志、Evaluation，以及 Vue 2 + Element UI 前端。
 
@@ -120,31 +133,35 @@ http://127.0.0.1:8000/health
 # 系统架构
 
 ```text
-User Question
-      |
-      v
-Dense Retrieval
-      |
-      v
-Top-K Candidates
-      |
-      v
-Cross-Encoder Reranker
-      |
-      v
-Top Evidence
-      |
-      v
-Evidence Verifier
-   /       \\
-  /         \\
-SUFFICIENT  INSUFFICIENT
-   |             |
-   v             v
-Generator      Abstain
-   |
-   v
-Final Answer
+                     User
+                       │
+                       ▼
+                 /api/v2/chat
+                       │
+                       ▼
+              Conversation Memory
+                       │
+                       ▼
+                Context Resolver
+                       │
+                       ▼
+                  Intent Router
+                       │
+      ┌────────────────┼────────────────┐
+      │                │                │
+      ▼                ▼                ▼
+KNOWLEDGE_QA      ORDER_QUERY       MIXED_QUERY
+      │                │                │
+      ▼                ▼         ┌──────┴──────┐
+ RAGService        OrderAgent     │             │
+      │                │      OrderService  RAGService
+ Retrieve         Tool Calling    │             │
+ Rerank               │         SQLite       Verify
+ Verify              SQLite        │             │
+      │                │           └──────┬──────┘
+      ▼                ▼                  ▼
+Generate /        Grounded          Grounded
+ Abstain           Answer            Composer
 ```
 
 服务层：
@@ -211,8 +228,17 @@ Web 页面目前支持：
 |---|---|
 | Embedding | `BAAI/bge-small-zh-v1.5` |
 | Reranker | `BAAI/bge-reranker-v2-m3` |
-| Verifier | `qwen3.6-plus` |
-| Answer Generator | `qwen-plus-2025-07-28` |
+| Verifier | `qwen3.5-plus-2026-02-15` |
+| Answer Generator | `qwen3.6-flash` |
+| Intent Router | `qwen3.6-flash` |
+| Order Agent / Tool Calling | `qwen3.6-flash` |
+| Mixed Query Composer | `qwen3.6-flash` |
+
+qwen3.5-plus
+→ 关键 Evidence 判断
+
+qwen3.6-flash
+→ 高频生成 / 路由 / Tool Calling / Composer
 
 LLM 通过阿里云 DashScope 的 OpenAI-compatible API 调用。
 
@@ -234,6 +260,8 @@ GET /health
 ```
 
 ## RAG Query
+
+Legacy single-turn evidence-grounded RAG endpoint
 
 ```http
 POST /api/v1/query
@@ -281,6 +309,42 @@ abstained = true
 
 ---
 
+## Multi-turn Customer Support
+
+```http
+POST /api/v2/chat
+```
+
+第一次请求：
+```
+{
+  "question": "帮我查一下 ORD202610002 这个订单",
+  "user_id": "U001",
+  "conversation_id": null
+}
+```
+返回
+```
+{
+  "conversation_id": "...",
+  "user_id": "U001",
+  "intent": "ORDER_QUERY",
+  "handler": "ORDER_AGENT",
+  "memory_used": false,
+  "answer": "...",
+  "result": {}
+}
+```
+第二轮：
+```
+{
+"question": "它现在到哪了？",
+"user_id": "U001",
+"conversation_id": "上一轮返回的 conversation_id"
+}
+```
+
+系统会复用服务端 Conversation Memory。
 # Evaluation Baseline
 
 当前 Full Pipeline E2E Regression V1：
@@ -430,21 +494,43 @@ DASHSCOPE_API_KEY=...
 
 ---
 
+
 # 当前版本
 
-正式工程基线：
+当前正式版本：
 
-```text
-v1.0.0
-```
+`v2.0.0`
 
-当前前端里程碑：
+v2.0.0 在 v1.0.0 Evidence-grounded RAG 基础上新增：
+
+- Intent Routing
+- SQLite 订单业务数据
+- Native LLM Tool Calling
+- Order Agent
+- Conversation Session
+- Structured Conversation Memory
+- Context Resolution
+- Multi-turn `/api/v2/chat`
+- RAG / Order 动态路由
+- Mixed Query
+- Structured Order Data + RAG Evidence 联合回答
+- v2 Chat API Regression Test
+
+历史稳定基线：
+
+- `v1.0.0`
+- `frontend-mvp-v1`
+- `v2-p0-core-v1`
+
+
+
+v1.0.0前端里程碑：
 
 ```text
 frontend-mvp-v1
 ```
 
-项目当前已经完成：
+v1.0.0已经完成：
 
 ```text
 Retrieval
