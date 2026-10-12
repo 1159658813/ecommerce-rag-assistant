@@ -36,6 +36,42 @@ class QueryResponse(BaseModel):
     ]
 
 
+class ChatRequest(BaseModel):
+    question: str = Field(
+        ...,
+        min_length=1,
+        max_length=2000,
+    )
+
+    user_id: str = Field(
+        ...,
+        min_length=1,
+        max_length=100,
+    )
+
+    conversation_id: str | None = Field(
+        default=None,
+        max_length=100,
+    )
+
+
+class ChatResponse(BaseModel):
+    conversation_id: str
+    user_id: str
+
+    question: str
+    resolved_question: str
+
+    memory_used: bool
+
+    intent: str
+    intent_reason: str
+
+    handler: str
+    answer: str
+
+    result: Any | None = None
+
 class HealthResponse(BaseModel):
 
     status: str

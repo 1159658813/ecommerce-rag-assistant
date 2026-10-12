@@ -1,12 +1,17 @@
 from contextlib import asynccontextmanager
 
 from src.api.schemas import (
+    ChatRequest,
+    ChatResponse,
+    ErrorResponse,
     HealthResponse,
     QueryRequest,
     QueryResponse,
-    ErrorResponse,
 )
 from src.service import build_rag_service
+from src.customer_support import (
+    CustomerSupportService,
+)
 
 import time
 import uuid
@@ -63,7 +68,6 @@ def get_request_id(
 async def lifespan(
     app: FastAPI,
 ):
-
     print(
         "Loading RAGService..."
     )
@@ -76,10 +80,26 @@ async def lifespan(
         "RAGService ready."
     )
 
+    print(
+        "Loading CustomerSupportService..."
+    )
+
+    app.state.customer_support_service = (
+        CustomerSupportService(
+            rag_service=(
+                app.state.rag_service
+            )
+        )
+    )
+
+    print(
+        "CustomerSupportService ready."
+    )
+
     yield
 
     print(
-        "RAGService shutting down."
+        "Services shutting down."
     )
 
 
@@ -489,5 +509,120 @@ def query(
         ) from error
 
     return result
+
+    return result
+
+
+@app.post(
+    "/api/v2/chat",
+    response_model=ChatResponse,
+    responses={
+        400: {
+            "model": ErrorResponse,
+            "description": "Invalid request",
+        },
+
+        422: {
+            "model": ErrorResponse,
+            "description": "Validation error",
+        },
+
+        500: {
+            "model": ErrorResponse,
+            "description": (
+                    "Customer support service error"
+            ),
+        },
+    },
+)
+def chat(
+        payload: ChatRequest,
+        request: Request,
+):
+    service = (
+        request
+        .app
+        .state
+        .customer_support_service
+    )
+
+    request_id = (
+        request.state.request_id
+    )
+
+    try:
+
+        result = service.ask(
+            question=payload.question,
+            user_id=payload.user_id,
+            conversation_id=(
+                payload.conversation_id
+            ),
+        )
+
+        logger.info(
+            "customer_support_completed "
+            "request_id=%s "
+            "conversation_id=%s "
+            "intent=%s "
+            "handler=%s "
+            "memory_used=%s",
+            request_id,
+            result.get(
+                "conversation_id"
+            ),
+            result.get(
+                "intent"
+            ),
+            result.get(
+                "handler"
+            ),
+            result.get(
+                "memory_used"
+            ),
+        )
+
+    except ValueError as error:
+
+        logger.warning(
+            "customer_support_invalid_request "
+            "request_id=%s "
+            "error=%s",
+            request_id,
+            str(error),
+        )
+
+        raise HTTPException(
+            status_code=400,
+            detail={
+                "code":
+                    "INVALID_REQUEST",
+
+                "message":
+                    str(error),
+            },
+        ) from error
+
+    except Exception as error:
+
+        logger.exception(
+            "customer_support_failed "
+            "request_id=%s",
+            request_id,
+        )
+
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "code":
+                    "CUSTOMER_SUPPORT_ERROR",
+
+                "message":
+                    (
+                        "Customer support service "
+                        "failed to process the request."
+                    ),
+            },
+        ) from error
 
     return result

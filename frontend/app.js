@@ -6,11 +6,13 @@ new Vue({
             question: "",
             sending: false,
             activeEvidence: [],
+            currentUserId: "U001",
+            conversationId: null,
 
             quickQuestions: [
                 "活动后98元还能使用满100减20吗？",
-                "退款后优惠券会退回来吗？",
-                "运费是否计入优惠门槛？"
+                "帮我查一下 ORD202610002 现在到哪里了？",
+                "退款后优惠券会退回来吗？"
             ],
 
             messages: [
@@ -47,16 +49,25 @@ new Vue({
 
             try {
                 const response = await axios.post(
-                    "/api/v1/query",
+                    "/api/v2/chat",
                     {
-                        question: text
+                        question: text,
+                        user_id: this.currentUserId,
+                        conversation_id: this.conversationId
                     }
                 );
                 const latencyMs =
                     performance.now() - startedAt;
 
                 const data = response.data;
+                if (data.conversation_id) {
+                    this.conversationId =
+                        data.conversation_id;
+                }
 
+
+                const handlerResult =
+                    data.result || {};
 
                 this.messages.push({
                     role: "assistant",
@@ -65,25 +76,50 @@ new Vue({
                         data.answer ||
                         "系统没有返回回答内容。",
 
+                    intent:
+                        data.intent || null,
+
+                    handler:
+                        data.handler || null,
+
+                    memoryUsed:
+                        Boolean(data.memory_used),
+
+                    conversationId:
+                        data.conversation_id || null,
+
                     verdict:
-                    data.verdict,
+                        handlerResult.verdict || null,
 
                     abstained:
-                        Boolean(data.abstained),
+                        Boolean(
+                            handlerResult.abstained
+                        ),
 
                     abstainReason:
-                    data.abstain_reason,
+                        handlerResult.abstain_reason || null,
 
                     evidences:
-                        Array.isArray(data.evidences)
-                            ? data.evidences
+                        Array.isArray(
+                            handlerResult.evidences
+                        )
+                            ? handlerResult.evidences
+                            : [],
+
+                    toolsCalled:
+                        Array.isArray(
+                            handlerResult.tools_called
+                        )
+                            ? handlerResult.tools_called
                             : [],
 
                     requestId:
                         response.headers[
                             "x-request-id"
                             ],
-                    latencyMs: latencyMs
+
+                    latencyMs:
+                    latencyMs
                 });
 
             } catch (error) {
@@ -196,6 +232,7 @@ new Vue({
 
             this.question = "";
             this.activeEvidence = [];
+            this.conversationId = null;
 
             this.$message({
                 message: "当前会话已清空",
