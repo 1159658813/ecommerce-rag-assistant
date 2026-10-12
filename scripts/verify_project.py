@@ -53,7 +53,7 @@ def main() -> int:
         help=(
             "quick: project checks only; "
             "api: project checks + API smoke test; "
-            "full: project checks + API smoke test + pipeline smoke test"
+            "full: complete regression including API, pipeline, and mixed query"
         ),
     )
 
@@ -96,6 +96,14 @@ def main() -> int:
             (
                 "Pipeline Smoke Test",
                 ROOT / "experiments" / "pipeline_smoke_test.py",
+            )
+        )
+        steps.append(
+            (
+                "Mixed Query Smoke Test",
+                ROOT
+                / "experiments"
+                / "mixed_query_smoke_test.py",
             )
         )
 
