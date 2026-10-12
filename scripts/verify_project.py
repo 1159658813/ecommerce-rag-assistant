@@ -82,6 +82,15 @@ def main() -> int:
             )
         )
 
+        steps.append(
+            (
+                "Chat API Smoke Test",
+                ROOT
+                / "experiments"
+                / "chat_api_smoke_test.py",
+            )
+        )
+
     if args.mode == "full":
         steps.append(
             (

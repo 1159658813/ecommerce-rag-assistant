@@ -149,11 +149,19 @@ class OrderAgent:
         # ----------------------------------------------------
 
         if not tool_calls:
+            answer = (
+                    assistant_message.content
+                    or ""
+            ).strip()
+
+            if not answer:
+                answer = (
+                    "请提供您需要查询的订单号，"
+                    "例如 ORD202610002。"
+                )
+
             return {
-                "answer": (
-                        assistant_message.content
-                        or "当前无法完成订单查询。"
-                ),
+                "answer": answer,
                 "tools_called": [],
                 "tool_results": [],
             }

@@ -107,10 +107,10 @@
                     智能电商客服助手
                 </h1>
 
-                <p>
-                    基于检索增强生成（RAG），为优惠、退款、物流、
-                    售后与活动规则问题提供基于证据的回答
-                </p>
+              <p>
+                融合 RAG、订单工具调用与多轮会话记忆，
+                为订单、物流、优惠、退款及售后问题提供智能客服支持
+              </p>
 
                 <div class="hero-tags">
 
@@ -220,6 +220,49 @@
                 <div class="message-content">
                     {{ message.content }}
                 </div>
+
+              <!-- Agent Metadata -->
+              <div
+                      v-if="
+        message.role === 'assistant' &&
+        (
+            message.intent ||
+            message.handler ||
+            message.memoryUsed
+        )
+    "
+                      class="rag-status-row"
+              >
+                <div class="answer-meta">
+
+                  <el-tag
+                          v-if="message.intent"
+                          size="small"
+                          effect="plain"
+                  >
+                    Intent · {{ message.intent }}
+                  </el-tag>
+
+                  <el-tag
+                          v-if="message.handler"
+                          size="small"
+                          type="info"
+                          effect="plain"
+                  >
+                    Handler · {{ message.handler }}
+                  </el-tag>
+
+                  <el-tag
+                          v-if="message.memoryUsed"
+                          size="small"
+                          type="success"
+                          effect="plain"
+                  >
+                    Memory Used
+                  </el-tag>
+
+                </div>
+              </div>
 
 
                 <!-- RAG Metadata -->
@@ -534,9 +577,9 @@
 
             </div>
 
-            <div class="composer-hint">
-                AI 回答仅基于当前知识库证据生成 · Evidence insufficient 时系统会主动拒答
-            </div>
+          <div class="composer-hint">
+            RAG 知识问答基于检索证据生成 · 订单信息通过业务工具实时查询
+          </div>
 
         </footer>
 
