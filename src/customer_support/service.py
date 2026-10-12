@@ -8,6 +8,10 @@ from src.memory import (
 from src.routing.intent_router import IntentRouter
 from src.service import build_rag_service
 
+from src.customer_support.mixed_query_service import (
+    MixedQueryService,
+)
+
 
 class CustomerSupportService:
     """
@@ -38,6 +42,9 @@ class CustomerSupportService:
                 ContextResolver
             ] = None,
             rag_service=None,
+            mixed_query_service: Optional[
+                MixedQueryService
+            ] = None,
     ):
         self.intent_router = (
                 intent_router
@@ -63,6 +70,9 @@ class CustomerSupportService:
         # order-only queries should not initialize
         # the full RAG pipeline.
         self._rag_service = rag_service
+        self._mixed_query_service = (
+            mixed_query_service
+        )
 
     # ========================================================
     # RAG Service
@@ -79,6 +89,26 @@ class CustomerSupportService:
             )
 
         return self._rag_service
+
+    def _get_mixed_query_service(
+            self,
+    ) -> MixedQueryService:
+        """
+        Lazily initialize mixed-query handling.
+
+        The existing RAGService instance is reused.
+        """
+
+        if self._mixed_query_service is None:
+            self._mixed_query_service = (
+                MixedQueryService(
+                    rag_service=(
+                        self._get_rag_service()
+                    )
+                )
+            )
+
+        return self._mixed_query_service
 
     # ========================================================
     # Conversation
@@ -276,32 +306,91 @@ class CustomerSupportService:
                 "优惠、售后、发票等电商相关问题。"
             )
 
+
         elif intent == "MIXED_QUERY":
 
-            handler = (
-                "MIXED_QUERY_PENDING"
-            )
+            order_id = (
 
-            answer = (
-                "这个问题同时涉及您的订单信息"
-                "和相关政策规则。"
-                "当前混合查询能力将在后续阶段接入。"
-            )
+                context_result.get(
 
-            # Even though Mixed Query is not implemented yet,
-            # remember an explicit order ID if the user
-            # mentioned one.
-            explicit_order_id = (
-                self.context_resolver.extract_order_id(
-                    resolved_question
+                    "active_order_id"
+
                 )
+
             )
 
-            if explicit_order_id:
-                self.memory_service.remember_order(
-                    conversation_id=conversation_id,
+            if not order_id:
+                order_id = (
+
+                    self.context_resolver
+
+                    .extract_order_id(
+
+                        resolved_question
+
+                    )
+
+                )
+
+            mixed_service = (
+
+                self._get_mixed_query_service()
+
+            )
+
+            result = (
+
+                mixed_service.answer(
+
+                    question=question,
+
                     user_id=user_id,
-                    order_id=explicit_order_id,
+
+                    order_id=order_id,
+
+                )
+
+            )
+
+            handler = "MIXED_QUERY"
+
+            answer = result[
+
+                "answer"
+
+            ]
+
+            order_result = (
+
+                result.get(
+
+                    "order_result"
+
+                )
+
+            )
+
+            if (
+
+                    order_id
+
+                    and order_result
+
+                    and order_result.get(
+
+                "success"
+
+            )
+
+            ):
+                self.memory_service.remember_order(
+
+                    conversation_id=conversation_id,
+
+                    user_id=user_id,
+
+                    order_id=order_id,
+
                 )
 
         else:
