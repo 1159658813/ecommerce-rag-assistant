@@ -4,6 +4,7 @@ from src.agents.order_agent import OrderAgent
 from src.memory import (
     ContextResolver,
     ConversationMemoryService,
+    HistorySelector,
     QueryRewriter,
 )
 from src.routing.intent_router import IntentRouter
@@ -45,6 +46,9 @@ class CustomerSupportService:
             query_rewriter: Optional[
                 QueryRewriter
             ] = None,
+            history_selector: Optional[
+                HistorySelector
+            ] = None,
             rag_service=None,
             mixed_query_service: Optional[
                 MixedQueryService
@@ -72,6 +76,10 @@ class CustomerSupportService:
         self.query_rewriter = (
                 query_rewriter
                 or QueryRewriter()
+        )
+        self.history_selector = (
+                history_selector
+                or HistorySelector()
         )
 
         # Lazy initialization:
@@ -317,16 +325,34 @@ class CustomerSupportService:
         )
 
         # ----------------------------------------------------
-        # Step 2: Load recent history
+        # Step 2: Select relevant conversation history
         # ----------------------------------------------------
 
-        recent_messages = (
+        candidate_messages = (
             self.memory_service
             .get_recent_messages(
                 conversation_id=conversation_id,
                 user_id=user_id,
-                limit=6,
+                limit=(
+                    self.history_selector
+                    .candidate_limit
+                ),
             )
+        )
+
+        history_result = (
+            self.history_selector.select(
+                question=question,
+                messages=candidate_messages,
+                active_order_id=active_order_id,
+                last_intent=last_intent,
+            )
+        )
+
+        recent_messages = (
+            history_result[
+                "messages"
+            ]
         )
 
         # ----------------------------------------------------
