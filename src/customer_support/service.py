@@ -4,6 +4,7 @@ from src.agents.order_agent import OrderAgent
 from src.memory import (
     ContextResolver,
     ConversationMemoryService,
+    QueryRewriter,
 )
 from src.routing.intent_router import IntentRouter
 from src.service import build_rag_service
@@ -41,6 +42,9 @@ class CustomerSupportService:
             context_resolver: Optional[
                 ContextResolver
             ] = None,
+            query_rewriter: Optional[
+                QueryRewriter
+            ] = None,
             rag_service=None,
             mixed_query_service: Optional[
                 MixedQueryService
@@ -64,6 +68,10 @@ class CustomerSupportService:
         self.context_resolver = (
                 context_resolver
                 or ContextResolver()
+        )
+        self.query_rewriter = (
+                query_rewriter
+                or QueryRewriter()
         )
 
         # Lazy initialization:
@@ -109,6 +117,109 @@ class CustomerSupportService:
             )
 
         return self._mixed_query_service
+
+    # ========================================================
+    # Query Rewrite
+    # ========================================================
+
+    def _rewrite_with_fallback(
+            self,
+            question: str,
+            messages: list[dict],
+            active_order_id: Optional[str],
+            last_intent: Optional[str],
+    ) -> dict:
+        """
+        Rewrite the current conversational question with
+        recent history and structured conversation state.
+
+        If the LLM rewriter fails, fall back to the existing
+        rule-based ContextResolver.
+        """
+
+        try:
+            rewrite_result = (
+                self.query_rewriter.rewrite(
+                    question=question,
+                    messages=messages,
+                    active_order_id=active_order_id,
+                    last_intent=last_intent,
+                )
+            )
+
+            rewritten_question = str(
+                rewrite_result.get(
+                    "rewritten_question",
+                    question,
+                )
+                or question
+            ).strip()
+
+            resolved_entities = (
+                    rewrite_result.get(
+                        "resolved_entities",
+                        {},
+                    )
+                    or {}
+            )
+
+            rewritten_order_id = (
+                resolved_entities.get(
+                    "order_id"
+                )
+            )
+
+            # Explicit order IDs in the current user message
+            # have the highest priority.
+            explicit_order_id = (
+                self.context_resolver
+                .extract_order_id(
+                    question
+                )
+            )
+
+            resolved_order_id = (
+                    explicit_order_id
+                    or rewritten_order_id
+                    or active_order_id
+            )
+
+            used_history = bool(
+                rewrite_result.get(
+                    "used_history",
+                    False,
+                )
+            )
+
+            # Structured active_order_id is also conversation
+            # memory even when no textual history was needed.
+            used_structured_memory = bool(
+                active_order_id
+                and not explicit_order_id
+                and active_order_id
+                in rewritten_question.upper()
+            )
+
+            return {
+                "original_question": question,
+                "resolved_question": rewritten_question,
+                "used_memory": (
+                        used_history
+                        or used_structured_memory
+                ),
+                "active_order_id": resolved_order_id,
+            }
+
+        except Exception:
+            # Preserve the existing deterministic resolver as
+            # a safe fallback. Query rewriting must never make
+            # the whole customer-support request unavailable.
+            return (
+                self.context_resolver.resolve(
+                    question=question,
+                    active_order_id=active_order_id,
+                )
+            )
 
     # ========================================================
     # Conversation
@@ -201,9 +312,25 @@ class CustomerSupportService:
         active_order_id = conversation.get(
             "active_order_id"
         )
+        last_intent = conversation.get(
+            "last_intent"
+        )
 
         # ----------------------------------------------------
-        # Step 2: Save original user message
+        # Step 2: Load recent history
+        # ----------------------------------------------------
+
+        recent_messages = (
+            self.memory_service
+            .get_recent_messages(
+                conversation_id=conversation_id,
+                user_id=user_id,
+                limit=6,
+            )
+        )
+
+        # ----------------------------------------------------
+        # Step 3: Save original user message
         # ----------------------------------------------------
 
         self.memory_service.save_user_message(
@@ -213,13 +340,15 @@ class CustomerSupportService:
         )
 
         # ----------------------------------------------------
-        # Step 3: Resolve context
+        # Step 4: Rewrite conversational query
         # ----------------------------------------------------
 
         context_result = (
-            self.context_resolver.resolve(
+            self._rewrite_with_fallback(
                 question=question,
+                messages=recent_messages,
                 active_order_id=active_order_id,
+                last_intent=last_intent,
             )
         )
 
@@ -230,7 +359,7 @@ class CustomerSupportService:
         )
 
         # ----------------------------------------------------
-        # Step 4: Intent Routing
+        # Step 5: Intent Routing
         # ----------------------------------------------------
 
         route_result = (
@@ -251,7 +380,7 @@ class CustomerSupportService:
         )
 
         # ----------------------------------------------------
-        # Step 5: Execute handler
+        # Step 6: Execute handler
         # ----------------------------------------------------
 
         handler = None
@@ -342,7 +471,7 @@ class CustomerSupportService:
 
                 mixed_service.answer(
 
-                    question=question,
+                    question=resolved_question,
 
                     user_id=user_id,
 
@@ -404,7 +533,7 @@ class CustomerSupportService:
             )
 
         # ----------------------------------------------------
-        # Step 6: Save assistant response
+        # Step 7: Save assistant response
         # ----------------------------------------------------
 
         self.memory_service.save_assistant_message(
@@ -414,7 +543,7 @@ class CustomerSupportService:
         )
 
         # ----------------------------------------------------
-        # Step 7: Return unified response
+        # Step 8: Return unified response
         # ----------------------------------------------------
 
         return {

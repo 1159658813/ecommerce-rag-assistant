@@ -54,6 +54,13 @@ class RAGSettings:
     intent_router_model: str = (
         "qwen3.6-flash"
     )
+    # --------------------------------------------------------
+    # Query Rewriter
+    # --------------------------------------------------------
+
+    query_rewriter_model: str = (
+        "qwen3.6-flash"
+    )
 
     # --------------------------------------------------------
     # Answerability Verifier
@@ -125,6 +132,10 @@ def load_settings():
         ),
         intent_router_model=os.getenv(
             "INTENT_ROUTER_MODEL",
+            "qwen3.6-flash",
+        ),
+        query_rewriter_model=os.getenv(
+            "QUERY_REWRITER_MODEL",
             "qwen3.6-flash",
         ),
 
