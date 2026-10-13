@@ -1,0 +1,66 @@
+[
+  {
+    "id": "memory_001",
+    "question": "它现在到哪了？",
+    "messages": [
+      {
+        "role": "user",
+        "content": "帮我查 ORD202610002"
+      },
+      {
+        "role": "assistant",
+        "content": "已查询订单 ORD202610002。"
+      }
+    ],
+    "active_order_id": "ORD202610002",
+    "last_intent": "ORDER_QUERY",
+    "expected_order_id": "ORD202610002",
+    "expected_used_history": true
+  },
+  {
+    "id": "memory_002",
+    "question": "第二个订单现在到哪了？",
+    "messages": [
+      {
+        "role": "user",
+        "content": "我的订单有哪些？"
+      },
+      {
+        "role": "assistant",
+        "content": "你有两个订单：ORD202610001 和 ORD202610002。"
+      }
+    ],
+    "active_order_id": null,
+    "last_intent": "ORDER_QUERY",
+    "expected_order_id": "ORD202610002",
+    "expected_used_history": true
+  },
+  {
+    "id": "memory_003",
+    "question": "ORD202610002 现在到哪了？",
+    "messages": [
+      {
+        "role": "user",
+        "content": "刚才查的是 ORD202610001"
+      }
+    ],
+    "active_order_id": "ORD202610001",
+    "last_intent": "ORDER_QUERY",
+    "expected_order_id": "ORD202610002",
+    "expected_used_history": false
+  },
+  {
+    "id": "memory_004",
+    "question": "退款一般多久到账？",
+    "messages": [
+      {
+        "role": "user",
+        "content": "帮我查 ORD202610001"
+      }
+    ],
+    "active_order_id": "ORD202610001",
+    "last_intent": "ORDER_QUERY",
+    "expected_order_id": null,
+    "expected_used_history": false
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "intent_001",
+    "question": "退款一般多久到账？",
+    "expected_intent": "KNOWLEDGE_QA"
+  },
+  {
+    "id": "intent_002",
+    "question": "满100减20的时候运费算不算门槛？",
+    "expected_intent": "KNOWLEDGE_QA"
+  },
+  {
+    "id": "intent_003",
+    "question": "ORD202610002 现在到哪了？",
+    "expected_intent": "ORDER_QUERY"
+  },
+  {
+    "id": "intent_004",
+    "question": "帮我看看我的订单有哪些",
+    "expected_intent": "ORDER_QUERY"
+  },
+  {
+    "id": "intent_005",
+    "question": "ORD202610001 的退款进度怎么样？",
+    "expected_intent": "ORDER_QUERY"
+  },
+  {
+    "id": "intent_006",
+    "question": "退款单 REF202610001 处理完了吗？",
+    "expected_intent": "ORDER_QUERY"
+  },
+  {
+    "id": "intent_007",
+    "question": "我的订单已经签收8天了，现在还能退吗？",
+    "expected_intent": "MIXED_QUERY"
+  },
+  {
+    "id": "intent_008",
+    "question": "这个订单正在退款，按照平台规则一般还要多久？",
+    "expected_intent": "MIXED_QUERY"
+  },
+  {
+    "id": "intent_009",
+    "question": "你好",
+    "expected_intent": "GENERAL_CHAT"
+  },
+  {
+    "id": "intent_010",
+    "question": "谢谢你的帮助",
+    "expected_intent": "GENERAL_CHAT"
+  },
+  {
+    "id": "intent_011",
+    "question": "帮我写一个Python爬虫",
+    "expected_intent": "UNSUPPORTED"
+  },
+  {
+    "id": "intent_012",
+    "question": "给我解释一下牛顿第二定律",
+    "expected_intent": "UNSUPPORTED"
+  }
+]

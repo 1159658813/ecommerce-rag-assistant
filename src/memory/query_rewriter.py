@@ -1,10 +1,53 @@
 import json
 import os
+import re
 from typing import Optional
 
 from openai import OpenAI
 
 from src.config import settings
+
+ORDER_ID_PATTERN = re.compile(
+    r"\bORD\d+\b",
+    re.IGNORECASE,
+)
+
+CONTEXT_REFERENCE_HINTS = (
+    "它",
+    "那个",
+    "这个",
+    "刚才",
+    "刚刚",
+    "之前",
+    "前面",
+    "上一个",
+    "下一个",
+    "第一个",
+    "第二个",
+    "第三个",
+    "这单",
+    "那单",
+    "已发货的",
+    "已签收的",
+    "现在到哪",
+    "到哪了",
+    "物流呢",
+    "还能",
+    "退款进度",
+    "处理到哪",
+    "处理完了吗",
+)
+
+GENERIC_POLICY_HINTS = (
+    "一般",
+    "通常",
+    "规则",
+    "政策",
+    "规定",
+    "条件",
+    "多久",
+    "到账时间",
+)
 
 SYSTEM_PROMPT = """
 你是中文电商客服系统中的 Conversation-aware Query Rewriter。
@@ -58,6 +101,20 @@ SYSTEM_PROMPT = """
   },
   "used_history": false
 }
+
+8. 如果当前问题已经明确包含订单号：
+   - 当前问题中的订单号优先级最高
+   - resolved_entities.order_id 必须使用当前问题中的订单号
+   - 不要被历史中的其他订单号覆盖
+   - used_history 为 false
+
+9. 如果当前问题本身是完整的通用政策问题，例如：
+   - 退款一般多久到账？
+   - 退货政策是什么？
+   - 售后规则怎么规定？
+   则不要使用历史订单或 active_order_id，
+   resolved_entities.order_id 应为 null，
+   used_history 为 false。
 """
 
 
@@ -151,6 +208,45 @@ class QueryRewriter:
         if not question:
             return {
                 "rewritten_question": "",
+                "resolved_entities": {
+                    "order_id": None,
+                },
+                "used_history": False,
+            }
+        # ----------------------------------------------------
+        # Deterministic guard 1:
+        # Explicit entity in the current question always wins.
+        #
+        # A self-contained question with an explicit order ID
+        # does not require conversation history.
+        # ----------------------------------------------------
+
+        explicit_order_id = (
+            self._extract_explicit_order_id(
+                question
+            )
+        )
+
+        if explicit_order_id:
+            return {
+                "rewritten_question": question,
+                "resolved_entities": {
+                    "order_id": explicit_order_id,
+                },
+                "used_history": False,
+            }
+
+        # ----------------------------------------------------
+        # Deterministic guard 2:
+        # Generic standalone policy questions must not inherit
+        # an unrelated active order from the previous turn.
+        # ----------------------------------------------------
+
+        if self._is_standalone_policy_question(
+                question
+        ):
+            return {
+                "rewritten_question": question,
                 "resolved_entities": {
                     "order_id": None,
                 },
@@ -268,6 +364,60 @@ class QueryRewriter:
                 used_history
             ),
         }
+
+    @staticmethod
+    def _extract_explicit_order_id(
+            question: str,
+    ) -> Optional[str]:
+
+        match = ORDER_ID_PATTERN.search(
+            str(
+                question or ""
+            )
+        )
+
+        if match is None:
+            return None
+
+        return (
+            match.group(0)
+            .strip()
+            .upper()
+        )
+
+    @staticmethod
+    def _is_standalone_policy_question(
+            question: str,
+    ) -> bool:
+
+        question = str(
+            question or ""
+        ).strip()
+
+        if not question:
+            return False
+
+        if ORDER_ID_PATTERN.search(
+                question
+        ):
+            return False
+
+        has_context_reference = any(
+            hint in question
+            for hint
+            in CONTEXT_REFERENCE_HINTS
+        )
+
+        if has_context_reference:
+            return False
+
+        has_generic_policy_signal = any(
+            hint in question
+            for hint
+            in GENERIC_POLICY_HINTS
+        )
+
+        return has_generic_policy_signal
 
     @staticmethod
     def _prepare_messages(
