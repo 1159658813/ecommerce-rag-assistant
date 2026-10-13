@@ -1,4 +1,5 @@
 import os
+import time
 from typing import Optional
 
 from openai import OpenAI
@@ -84,6 +85,54 @@ class MixedQueryService:
     # Public Entry
     # ========================================================
 
+    @staticmethod
+    def _elapsed_ms(
+            started_at: float,
+    ) -> float:
+        return round(
+            (
+                    time.perf_counter()
+                    - started_at
+            )
+            * 1000,
+            3,
+        )
+
+    @staticmethod
+    def _build_observability(
+            latency_tool: float = 0.0,
+            latency_retrieval: float = 0.0,
+            latency_verifier: float = 0.0,
+            latency_composer: float = 0.0,
+            verifier_retry_count: int = 0,
+            abstained: bool = False,
+    ) -> dict:
+        return {
+            "latency_tool": round(
+                latency_tool,
+                3,
+            ),
+            "latency_retrieval": round(
+                latency_retrieval,
+                3,
+            ),
+            "latency_verifier": round(
+                latency_verifier,
+                3,
+            ),
+            "latency_composer": round(
+                latency_composer,
+                3,
+            ),
+            "verifier_retry_count": int(
+                verifier_retry_count
+            ),
+            "abstained": bool(
+                abstained
+            ),
+            "latency_unit": "ms",
+        }
+
     def answer(
             self,
             question: str,
@@ -94,6 +143,8 @@ class MixedQueryService:
         Answer one query that requires both
         order data and knowledge-base policy.
         """
+
+        latency_tool = 0.0
 
         if not order_id:
             return {
@@ -111,16 +162,29 @@ class MixedQueryService:
                 "abstained": False,
                 "abstain_reason": None,
                 "evidences": [],
+                "observability": (
+                    self._build_observability()
+                ),
             }
 
         # ----------------------------------------------------
         # Step 1: Query structured order data
         # ----------------------------------------------------
 
+        tool_started = (
+            time.perf_counter()
+        )
+
         order_result = (
             self.order_service.get_order_detail(
                 user_id=user_id,
                 order_id=order_id,
+            )
+        )
+
+        latency_tool = (
+            self._elapsed_ms(
+                tool_started
             )
         )
 
@@ -138,6 +202,13 @@ class MixedQueryService:
                 "abstained": False,
                 "abstain_reason": None,
                 "evidences": [],
+                "observability": (
+                    self._build_observability(
+                        latency_tool=(
+                            latency_tool
+                        ),
+                    )
+                ),
             }
 
         # ----------------------------------------------------
@@ -155,6 +226,37 @@ class MixedQueryService:
             self.rag_service.ask(
                 policy_query
             )
+        )
+        rag_observability = (
+                rag_result.get(
+                    "observability",
+                    {},
+                )
+                or {}
+        )
+
+        latency_retrieval = float(
+            rag_observability.get(
+                "latency_retrieval",
+                0.0,
+            )
+            or 0.0
+        )
+
+        latency_verifier = float(
+            rag_observability.get(
+                "latency_verifier",
+                0.0,
+            )
+            or 0.0
+        )
+
+        verifier_retry_count = int(
+            rag_observability.get(
+                "verifier_retry_count",
+                0,
+            )
+            or 0
         )
 
         # ----------------------------------------------------
@@ -185,16 +287,44 @@ class MixedQueryService:
                 order_result=order_result,
                 rag_result=rag_result,
                 combined=False,
+                observability=(
+                    self._build_observability(
+                        latency_tool=(
+                            latency_tool
+                        ),
+                        latency_retrieval=(
+                            latency_retrieval
+                        ),
+                        latency_verifier=(
+                            latency_verifier
+                        ),
+                        latency_composer=0.0,
+                        verifier_retry_count=(
+                            verifier_retry_count
+                        ),
+                        abstained=True,
+                    )
+                ),
             )
 
         # ----------------------------------------------------
         # Step 4: Grounded composition
         # ----------------------------------------------------
 
+        composer_started = (
+            time.perf_counter()
+        )
+
         answer = self._compose_answer(
             question=question,
             order_result=order_result,
             rag_result=rag_result,
+        )
+
+        latency_composer = (
+            self._elapsed_ms(
+                composer_started
+            )
         )
 
         return self._build_result(
@@ -203,6 +333,24 @@ class MixedQueryService:
             order_result=order_result,
             rag_result=rag_result,
             combined=True,
+            observability=(
+                self._build_observability(
+                    latency_tool=latency_tool,
+                    latency_retrieval=(
+                        latency_retrieval
+                    ),
+                    latency_verifier=(
+                        latency_verifier
+                    ),
+                    latency_composer=(
+                        latency_composer
+                    ),
+                    verifier_retry_count=(
+                        verifier_retry_count
+                    ),
+                    abstained=False,
+                )
+            ),
         )
 
     # ========================================================
@@ -322,6 +470,7 @@ class MixedQueryService:
             order_result: dict,
             rag_result: dict,
             combined: bool,
+            observability: dict,
     ) -> dict:
         """
         Keep RAG metadata at top level so the
@@ -356,5 +505,8 @@ class MixedQueryService:
                     "evidences",
                     [],
                 )
+            ),
+            "observability": (
+                observability
             ),
         }
