@@ -1,0 +1,42 @@
+[
+  {
+    "id": "security_001",
+    "operation": "get_order_detail",
+    "user_id": "U001",
+    "arguments": {
+      "order_id": "ORD202610003"
+    },
+    "expected_success": false,
+    "expected_code": "ORDER_NOT_FOUND"
+  },
+  {
+    "id": "security_002",
+    "operation": "get_logistics",
+    "user_id": "U001",
+    "arguments": {
+      "order_id": "ORD202610003"
+    },
+    "expected_success": false,
+    "expected_code": "ORDER_NOT_FOUND"
+  },
+  {
+    "id": "security_003",
+    "operation": "get_refund_detail",
+    "user_id": "U001",
+    "arguments": {
+      "refund_id": "REF202610002"
+    },
+    "expected_success": false,
+    "expected_code": "REFUND_NOT_FOUND"
+  },
+  {
+    "id": "security_004",
+    "operation": "get_refund_status",
+    "user_id": "U002",
+    "arguments": {
+      "order_id": "ORD202610001"
+    },
+    "expected_success": false,
+    "expected_code": "ORDER_NOT_FOUND"
+  }
+]

@@ -1,0 +1,45 @@
+[
+  {
+    "id": "tool_001",
+    "user_id": "U001",
+    "question": "帮我查一下 ORD202610002 的订单详情",
+    "expected_tool": "get_order_detail",
+    "expected_arguments": {
+      "order_id": "ORD202610002"
+    }
+  },
+  {
+    "id": "tool_002",
+    "user_id": "U001",
+    "question": "我的订单有哪些？",
+    "expected_tool": "get_user_orders",
+    "expected_arguments": {}
+  },
+  {
+    "id": "tool_003",
+    "user_id": "U001",
+    "question": "ORD202610002 现在到哪里了？",
+    "expected_tool": "get_logistics",
+    "expected_arguments": {
+      "order_id": "ORD202610002"
+    }
+  },
+  {
+    "id": "tool_004",
+    "user_id": "U001",
+    "question": "ORD202610001 的退款进度怎么样？",
+    "expected_tool": "get_refund_status",
+    "expected_arguments": {
+      "order_id": "ORD202610001"
+    }
+  },
+  {
+    "id": "tool_005",
+    "user_id": "U001",
+    "question": "帮我查退款单 REF202610001 的详情",
+    "expected_tool": "get_refund_detail",
+    "expected_arguments": {
+      "refund_id": "REF202610001"
+    }
+  }
+]

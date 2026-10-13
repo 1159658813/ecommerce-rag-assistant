@@ -115,3 +115,6 @@ __pycache__/
 data/database/*.db
 data/database/*.db-shm
 data/database/*.db-wal
+
+# Evaluation V2 generated reports
+evaluation/results/v2/

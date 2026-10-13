@@ -1,0 +1,38 @@
+[
+  {
+    "id": "mixed_001",
+    "user_id": "U002",
+    "order_id": "ORD202610003",
+    "question": "我的订单已经签收了，现在还能退货吗？",
+    "expected_order_success": true,
+    "expected_order_status": "DELIVERED",
+    "expected_verdict": "SUFFICIENT"
+  },
+  {
+    "id": "mixed_002",
+    "user_id": "U001",
+    "order_id": "ORD202610002",
+    "question": "这个订单还在运输中，我现在可以申请退货吗？",
+    "expected_order_success": true,
+    "expected_order_status": "SHIPPED",
+    "expected_verdict": "SUFFICIENT"
+  },
+  {
+    "id": "mixed_003",
+    "user_id": "U001",
+    "order_id": "ORD202610001",
+    "question": "这个订单正在退款，平台有没有额外赔偿规则？",
+    "expected_order_success": true,
+    "expected_order_status": "PAID",
+    "expected_verdict": "INSUFFICIENT"
+  },
+  {
+    "id": "mixed_004",
+    "user_id": "U001",
+    "order_id": "ORD202610003",
+    "question": "这个订单签收后还能退吗？",
+    "expected_order_success": false,
+    "expected_order_status": null,
+    "expected_verdict": null
+  }
+]
