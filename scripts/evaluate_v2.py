@@ -1361,6 +1361,39 @@ def evaluate_mixed(
                     or []
             )
 
+            evidence_debug = []
+
+            for evidence in evidences:
+                content = str(
+                    evidence.get(
+                        "content",
+                        "",
+                    )
+                    or ""
+                )
+
+                evidence_debug.append(
+                    {
+                        "rank": evidence.get(
+                            "rank"
+                        ),
+                        "source": evidence.get(
+                            "source"
+                        ),
+                        "section": evidence.get(
+                            "section"
+                        ),
+                        "reranker_score": (
+                            evidence.get(
+                                "reranker_score"
+                            )
+                        ),
+                        "content_preview": (
+                            content[:300]
+                        ),
+                    }
+                )
+
             rag_result = result.get(
                 "rag_result"
             )
@@ -1502,6 +1535,9 @@ def evaluate_mixed(
                     "evidence_count": len(
                         evidences
                     ),
+                    "evidence_debug": (
+                        evidence_debug
+                    ),
                     "combined_answer_success": (
                         combined_answer_success
                     ),
@@ -1522,6 +1558,16 @@ def evaluate_mixed(
             )
             print(
                 "  Combined   :",
+                combined,
+            )
+
+            print(
+                "  Abstained  :",
+                abstained,
+            )
+
+            print(
+                "  Answer OK  :",
                 combined_answer_success,
             )
             print(
@@ -1530,6 +1576,38 @@ def evaluate_mixed(
                 if passed
                 else "FAIL",
             )
+
+            if not passed:
+
+                print(
+                    "  Evidence:"
+                )
+
+                for evidence in evidence_debug:
+                    print(
+                        "   -",
+                        evidence.get(
+                            "source"
+                        ),
+                        "/",
+                        evidence.get(
+                            "section"
+                        ),
+                    )
+
+                    print(
+                        "     Score:",
+                        evidence.get(
+                            "reranker_score"
+                        ),
+                    )
+
+                    print(
+                        "     Preview:",
+                        evidence.get(
+                            "content_preview"
+                        ),
+                    )
 
         except Exception as exc:
 
