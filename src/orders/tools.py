@@ -74,6 +74,59 @@ ORDER_TOOLS = [
             },
         },
     },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_refund_status",
+            "description": (
+                "查询当前用户某个订单最新的退款处理状态。"
+                "当用户询问某个订单退款到哪一步、"
+                "退款是否完成等实时退款进度时使用。"
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "order_id": {
+                        "type": "string",
+                        "description": (
+                            "需要查询退款状态的订单号，"
+                            "例如 ORD202610001。"
+                        ),
+                    }
+                },
+                "required": [
+                    "order_id"
+                ],
+                "additionalProperties": False,
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_refund_detail",
+            "description": (
+                "根据退款单号查询当前用户自己的退款详情，"
+                "包括退款状态、金额、原因和处理时间。"
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "refund_id": {
+                        "type": "string",
+                        "description": (
+                            "退款单号，"
+                            "例如 REF202610001。"
+                        ),
+                    }
+                },
+                "required": [
+                    "refund_id"
+                ],
+                "additionalProperties": False,
+            },
+        },
+    },
 ]
 
 
@@ -148,6 +201,42 @@ class OrderToolExecutor:
             return self.service.get_logistics(
                 user_id=user_id,
                 order_id=order_id,
+            )
+
+        if tool_name == "get_refund_status":
+            order_id = arguments.get(
+                "order_id"
+            )
+
+            if not order_id:
+                return {
+                    "success": False,
+                    "code": "INVALID_ARGUMENT",
+                    "message": "缺少订单号。",
+                    "data": None,
+                }
+
+            return self.service.get_refund_status(
+                user_id=user_id,
+                order_id=order_id,
+            )
+
+        if tool_name == "get_refund_detail":
+            refund_id = arguments.get(
+                "refund_id"
+            )
+
+            if not refund_id:
+                return {
+                    "success": False,
+                    "code": "INVALID_ARGUMENT",
+                    "message": "缺少退款单号。",
+                    "data": None,
+                }
+
+            return self.service.get_refund_detail(
+                user_id=user_id,
+                refund_id=refund_id,
             )
 
         return {
