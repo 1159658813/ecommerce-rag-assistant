@@ -6,7 +6,7 @@ from src.orders.init_db import DATABASE_PATH
 
 class OrderRepository:
     """
-    Data access layer for orders and shipments.
+    Data access layer for orders, shipments, and refunds.
 
     This class is responsible only for database operations.
     It should not contain business logic or LLM logic.
@@ -131,6 +131,78 @@ class OrderRepository:
                     estimated_delivery
                 FROM shipments
                 WHERE order_id = ?
+                """,
+                (order_id,),
+            )
+
+            row = cursor.fetchone()
+
+        if row is None:
+            return None
+
+        return dict(row)
+
+    # ========================================================
+    # Refund Queries
+    # ========================================================
+
+    def get_refund_by_id(
+            self,
+            refund_id: str,
+    ) -> Optional[dict]:
+        """
+        Find one refund by refund_id.
+        """
+
+        with self._connect() as conn:
+            cursor = conn.execute(
+                """
+                SELECT
+                    refund_id,
+                    order_id,
+                    user_id,
+                    status,
+                    amount,
+                    reason,
+                    created_at,
+                    completed_at
+                FROM refunds
+                WHERE refund_id = ?
+                """,
+                (refund_id,),
+            )
+
+            row = cursor.fetchone()
+
+        if row is None:
+            return None
+
+        return dict(row)
+
+    def get_latest_refund_by_order_id(
+            self,
+            order_id: str,
+    ) -> Optional[dict]:
+        """
+        Find the latest refund record for one order.
+        """
+
+        with self._connect() as conn:
+            cursor = conn.execute(
+                """
+                SELECT
+                    refund_id,
+                    order_id,
+                    user_id,
+                    status,
+                    amount,
+                    reason,
+                    created_at,
+                    completed_at
+                FROM refunds
+                WHERE order_id = ?
+                ORDER BY created_at DESC
+                LIMIT 1
                 """,
                 (order_id,),
             )

@@ -60,6 +60,45 @@ def create_tables(conn: sqlite3.Connection) -> None:
         )
         """
     )
+
+    # --------------------------------------------------------
+    # refunds
+    # --------------------------------------------------------
+
+    cursor.execute(
+        """
+        CREATE TABLE IF NOT EXISTS refunds (
+            refund_id TEXT PRIMARY KEY,
+            order_id TEXT NOT NULL,
+            user_id TEXT NOT NULL,
+            status TEXT NOT NULL,
+            amount REAL NOT NULL,
+            reason TEXT,
+            created_at TEXT NOT NULL,
+            completed_at TEXT,
+
+            FOREIGN KEY (order_id)
+                REFERENCES orders(order_id)
+        )
+        """
+    )
+
+    cursor.execute(
+        """
+        CREATE INDEX IF NOT EXISTS
+        idx_refunds_order_id
+        ON refunds(order_id)
+        """
+    )
+
+    cursor.execute(
+        """
+        CREATE INDEX IF NOT EXISTS
+        idx_refunds_user_id
+        ON refunds(user_id)
+        """
+    )
+
     # --------------------------------------------------------
     # conversations
     # --------------------------------------------------------
@@ -200,6 +239,46 @@ def insert_demo_data(conn: sqlite3.Connection) -> None:
         VALUES (?, ?, ?, ?, ?, ?, ?)
         """,
         shipments,
+    )
+
+    refunds = [
+        (
+            "REF202610001",
+            "ORD202610001",
+            "U001",
+            "PROCESSING",
+            299.00,
+            "用户申请退款",
+            "2026-10-10 10:00:00",
+            None,
+        ),
+        (
+            "REF202610002",
+            "ORD202610003",
+            "U002",
+            "COMPLETED",
+            159.00,
+            "商品质量问题",
+            "2026-10-08 09:00:00",
+            "2026-10-09 18:00:00",
+        ),
+    ]
+
+    cursor.executemany(
+        """
+        INSERT OR IGNORE INTO refunds (
+            refund_id,
+            order_id,
+            user_id,
+            status,
+            amount,
+            reason,
+            created_at,
+            completed_at
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        """,
+        refunds,
     )
 
     conn.commit()

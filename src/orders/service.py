@@ -47,6 +47,53 @@ class OrderService:
 
         return order
 
+    def _get_owned_refund(
+            self,
+            user_id: str,
+            refund_id: str,
+    ) -> Optional[dict]:
+        """
+        Return the refund only if it belongs to the user.
+
+        Refunds belonging to another user are treated
+        as unavailable.
+        """
+
+        refund = self.repository.get_refund_by_id(
+            refund_id
+        )
+
+        if refund is None:
+            return None
+
+        if refund["user_id"] != user_id:
+            return None
+
+        order = self._get_owned_order(
+            user_id=user_id,
+            order_id=refund["order_id"],
+        )
+
+        if order is None:
+            return None
+
+        return refund
+
+    @staticmethod
+    def _public_refund(
+            refund: dict,
+    ) -> dict:
+        """
+        Remove internal ownership fields before returning
+        refund data to upper layers.
+        """
+
+        return {
+            key: value
+            for key, value in refund.items()
+            if key != "user_id"
+        }
+
     # ========================================================
     # Order Detail
     # ========================================================
@@ -159,4 +206,91 @@ class OrderService:
             "code": "OK",
             "message": "物流查询成功。",
             "data": shipment,
+        }
+
+    # ========================================================
+    # Refund Status
+    # ========================================================
+
+    def get_refund_status(
+            self,
+            user_id: str,
+            order_id: str,
+    ) -> dict:
+        """
+        Get the latest refund status for an owned order.
+        """
+
+        order = self._get_owned_order(
+            user_id=user_id,
+            order_id=order_id,
+        )
+
+        if order is None:
+            return {
+                "success": False,
+                "code": "ORDER_NOT_FOUND",
+                "message": "未找到该订单。",
+                "data": None,
+            }
+
+        refund = (
+            self.repository
+            .get_latest_refund_by_order_id(
+                order_id
+            )
+        )
+
+        if refund is None:
+            return {
+                "success": False,
+                "code": "REFUND_NOT_FOUND",
+                "message": "该订单暂无退款记录。",
+                "data": {
+                    "order_id": order_id,
+                },
+            }
+
+        return {
+            "success": True,
+            "code": "OK",
+            "message": "退款状态查询成功。",
+            "data": self._public_refund(
+                refund
+            ),
+        }
+
+    # ========================================================
+    # Refund Detail
+    # ========================================================
+
+    def get_refund_detail(
+            self,
+            user_id: str,
+            refund_id: str,
+    ) -> dict:
+        """
+        Get refund detail owned by the current user.
+        """
+
+        refund = self._get_owned_refund(
+            user_id=user_id,
+            refund_id=refund_id,
+        )
+
+        if refund is None:
+            return {
+                "success": False,
+                "code": "REFUND_NOT_FOUND",
+                "message": "未找到该退款记录。",
+                "data": None,
+            }
+
+        return {
+            "success": True,
+            "code": "OK",
+            "message": "退款详情查询成功。",
+            "data": self._public_refund(
+                refund
+            ),
         }
