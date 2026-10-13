@@ -1,5 +1,6 @@
 import json
 import os
+import time
 from typing import Optional
 
 from openai import OpenAI
@@ -103,6 +104,8 @@ class OrderAgent:
         """
 
         question = question.strip()
+        latency_tool = 0.0
+        latency_composer = 0.0
 
         if not question:
             return {
@@ -171,6 +174,14 @@ class OrderAgent:
                 "answer": answer,
                 "tools_called": [],
                 "tool_results": [],
+                "observability": {
+                    "latency_tool": 0.0,
+                    "latency_composer": 0.0,
+                    "tools_called": [],
+                    "verifier_retry_count": 0,
+                    "abstained": False,
+                    "latency_unit": "ms",
+                },
             }
 
         # Add the assistant tool-call message
@@ -213,12 +224,24 @@ class OrderAgent:
             except json.JSONDecodeError:
                 arguments = {}
 
+            tool_started = (
+                time.perf_counter()
+            )
+
             result = (
                 self.tool_executor.execute(
                     tool_name=tool_name,
                     arguments=arguments,
                     user_id=user_id,
                 )
+            )
+
+            latency_tool += (
+                    (
+                            time.perf_counter()
+                            - tool_started
+                    )
+                    * 1000
             )
 
             tools_called.append(
@@ -252,6 +275,10 @@ class OrderAgent:
         # from real tool results.
         # ----------------------------------------------------
 
+        composer_started = (
+            time.perf_counter()
+        )
+
         final_response = (
             self.client.chat.completions.create(
                 model=self.model,
@@ -261,6 +288,14 @@ class OrderAgent:
                     "enable_thinking": False
                 },
             )
+        )
+
+        latency_composer = (
+                (
+                        time.perf_counter()
+                        - composer_started
+                )
+                * 1000
         )
 
         answer = (
@@ -275,4 +310,18 @@ class OrderAgent:
             "answer": answer,
             "tools_called": tools_called,
             "tool_results": tool_results,
+            "observability": {
+                "latency_tool": round(
+                    latency_tool,
+                    3,
+                ),
+                "latency_composer": round(
+                    latency_composer,
+                    3,
+                ),
+                "tools_called": tools_called,
+                "verifier_retry_count": 0,
+                "abstained": False,
+                "latency_unit": "ms",
+            },
         }

@@ -1,3 +1,4 @@
+import time
 from typing import Optional
 
 from src.agents.order_agent import OrderAgent
@@ -13,7 +14,14 @@ from src.service import build_rag_service
 from src.customer_support.mixed_query_service import (
     MixedQueryService,
 )
+from src.observability import (
+    get_logger,
+    log_event,
+)
 
+logger = get_logger(
+    "customer_support"
+)
 
 class CustomerSupportService:
     """
@@ -302,6 +310,12 @@ class CustomerSupportService:
                 "user_id 不能为空。"
             )
 
+        total_started = (
+            time.perf_counter()
+        )
+
+        latency_router = 0.0
+
         # ----------------------------------------------------
         # Step 1: Load or create conversation
         # ----------------------------------------------------
@@ -388,10 +402,23 @@ class CustomerSupportService:
         # Step 5: Intent Routing
         # ----------------------------------------------------
 
+        router_started = (
+            time.perf_counter()
+        )
+
         route_result = (
             self.intent_router.route(
                 resolved_question
             )
+        )
+
+        latency_router = round(
+            (
+                    time.perf_counter()
+                    - router_started
+            )
+            * 1000,
+            3,
         )
 
         intent = route_result["intent"]
@@ -569,7 +596,130 @@ class CustomerSupportService:
         )
 
         # ----------------------------------------------------
-        # Step 8: Return unified response
+        # Step 8: Observability V2
+        # ----------------------------------------------------
+
+        component_observability = {}
+
+        if isinstance(
+                result,
+                dict,
+        ):
+            component_observability = (
+                    result.get(
+                        "observability",
+                        {},
+                    )
+                    or {}
+            )
+
+        tools_called = []
+
+        if isinstance(
+                result,
+                dict,
+        ):
+            tools_called = (
+                    result.get(
+                        "tools_called",
+                        [],
+                    )
+                    or component_observability.get(
+                "tools_called",
+                [],
+            )
+                    or []
+            )
+
+        abstained = False
+
+        if isinstance(
+                result,
+                dict,
+        ):
+            abstained = bool(
+                result.get(
+                    "abstained",
+                    component_observability.get(
+                        "abstained",
+                        False,
+                    ),
+                )
+            )
+
+        latency_total = round(
+            (
+                    time.perf_counter()
+                    - total_started
+            )
+            * 1000,
+            3,
+        )
+
+        trace = {
+            "latency_total": (
+                latency_total
+            ),
+            "latency_router": (
+                latency_router
+            ),
+            "latency_retrieval": float(
+                component_observability.get(
+                    "latency_retrieval",
+                    0.0,
+                )
+                or 0.0
+            ),
+            "latency_verifier": float(
+                component_observability.get(
+                    "latency_verifier",
+                    0.0,
+                )
+                or 0.0
+            ),
+            "latency_tool": float(
+                component_observability.get(
+                    "latency_tool",
+                    0.0,
+                )
+                or 0.0
+            ),
+            "latency_composer": float(
+                component_observability.get(
+                    "latency_composer",
+                    0.0,
+                )
+                or 0.0
+            ),
+            "tools_called": tools_called,
+            "verifier_retry_count": int(
+                component_observability.get(
+                    "verifier_retry_count",
+                    0,
+                )
+                or 0
+            ),
+            "abstained": abstained,
+            "conversation_id": (
+                conversation_id
+            ),
+            "intent": intent,
+            "handler": handler,
+            "memory_used": bool(
+                context_result[
+                    "used_memory"
+                ]
+            ),
+        }
+
+        log_event(
+            logger,
+            "customer_support_trace",
+            **trace,
+        )
+
+        # ----------------------------------------------------
+        # Step 9: Return unified response
         # ----------------------------------------------------
 
         return {

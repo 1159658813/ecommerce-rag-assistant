@@ -1,3 +1,4 @@
+import time
 class RAGPipeline:
 
     def __init__(
@@ -14,6 +15,19 @@ class RAGPipeline:
 
         self.candidate_k = candidate_k
         self.evidence_k = evidence_k
+
+    @staticmethod
+    def _elapsed_ms(
+            started_at: float,
+    ) -> float:
+        return round(
+            (
+                    time.perf_counter()
+                    - started_at
+            )
+            * 1000,
+            3,
+        )
 
     @staticmethod
     def _build_evidences(
@@ -50,18 +64,28 @@ class RAGPipeline:
         return evidences
 
     def ask(
-        self,
-        question,
+            self,
+            question,
     ):
         # ====================================================
         # 1. Dense Retrieval + Reranker
         # ====================================================
+
+        retrieval_started = (
+            time.perf_counter()
+        )
 
         retrieval_results = (
             self.retriever.retrieve(
                 query=question,
                 candidate_k=self.candidate_k,
                 final_k=self.evidence_k,
+            )
+        )
+
+        latency_retrieval = (
+            self._elapsed_ms(
+                retrieval_started
             )
         )
 
@@ -83,6 +107,16 @@ class RAGPipeline:
                 "retrieval_results": [],
                 "evidences": [],
                 "verifier": None,
+                "observability": {
+                    "latency_retrieval": (
+                        latency_retrieval
+                    ),
+                    "latency_verifier": 0.0,
+                    "latency_composer": 0.0,
+                    "verifier_retry_count": 0,
+                    "abstained": True,
+                    "latency_unit": "ms",
+                },
             }
 
         # ====================================================
@@ -99,10 +133,20 @@ class RAGPipeline:
         # 4. Answerability Verification
         # ====================================================
 
+        verifier_started = (
+            time.perf_counter()
+        )
+
         verifier_result = (
             self.verifier.verify(
                 question=question,
                 evidences=evidences,
+            )
+        )
+
+        latency_verifier = (
+            self._elapsed_ms(
+                verifier_started
             )
         )
 
@@ -130,16 +174,38 @@ class RAGPipeline:
                 ),
                 "evidences": evidences,
                 "verifier": verifier_result,
+                "observability": {
+                    "latency_retrieval": (
+                        latency_retrieval
+                    ),
+                    "latency_verifier": (
+                        latency_verifier
+                    ),
+                    "latency_composer": 0.0,
+                    "verifier_retry_count": 0,
+                    "abstained": True,
+                    "latency_unit": "ms",
+                },
             }
 
         # ====================================================
         # 6. Generation
         # ====================================================
 
+        composer_started = (
+            time.perf_counter()
+        )
+
         answer = (
             self.generator.generate(
                 question=question,
                 evidences=evidences,
+            )
+        )
+
+        latency_composer = (
+            self._elapsed_ms(
+                composer_started
             )
         )
 
@@ -157,4 +223,18 @@ class RAGPipeline:
             ),
             "evidences": evidences,
             "verifier": verifier_result,
+            "observability": {
+                "latency_retrieval": (
+                    latency_retrieval
+                ),
+                "latency_verifier": (
+                    latency_verifier
+                ),
+                "latency_composer": (
+                    latency_composer
+                ),
+                "verifier_retry_count": 0,
+                "abstained": False,
+                "latency_unit": "ms",
+            },
         }

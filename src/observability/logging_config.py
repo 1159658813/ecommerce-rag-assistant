@@ -1,5 +1,5 @@
+import json
 import logging
-
 
 LOGGER_NAME = "ecommerce_rag"
 
@@ -52,4 +52,35 @@ def get_logger(
 
     return logging.getLogger(
         f"{LOGGER_NAME}.{name}"
+    )
+
+
+def log_event(
+        logger,
+        event: str,
+        **fields,
+):
+    """
+    Write one structured observability event.
+
+    The outer logging format remains human-readable,
+    while event fields are serialized as JSON so they
+    can also be parsed by log-processing systems.
+    """
+
+    payload = {
+        key: value
+        for key, value in fields.items()
+        if value is not None
+    }
+
+    logger.info(
+        "%s | %s",
+        event,
+        json.dumps(
+            payload,
+            ensure_ascii=False,
+            sort_keys=True,
+            default=str,
+        ),
     )
