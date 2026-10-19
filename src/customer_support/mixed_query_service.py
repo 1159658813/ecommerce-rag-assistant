@@ -4,6 +4,7 @@ from typing import Optional
 
 from openai import OpenAI
 
+from src.reliability import FallbackPolicy
 from src.config import settings
 from src.orders.service import OrderService
 
@@ -79,6 +80,8 @@ class MixedQueryService:
         self.client = OpenAI(
             api_key=api_key,
             base_url=base_url,
+            timeout=20.0,
+            max_retries=0,
         )
 
     # ========================================================
@@ -133,223 +136,97 @@ class MixedQueryService:
             "latency_unit": "ms",
         }
 
-    def answer(
-            self,
-            question: str,
-            user_id: str,
-            order_id: Optional[str],
-    ) -> dict:
-        """
-        Answer one query that requires both
-        order data and knowledge-base policy.
-        """
-
-        latency_tool = 0.0
-
+    def answer(self, question: str, user_id: str, order_id: Optional[str]) -> dict:
         if not order_id:
             return {
-                "answer": (
-                    "这个问题需要结合您的具体订单"
-                    "和相关政策进行判断。"
-                    "请先提供需要查询的订单号，"
-                    "例如 ORD202610001。"
-                ),
-                "order_id": None,
-                "order_result": None,
-                "rag_result": None,
-                "combined": False,
-                "verdict": None,
-                "abstained": False,
-                "abstain_reason": None,
-                "evidences": [],
-                "observability": (
-                    self._build_observability()
-                ),
+                "answer": "这个问题需要结合您的具体订单和政策进行判断，请提供订单号。",
+                "order_id": None, "order_result": None, "rag_result": None,
+                "combined": False, "verdict": None, "abstained": False,
+                "abstain_reason": None, "evidences": [],
+                "observability": self._build_observability(),
             }
 
-        # ----------------------------------------------------
-        # Step 1: Query structured order data
-        # ----------------------------------------------------
-
-        tool_started = (
-            time.perf_counter()
-        )
-
-        order_result = (
-            self.order_service.get_order_detail(
-                user_id=user_id,
-                order_id=order_id,
-            )
-        )
-
-        latency_tool = (
-            self._elapsed_ms(
-                tool_started
-            )
-        )
-
+        started = time.perf_counter()
+        try:
+            order_result = self.order_service.get_order_detail(user_id=user_id, order_id=order_id)
+        except Exception:
+            return {
+                "answer": "订单查询暂时不可用，请稍后重试。",
+                "order_id": order_id, "order_result": None, "rag_result": None,
+                "combined": False, "verdict": None, "abstained": True,
+                "abstain_reason": "tool_unavailable", "evidences": [],
+                "observability": self._build_observability(abstained=True),
+            }
+        latency_tool = self._elapsed_ms(started)
         if not order_result.get("success"):
             return {
-                "answer": (
-                        order_result.get("message")
-                        or "未找到该订单。"
-                ),
-                "order_id": order_id,
-                "order_result": order_result,
-                "rag_result": None,
-                "combined": False,
-                "verdict": None,
-                "abstained": False,
-                "abstain_reason": None,
+                "answer": order_result.get("message") or "未找到该订单。",
+                "order_id": order_id, "order_result": order_result,
+                "rag_result": None, "combined": False, "verdict": None,
+                "abstained": False, "abstain_reason": None,
                 "evidences": [],
-                "observability": (
-                    self._build_observability(
-                        latency_tool=(
-                            latency_tool
-                        ),
-                    )
-                ),
+                "observability": self._build_observability(latency_tool=latency_tool),
             }
 
-        # ----------------------------------------------------
-        # Step 2: Ask RAG only for policy knowledge
-        # ----------------------------------------------------
+        policy_query = self._build_policy_query(question=question, order_id=order_id)
+        try:
+            rag_result = self.rag_service.ask(policy_query)
+        except Exception:
+            rag_result = {
+                "answer": FallbackPolicy.rag_message(),
+                "verdict": None, "abstained": True,
+                "abstain_reason": "rag_unavailable", "evidences": [],
+                "observability": {},
+            }
 
-        policy_query = (
-            self._build_policy_query(
-                question=question,
-                order_id=order_id,
-            )
+        obs = rag_result.get("observability") or {}
+        timings = dict(
+            latency_tool=latency_tool,
+            latency_retrieval=float(obs.get("latency_retrieval", 0) or 0),
+            latency_verifier=float(obs.get("latency_verifier", 0) or 0),
+            verifier_retry_count=int(obs.get("verifier_retry_count", 0) or 0),
         )
 
-        rag_result = (
-            self.rag_service.ask(
-                policy_query
+        if rag_result.get("abstained") or rag_result.get("verdict") != "SUFFICIENT":
+            order = (order_result.get("data") or {}).get("order") or {}
+            answer = (f"已查询到订单 {order_id}，当前订单状态为 {order.get('status', '未知')}。"
+                      "相关政策暂时无法可靠确认，请稍后重试。")
+            out = self._build_result(
+                answer=answer, order_id=order_id, order_result=order_result,
+                rag_result=rag_result, combined=False,
+                observability=self._build_observability(**timings, abstained=True),
             )
-        )
-        rag_observability = (
-                rag_result.get(
-                    "observability",
-                    {},
-                )
-                or {}
-        )
+            out["abstained"] = True
+            out["abstain_reason"] = rag_result.get("abstain_reason") or "evidence_insufficient"
+            return out
 
-        latency_retrieval = float(
-            rag_observability.get(
-                "latency_retrieval",
-                0.0,
+        started = time.perf_counter()
+        try:
+            answer = self._compose_answer(
+                question=question, order_result=order_result, rag_result=rag_result,
             )
-            or 0.0
-        )
-
-        latency_verifier = float(
-            rag_observability.get(
-                "latency_verifier",
-                0.0,
-            )
-            or 0.0
-        )
-
-        verifier_retry_count = int(
-            rag_observability.get(
-                "verifier_retry_count",
-                0,
-            )
-            or 0
-        )
-
-        # ----------------------------------------------------
-        # Step 3: Evidence insufficient
-        # ----------------------------------------------------
-
-        if rag_result.get("abstained"):
-            order = (
-                order_result[
-                    "data"
-                ][
-                    "order"
-                ]
-            )
-
-            answer = (
-                f"已查询到订单 {order_id}，"
-                f"当前订单状态为 "
-                f"{order.get('status')}。"
-                "但当前知识库中的政策证据不足，"
-                "暂时无法可靠判断该订单是否满足"
-                "您询问的政策条件。"
-            )
-
-            return self._build_result(
-                answer=answer,
-                order_id=order_id,
-                order_result=order_result,
-                rag_result=rag_result,
-                combined=False,
-                observability=(
-                    self._build_observability(
-                        latency_tool=(
-                            latency_tool
-                        ),
-                        latency_retrieval=(
-                            latency_retrieval
-                        ),
-                        latency_verifier=(
-                            latency_verifier
-                        ),
-                        latency_composer=0.0,
-                        verifier_retry_count=(
-                            verifier_retry_count
-                        ),
-                        abstained=True,
-                    )
+            if not isinstance(answer, str) or not answer.strip() or answer.startswith("已获得订单信息和相关政策，但暂时无法生成可靠回答"):
+                raise ValueError("empty composer output")
+        except Exception:
+            order = (order_result.get("data") or {}).get("order") or {}
+            answer = (f"已查询到订单 {order_id}，当前订单状态为 {order.get('status', '未知')}。"
+                      "由于回复生成服务暂时不可用，无法可靠整合政策，请稍后重试。")
+            out = self._build_result(
+                answer=answer, order_id=order_id, order_result=order_result,
+                rag_result=rag_result, combined=False,
+                observability=self._build_observability(
+                    **timings, latency_composer=self._elapsed_ms(started), abstained=True,
                 ),
             )
-
-        # ----------------------------------------------------
-        # Step 4: Grounded composition
-        # ----------------------------------------------------
-
-        composer_started = (
-            time.perf_counter()
-        )
-
-        answer = self._compose_answer(
-            question=question,
-            order_result=order_result,
-            rag_result=rag_result,
-        )
-
-        latency_composer = (
-            self._elapsed_ms(
-                composer_started
-            )
-        )
+            out["abstained"] = True
+            out["abstain_reason"] = "composer_unavailable"
+            return out
 
         return self._build_result(
-            answer=answer,
-            order_id=order_id,
-            order_result=order_result,
-            rag_result=rag_result,
-            combined=True,
-            observability=(
-                self._build_observability(
-                    latency_tool=latency_tool,
-                    latency_retrieval=(
-                        latency_retrieval
-                    ),
-                    latency_verifier=(
-                        latency_verifier
-                    ),
-                    latency_composer=(
-                        latency_composer
-                    ),
-                    verifier_retry_count=(
-                        verifier_retry_count
-                    ),
-                    abstained=False,
-                )
+            answer=answer.strip(), order_id=order_id,
+            order_result=order_result, rag_result=rag_result, combined=True,
+            observability=self._build_observability(
+                **timings, latency_composer=self._elapsed_ms(started), abstained=False,
             ),
         )
 

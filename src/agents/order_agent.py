@@ -5,6 +5,7 @@ from typing import Optional
 
 from openai import OpenAI
 
+from src.reliability import FallbackPolicy
 from src.config import settings
 from src.orders.tools import (
     ORDER_TOOLS,
@@ -86,6 +87,8 @@ class OrderAgent:
         self.client = OpenAI(
             api_key=api_key,
             base_url=base_url,
+            timeout=20.0,
+            max_retries=0,
         )
 
         self.tool_executor = (
@@ -93,235 +96,108 @@ class OrderAgent:
                 or OrderToolExecutor()
         )
 
-    def ask(
-            self,
-            question: str,
-            user_id: str,
-    ) -> dict:
-        """
-        Answer one order-related question
-        using native tool calling.
-        """
-
-        question = question.strip()
+    def ask(self, question: str, user_id: str) -> dict:
+        question = str(question or "").strip()
         latency_tool = 0.0
         latency_composer = 0.0
+        tools_called = []
+        tool_results = []
 
-        if not question:
-            return {
-                "answer": "请输入需要查询的订单问题。",
-                "tools_called": [],
-                "tool_results": [],
-            }
-
-        messages = [
-            {
-                "role": "system",
-                "content": SYSTEM_PROMPT,
-            },
-            {
-                "role": "user",
-                "content": question,
-            },
-        ]
-
-        # ----------------------------------------------------
-        # Step 1:
-        # Ask the LLM whether it needs a tool.
-        # ----------------------------------------------------
-
-        response = (
-            self.client.chat.completions.create(
-                model=self.model,
-                messages=messages,
-                tools=ORDER_TOOLS,
-                tool_choice="auto",
-                temperature=0.0,
-                extra_body={
-                    "enable_thinking": False
-                },
-            )
-        )
-
-        assistant_message = (
-            response
-            .choices[0]
-            .message
-        )
-
-        tool_calls = (
-                assistant_message.tool_calls
-                or []
-        )
-
-        # ----------------------------------------------------
-        # No tool call
-        # ----------------------------------------------------
-
-        if not tool_calls:
-            answer = (
-                    assistant_message.content
-                    or ""
-            ).strip()
-
-            if not answer:
-                answer = (
-                    "请提供您需要查询的订单号，"
-                    "例如 ORD202610002。"
-                )
-
+        def response(answer, abstained=False, reason=None):
             return {
                 "answer": answer,
-                "tools_called": [],
-                "tool_results": [],
+                "tools_called": tools_called,
+                "tool_results": tool_results,
+                "abstained": bool(abstained),
+                "abstain_reason": reason,
                 "observability": {
-                    "latency_tool": 0.0,
-                    "latency_composer": 0.0,
-                    "tools_called": [],
+                    "latency_tool": round(latency_tool, 3),
+                    "latency_composer": round(latency_composer, 3),
+                    "tools_called": list(tools_called),
                     "verifier_retry_count": 0,
-                    "abstained": False,
+                    "abstained": bool(abstained),
                     "latency_unit": "ms",
                 },
             }
 
-        # Add the assistant tool-call message
-        # back into conversation history.
+        if not question:
+            return response("请输入需要查询的订单问题。")
 
-        messages.append(
-            assistant_message.model_dump(
-                exclude_none=True
+        messages = [
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": question},
+        ]
+
+        # Initial routing is untrusted; no tool was run if this call fails.
+        try:
+            first = self.client.chat.completions.create(
+                model=self.model, messages=messages, tools=ORDER_TOOLS,
+                tool_choice="auto", temperature=0.0,
+                extra_body={"enable_thinking": False},
             )
-        )
+            message = first.choices[0].message
+            tool_calls = message.tool_calls or []
+        except Exception:
+            return response(FallbackPolicy.unavailable_message(), True, "tool_selection_unavailable")
 
-        tools_called = []
-        tool_results = []
+        if not tool_calls:
+            # No verified tool facts: do not pass through an LLM-created order status.
+            return response("请提供需要查询的订单号或退款单号，以便核实真实信息。")
 
-        # ----------------------------------------------------
-        # Step 2:
-        # Execute tools selected by the LLM.
-        # ----------------------------------------------------
+        messages.append(message.model_dump(exclude_none=True))
 
         for tool_call in tool_calls:
-
-            tool_name = (
-                tool_call
-                .function
-                .name
-            )
-
-            raw_arguments = (
-                    tool_call
-                    .function
-                    .arguments
-                    or "{}"
-            )
-
+            tool_name = getattr(tool_call.function, "name", "")
+            raw = getattr(tool_call.function, "arguments", "") or "{}"
+            tools_called.append(tool_name)
             try:
-                arguments = json.loads(
-                    raw_arguments
+                arguments = json.loads(raw)
+            except (json.JSONDecodeError, TypeError):
+                arguments = None
+
+            started = time.perf_counter()
+            try:
+                result = self.tool_executor.execute(
+                    tool_name=tool_name, arguments=arguments, user_id=user_id,
                 )
-
-            except json.JSONDecodeError:
-                arguments = {}
-
-            tool_started = (
-                time.perf_counter()
-            )
-
-            result = (
-                self.tool_executor.execute(
-                    tool_name=tool_name,
-                    arguments=arguments,
-                    user_id=user_id,
-                )
-            )
-
-            latency_tool += (
-                    (
-                            time.perf_counter()
-                            - tool_started
-                    )
-                    * 1000
-            )
-
-            tools_called.append(
-                tool_name
-            )
-
-            tool_results.append(
-                {
-                    "tool_name": tool_name,
-                    "arguments": arguments,
-                    "result": result,
+            except Exception:
+                result = {
+                    "success": False,
+                    "code": "TOOL_UNAVAILABLE",
+                    "message": "订单数据查询暂时不可用，请稍后重试。",
+                    "data": None,
                 }
+            finally:
+                latency_tool += (time.perf_counter() - started) * 1000
+
+            tool_results.append({
+                "tool_name": tool_name,
+                "arguments": arguments if isinstance(arguments, dict) else {},
+                "result": result,
+            })
+            messages.append({
+                "role": "tool", "tool_call_id": tool_call.id,
+                "content": json.dumps(result, ensure_ascii=False),
+            })
+
+        # An invalid or unavailable tool result cannot be repaired by free-text LLM output.
+        if any(not x["result"].get("success") for x in tool_results):
+            return response(FallbackPolicy.order_answer(tool_results), True, "tool_failed")
+
+        started = time.perf_counter()
+        try:
+            final = self.client.chat.completions.create(
+                model=self.model, messages=messages, temperature=0.0,
+                extra_body={"enable_thinking": False},
             )
-
-            messages.append(
-                {
-                    "role": "tool",
-                    "tool_call_id": (
-                        tool_call.id
-                    ),
-                    "content": json.dumps(
-                        result,
-                        ensure_ascii=False,
-                    ),
-                }
-            )
-
-        # ----------------------------------------------------
-        # Step 3:
-        # Let the LLM compose the final answer
-        # from real tool results.
-        # ----------------------------------------------------
-
-        composer_started = (
-            time.perf_counter()
-        )
-
-        final_response = (
-            self.client.chat.completions.create(
-                model=self.model,
-                messages=messages,
-                temperature=0.0,
-                extra_body={
-                    "enable_thinking": False
-                },
-            )
-        )
-
-        latency_composer = (
-                (
-                        time.perf_counter()
-                        - composer_started
-                )
-                * 1000
-        )
-
-        answer = (
-                final_response
-                .choices[0]
-                .message
-                .content
-                or ""
-        ).strip()
-
-        return {
-            "answer": answer,
-            "tools_called": tools_called,
-            "tool_results": tool_results,
-            "observability": {
-                "latency_tool": round(
-                    latency_tool,
-                    3,
-                ),
-                "latency_composer": round(
-                    latency_composer,
-                    3,
-                ),
-                "tools_called": tools_called,
-                "verifier_retry_count": 0,
-                "abstained": False,
-                "latency_unit": "ms",
-            },
-        }
+            answer = (final.choices[0].message.content or "").strip()
+            if not answer:
+                latency_composer = (time.perf_counter() - started) * 1000
+                return response(FallbackPolicy.order_answer(tool_results), True, "composer_empty")
+            latency_composer = (time.perf_counter() - started) * 1000
+            return response(answer)
+        except Exception:
+            latency_composer = (time.perf_counter() - started) * 1000
+            return response(FallbackPolicy.order_answer(tool_results), True, "composer_unavailable")
+        finally:
+            latency_composer = (time.perf_counter() - started) * 1000

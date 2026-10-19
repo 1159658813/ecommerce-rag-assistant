@@ -1,4 +1,8 @@
 import time
+
+from src.reliability import FallbackPolicy
+
+
 class RAGPipeline:
 
     def __init__(
@@ -63,178 +67,76 @@ class RAGPipeline:
 
         return evidences
 
-    def ask(
-            self,
-            question,
-    ):
-        # ====================================================
-        # 1. Dense Retrieval + Reranker
-        # ====================================================
+    def ask(self, question):
+        retrieval_ms = verifier_ms = composer_ms = 0.0
+        retry_count = 0
+        retrieval_results = []
+        evidences = []
+        verifier_result = None
 
-        retrieval_started = (
-            time.perf_counter()
-        )
-
-        retrieval_results = (
-            self.retriever.retrieve(
-                query=question,
-                candidate_k=self.candidate_k,
-                final_k=self.evidence_k,
-            )
-        )
-
-        latency_retrieval = (
-            self._elapsed_ms(
-                retrieval_started
-            )
-        )
-
-        # ====================================================
-        # 2. Retrieval Empty
-        # ====================================================
-
-        if not retrieval_results:
+        def response(answer, abstained, reason):
             return {
                 "question": question,
-                "answer": (
-                    "根据当前知识库信息，"
-                    "暂时无法确认。"
-                ),
-                "abstained": True,
-                "abstain_reason": (
-                    "retrieval_empty"
-                ),
-                "retrieval_results": [],
-                "evidences": [],
-                "verifier": None,
-                "observability": {
-                    "latency_retrieval": (
-                        latency_retrieval
-                    ),
-                    "latency_verifier": 0.0,
-                    "latency_composer": 0.0,
-                    "verifier_retry_count": 0,
-                    "abstained": True,
-                    "latency_unit": "ms",
-                },
-            }
-
-        # ====================================================
-        # 3. Normalize Evidence
-        # ====================================================
-
-        evidences = (
-            self._build_evidences(
-                retrieval_results
-            )
-        )
-
-        # ====================================================
-        # 4. Answerability Verification
-        # ====================================================
-
-        verifier_started = (
-            time.perf_counter()
-        )
-
-        verifier_result = (
-            self.verifier.verify(
-                question=question,
-                evidences=evidences,
-            )
-        )
-
-        latency_verifier = (
-            self._elapsed_ms(
-                verifier_started
-            )
-        )
-
-        verdict = verifier_result[
-            "verdict"
-        ]
-
-        # ====================================================
-        # 5. Abstention Gate
-        # ====================================================
-
-        if verdict == "INSUFFICIENT":
-            return {
-                "question": question,
-                "answer": (
-                    "根据当前知识库信息，"
-                    "暂时无法确认。"
-                ),
-                "abstained": True,
-                "abstain_reason": (
-                    "evidence_insufficient"
-                ),
-                "retrieval_results": (
-                    retrieval_results
-                ),
+                "answer": answer,
+                "abstained": abstained,
+                "abstain_reason": reason,
+                "retrieval_results": retrieval_results,
                 "evidences": evidences,
                 "verifier": verifier_result,
                 "observability": {
-                    "latency_retrieval": (
-                        latency_retrieval
-                    ),
-                    "latency_verifier": (
-                        latency_verifier
-                    ),
-                    "latency_composer": 0.0,
-                    "verifier_retry_count": 0,
-                    "abstained": True,
+                    "latency_retrieval": retrieval_ms,
+                    "latency_verifier": verifier_ms,
+                    "latency_composer": composer_ms,
+                    "verifier_retry_count": retry_count,
+                    "abstained": abstained,
                     "latency_unit": "ms",
                 },
             }
 
-        # ====================================================
-        # 6. Generation
-        # ====================================================
+        started = time.perf_counter()
+        try:
+            retrieval_results = self.retriever.retrieve(
+                query=question,
+                candidate_k=self.candidate_k,
+                final_k=self.evidence_k,
+            ) or []
+            evidences = self._build_evidences(retrieval_results)
+        except Exception:
+            retrieval_ms = self._elapsed_ms(started)
+            return response(FallbackPolicy.rag_message(), True, "retrieval_unavailable")
+        finally:
+            retrieval_ms = self._elapsed_ms(started)
 
-        composer_started = (
-            time.perf_counter()
-        )
+        if not retrieval_results:
+            return response("根据当前知识库信息，暂时无法确认。", True, "retrieval_empty")
 
-        answer = (
-            self.generator.generate(
-                question=question,
-                evidences=evidences,
-            )
-        )
+        started = time.perf_counter()
+        try:
+            verifier_result = self.verifier.verify(question=question, evidences=evidences)
+            retry_count = int(verifier_result.get("retry_count", 0) or 0)
+            verdict = verifier_result.get("verdict")
+            if verdict not in {"SUFFICIENT", "INSUFFICIENT"}:
+                raise ValueError("Invalid verifier verdict")
+        except Exception as exc:
+            retry_count = int(getattr(exc, "retry_count", 0) or 0)
+            verifier_ms = self._elapsed_ms(started)
+            return response(FallbackPolicy.rag_message(), True, "verifier_unavailable")
+        finally:
+            verifier_ms = self._elapsed_ms(started)
 
-        latency_composer = (
-            self._elapsed_ms(
-                composer_started
-            )
-        )
+        if verdict == "INSUFFICIENT":
+            return response("根据当前知识库信息，暂时无法确认。", True, "evidence_insufficient")
 
-        # ====================================================
-        # 7. Final Result
-        # ====================================================
+        started = time.perf_counter()
+        try:
+            answer = self.generator.generate(question=question, evidences=evidences)
+            if not isinstance(answer, str) or not answer.strip():
+                composer_ms = self._elapsed_ms(started)
+                return response(FallbackPolicy.rag_message(), True, "composer_empty")
+        except Exception:
+            composer_ms = self._elapsed_ms(started)
+            return response(FallbackPolicy.rag_message(), True, "composer_unavailable")
+        finally:
+            composer_ms = self._elapsed_ms(started)
 
-        return {
-            "question": question,
-            "answer": answer,
-            "abstained": False,
-            "abstain_reason": None,
-            "retrieval_results": (
-                retrieval_results
-            ),
-            "evidences": evidences,
-            "verifier": verifier_result,
-            "observability": {
-                "latency_retrieval": (
-                    latency_retrieval
-                ),
-                "latency_verifier": (
-                    latency_verifier
-                ),
-                "latency_composer": (
-                    latency_composer
-                ),
-                "verifier_retry_count": 0,
-                "abstained": False,
-                "latency_unit": "ms",
-            },
-        }
+        return response(answer.strip(), False, None)

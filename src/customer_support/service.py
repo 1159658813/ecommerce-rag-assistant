@@ -10,6 +10,7 @@ from src.memory import (
 )
 from src.routing.intent_router import IntentRouter
 from src.service import build_rag_service
+from src.reliability import FallbackPolicy
 
 from src.customer_support.mixed_query_service import (
     MixedQueryService,
@@ -406,11 +407,10 @@ class CustomerSupportService:
             time.perf_counter()
         )
 
-        route_result = (
-            self.intent_router.route(
-                resolved_question
-            )
-        )
+        try:
+            route_result = self.intent_router.route(resolved_question)
+        except Exception:
+            route_result = FallbackPolicy.router_result()
 
         latency_router = round(
             (
@@ -575,6 +575,10 @@ class CustomerSupportService:
 
                 )
 
+        elif route_result.get("fallback") or intent_reason == "router_unavailable":
+            handler = "ROUTER_FALLBACK"
+            answer = FallbackPolicy.unavailable_message()
+
         else:
 
             handler = "UNSUPPORTED"
@@ -647,6 +651,10 @@ class CustomerSupportService:
                 )
             )
 
+        # Router failures have no downstream component result, but are abstentions.
+        if handler == "ROUTER_FALLBACK":
+            abstained = True
+
         latency_total = round(
             (
                     time.perf_counter()
@@ -700,6 +708,10 @@ class CustomerSupportService:
                 or 0
             ),
             "abstained": abstained,
+            "fallback_reason": (
+                "router_unavailable" if handler == "ROUTER_FALLBACK"
+                else (result.get("abstain_reason") if isinstance(result, dict) else None)
+            ),
             "conversation_id": (
                 conversation_id
             ),

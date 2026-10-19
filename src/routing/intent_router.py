@@ -2,8 +2,10 @@ import json
 import os
 
 from openai import OpenAI
+from openai import APIError
 
 from src.config import settings
+from src.reliability import FallbackPolicy, RetryPolicy
 from src.routing.prompt import SYSTEM_PROMPT
 
 VALID_INTENTS = {
@@ -54,95 +56,44 @@ class IntentRouter:
         self.client = OpenAI(
             api_key=api_key,
             base_url=base_url,
+            timeout=12.0,
+            max_retries=0,
         )
 
-    def route(
-            self,
-            question: str,
-    ) -> dict:
-        """
-        Classify the user question.
-
-        Returns:
-            {
-                "intent": "...",
-                "reason": "..."
-            }
-        """
-
-        question = question.strip()
-
+    # P1-6 ROUTER FAIL-CLOSED
+    def route(self, question: str) -> dict:
+        question = str(question or "").strip()
         if not question:
-            return {
-                "intent": "UNSUPPORTED",
-                "reason": "用户问题为空。",
-            }
+            return {"intent": "UNSUPPORTED", "reason": "用户问题为空。"}
 
-        response = (
-            self.client.chat.completions.create(
+        def attempt():
+            response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[
-                    {
-                        "role": "system",
-                        "content": SYSTEM_PROMPT,
-                    },
-                    {
-                        "role": "user",
-                        "content": question,
-                    },
+                    {"role": "system", "content": SYSTEM_PROMPT},
+                    {"role": "user", "content": question},
                 ],
                 temperature=0.0,
-
-                response_format={
-                    "type": "json_object"
-                },
-
-                extra_body={
-                    "enable_thinking": False
-                },
+                response_format={"type": "json_object"},
+                extra_body={"enable_thinking": False},
             )
-        )
-
-        content = (
-            response
-            .choices[0]
-            .message
-            .content
-            .strip()
-        )
-
-        try:
-            result = json.loads(content)
-
-        except json.JSONDecodeError as exc:
-            raise ValueError(
-                "Intent Router 返回了无效 JSON。"
-            ) from exc
-
-        intent = str(
-            result.get(
-                "intent",
-                ""
-            )
-        ).strip().upper()
-
-        reason = str(
-            result.get(
-                "reason",
-                ""
-            )
-        ).strip()
-
-        if intent not in VALID_INTENTS:
+            content = (response.choices[0].message.content or "").strip()
+            payload = json.loads(content)
+            if not isinstance(payload, dict):
+                raise ValueError("Invalid intent payload")
+            intent = str(payload.get("intent", "")).strip().upper()
+            if intent not in VALID_INTENTS:
+                raise ValueError("Unknown intent")
             return {
-                "intent": "UNSUPPORTED",
-                "reason": (
-                    "Intent Router 返回了未知意图："
-                    f"{intent}"
-                ),
+                "intent": intent,
+                "reason": str(payload.get("reason", "")).strip(),
             }
 
-        return {
-            "intent": intent,
-            "reason": reason,
-        }
+        try:
+            return RetryPolicy(max_attempts=2).run(
+                attempt,
+                retry_on=(APIError, TimeoutError, ConnectionError,
+                          ValueError, IndexError, TypeError, AttributeError),
+            )
+        except Exception:
+            return FallbackPolicy.router_result()

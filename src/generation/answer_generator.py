@@ -34,6 +34,9 @@ class AnswerGenerator:
 
         self.client = OpenAI(
             api_key=api_key,
+            # P1-6 generator request timeout
+            timeout=20.0,
+            max_retries=0,
             base_url=(
                 "https://dashscope.aliyuncs.com/"
                 "compatible-mode/v1"
