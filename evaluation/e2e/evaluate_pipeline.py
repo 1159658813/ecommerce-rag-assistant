@@ -421,9 +421,19 @@ def build_summary(
     errors = [
         record
         for record in records
-        if record.get(
-            "status"
-        ) != "OK"
+        if record.get("status") == "PIPELINE_ERROR"
+    ]
+
+    fallbacks = [
+        record
+        for record in records
+        if record.get("status") == "SAFE_FALLBACK"
+    ]
+
+    retrieval_empty = [
+        record
+        for record in records
+        if record.get("status") == "RETRIEVAL_EMPTY"
     ]
 
     tp = tn = fp = fn = 0
@@ -623,6 +633,21 @@ def build_summary(
             record["id"]
             for record in errors
         ],
+        "safe_fallback_count": len(fallbacks),
+
+        "safe_fallback_ids": [
+            record["id"]
+            for record in fallbacks
+        ],
+
+        "retrieval_empty_count": len(retrieval_empty),
+
+        "handled_rate": safe_divide(
+            len(completed)
+            + len(fallbacks)
+            + len(retrieval_empty),
+            total,
+        ),
     }
 
 
@@ -797,6 +822,50 @@ for index, item in enumerate(
                 "verdict"
             )
         )
+
+        abstain_reason = result.get("abstain_reason")
+
+        safe_fallback_reasons = {
+            "retrieval_unavailable",
+            "verifier_unavailable",
+            "composer_unavailable",
+            "composer_empty",
+        }
+
+        if (
+                result.get("abstained") is True
+                and abstain_reason in (
+                safe_fallback_reasons | {"retrieval_empty"}
+        )
+        ):
+            status = (
+                "RETRIEVAL_EMPTY"
+                if abstain_reason == "retrieval_empty"
+                else "SAFE_FALLBACK"
+            )
+
+            record = {
+                "id": question_id,
+                "question": question,
+                "evidence_sufficient": evidence_sufficient,
+                "status": status,
+                "verifier_verdict": verifier_verdict,
+                "abstained": True,
+                "abstain_reason": abstain_reason,
+            }
+
+            records.append(record)
+
+            write_json(
+                CHECKPOINT_PATH,
+                {"records": records},
+            )
+
+            print(
+                f"[{status}] {question_id}: {abstain_reason}"
+            )
+
+            continue
 
         if (
             verifier_verdict
