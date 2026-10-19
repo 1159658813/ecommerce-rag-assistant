@@ -496,65 +496,35 @@ INSUFFICIENT 示例：
 
         return result
 
-    def verify(
-        self,
-        question,
-        evidences,
-    ):
-        """
-        Fail closed：
-        - 没有 Evidence -> INSUFFICIENT
-        - API/解析异常由调用方记录为 ERROR，
-          不应被当作 SUFFICIENT 放行。
-        """
-        question = str(
-            question or ""
-        ).strip()
-
+    def verify(self, question, evidences):
+        """Fail closed. retry_count counts extra attempts, not the first call."""
+        question = str(question or "").strip()
         if not question:
-            raise ValueError(
-                "question 不能为空。"
-            )
-
+            raise ValueError("question 不能为空。")
         if not evidences:
             return {
                 "verdict": "INSUFFICIENT",
                 "covered_facts": [],
-                "missing_facts": [
-                    "缺少可用于回答问题的知识库证据"
-                ],
-                "reason": (
-                    "当前没有提供任何 Evidence。"
-                ),
+                "missing_facts": ["缺少可用于回答问题的知识库证据"],
+                "reason": "当前没有提供任何 Evidence。",
                 "raw_output": None,
+                "retry_count": 0,
             }
 
-        last_error = None
-
-        for attempt in range(
-            1,
-            self.max_retries + 1,
-        ):
+        max_attempts = max(1, int(self.max_retries))
+        for attempt in range(1, max_attempts + 1):
             try:
-                return self._call_once(
-                    question=question,
-                    evidences=evidences,
-                )
+                result = self._call_once(question=question, evidences=evidences)
+                result["retry_count"] = attempt - 1
+                return result
+            except Exception as exc:
+                if attempt == max_attempts:
+                    failure = VerifierExhausted("Verifier unavailable after retries")
+                    failure.retry_count = attempt - 1
+                    raise failure from exc
+                if self.retry_base_seconds:
+                    time.sleep(self.retry_base_seconds * attempt)
 
-            except Exception as error:
-                last_error = error
 
-                print(
-                    "[Verifier Retry] "
-                    f"attempt={attempt}/"
-                    f"{self.max_retries} "
-                    f"error={repr(error)}"
-                )
-
-                if attempt < self.max_retries:
-                    time.sleep(
-                        self.retry_base_seconds
-                        * attempt
-                    )
-
-        raise last_error
+class VerifierExhausted(RuntimeError):
+    retry_count = 0

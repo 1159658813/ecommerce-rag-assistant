@@ -34,4 +34,5 @@ class RAGService:
                 else None
             ),
             "evidences": result["evidences"],
+            "observability": result.get("observability", {}),
         }

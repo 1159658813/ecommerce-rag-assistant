@@ -152,6 +152,16 @@ class OrderToolExecutor:
                 or OrderService()
         )
 
+    @staticmethod
+    def _invalid_arguments() -> dict:
+        return {"success": False, "code": "INVALID_ARGUMENT",
+                "message": "查询参数无效，请重新提供正确的订单或退款单号。", "data": None}
+
+    @staticmethod
+    def _invalid_tool(tool_name: str) -> dict:
+        return {"success": False, "code": "UNKNOWN_TOOL",
+                "message": "不支持此查询操作。", "data": None}
+
     def execute(
             self,
             tool_name: str,
@@ -161,6 +171,28 @@ class OrderToolExecutor:
         """
         Execute one order tool.
         """
+
+        # Trust boundary: model supplies only tool arguments, never the user identity.
+        allowed = {
+            "get_order_detail": "order_id",
+            "get_user_orders": None,
+            "get_logistics": "order_id",
+            "get_refund_status": "order_id",
+            "get_refund_detail": "refund_id",
+        }
+        if tool_name not in allowed:
+            return self._invalid_tool(tool_name)
+        field = allowed[tool_name]
+        if not isinstance(arguments, dict):
+            return self._invalid_arguments()
+        expected_keys = {field} if field else set()
+        if set(arguments) != expected_keys:
+            return self._invalid_arguments()
+        if field:
+            value = arguments[field]
+            if not isinstance(value, str) or not value.strip():
+                return self._invalid_arguments()
+            arguments = {field: value.strip()}
 
         if tool_name == "get_order_detail":
             order_id = arguments.get(
