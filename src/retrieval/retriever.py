@@ -9,7 +9,7 @@ class Retriever:
         index_path,
         metadata_path,
         embedding_model_name="BAAI/bge-small-zh-v1.5",
-        device="cuda"
+        device=None
     ):
 
         self.embedding_model = EmbeddingModel(

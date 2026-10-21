@@ -1,0 +1,44 @@
+name: ecommerce-rag-assistant
+
+services:
+  rag-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ecommerce-rag-assistant:local
+    env_file:
+      - .env
+    environment:
+      HF_HOME: /opt/hf-cache
+      TOKENIZERS_PARALLELISM: "false"
+      HF_HUB_DISABLE_TELEMETRY: "1"
+
+      HTTP_PROXY: "${RAG_PROXY_URL:-}"
+      HTTPS_PROXY: "${RAG_PROXY_URL:-}"
+      http_proxy: "${RAG_PROXY_URL:-}"
+      https_proxy: "${RAG_PROXY_URL:-}"
+      NO_PROXY: "localhost,127.0.0.1"
+      no_proxy: "localhost,127.0.0.1"
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - type: bind
+        source: ./data
+        target: /app/data
+      - type: volume
+        source: hf-cache
+        target: /opt/hf-cache
+    init: true
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=5)"
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15m
+
+volumes:
+  hf-cache:
