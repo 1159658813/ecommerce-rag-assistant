@@ -20,6 +20,19 @@ load_dotenv(
 # Settings
 # ============================================================
 
+def optional_bool_env(name: str) -> bool | None:
+    """Unset keeps the provider's existing default; invalid values fail fast."""
+    raw = os.getenv(name)
+    if raw is None or not raw.strip():
+        return None
+    normalized = raw.strip().lower()
+    if normalized in {"1", "true", "yes", "on"}:
+        return True
+    if normalized in {"0", "false", "no", "off"}:
+        return False
+    raise ValueError(f"{name} must be true/false or left unset")
+
+
 @dataclass(frozen=True)
 class RAGSettings:
 
@@ -72,6 +85,8 @@ class RAGSettings:
 
     verifier_timeout_seconds: float = 60.0
     verifier_max_retries: int = 3
+    # None: do not send a thinking override (preserves the baseline).
+    verifier_enable_thinking: bool | None = None
 
     # --------------------------------------------------------
     # Data
@@ -156,6 +171,9 @@ def load_settings():
                 "ANSWERABILITY_VERIFIER_MAX_RETRIES",
                 "3",
             )
+        ),
+        verifier_enable_thinking=optional_bool_env(
+            "ANSWERABILITY_VERIFIER_ENABLE_THINKING"
         ),
         log_level=os.getenv(
             "LOG_LEVEL",

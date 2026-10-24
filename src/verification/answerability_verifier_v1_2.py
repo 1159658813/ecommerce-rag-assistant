@@ -36,6 +36,7 @@ class AnswerabilityVerifierV12:
         timeout_seconds=60,
         max_retries=3,
         retry_base_seconds=2,
+        enable_thinking=None,
     ):
         api_key = os.getenv("DASHSCOPE_API_KEY")
 
@@ -50,6 +51,9 @@ class AnswerabilityVerifierV12:
             "https://dashscope.aliyuncs.com/compatible-mode/v1",
         )
 
+        if enable_thinking is not None and not isinstance(enable_thinking, bool):
+            raise ValueError("enable_thinking must be bool or None")
+        self.enable_thinking = enable_thinking
         self.model = model
         self.max_retries = max_retries
         self.retry_base_seconds = retry_base_seconds
@@ -454,11 +458,20 @@ INSUFFICIENT 示例：
             evidences=evidences,
         )
 
+        # Only one experimental variable: thinking mode. None keeps the
+        # original request body unchanged for apples-to-apples comparison.
+        extra_args = {}
+        if self.enable_thinking is not None:
+            extra_args["extra_body"] = {
+                "enable_thinking": self.enable_thinking,
+            }
+
         completion = (
             self.client
             .chat
             .completions
             .create(
+                **extra_args,
                 model=self.model,
                 messages=[
                     {
