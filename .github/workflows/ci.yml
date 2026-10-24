@@ -1,0 +1,44 @@
+name: Python Offline CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-tests:
+    name: Offline tests (Python 3.11)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+      # Only the dependencies used by the offline verifier tests.
+      # Do not install full requirements.txt (Torch/FAISS/model packages).
+      - name: Install small test dependencies
+        run: python -m pip install --disable-pip-version-check openai==3.1.0 python-dotenv==1.2.2
+
+      - name: Check Python syntax
+        run: python -m compileall -q src scripts tests
+
+      - name: Verifier and Evidence Gate regression tests
+        run: python -m unittest tests.test_p2b_verifier_toggle -v
+
+      - name: Performance script self-tests (no network calls)
+        run: |
+          python scripts/p2_trace_summary.py --self-test
+          python scripts/p2_perf_trace_pilot.py --self-test
