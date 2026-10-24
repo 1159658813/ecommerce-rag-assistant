@@ -37,6 +37,7 @@ def build_pipeline():
         max_retries=(
             settings.verifier_max_retries
         ),
+        enable_thinking=settings.verifier_enable_thinking,
     )
 
     generator = AnswerGenerator(

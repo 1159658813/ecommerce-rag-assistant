@@ -32,6 +32,11 @@ CASES = {
         "question": "七天无理由退货必须保留商品原包装吗？",
         "expected_intent": "KNOWLEDGE_QA",
     },
+    "knowledge_insufficient": {
+        # Existing frozen evaluation label b2_q60: answerable=false.
+        "question": "商家超过48小时没发货的话，平台是不是会自动赔我订单金额的10%？",
+        "expected_intent": "KNOWLEDGE_QA",
+    },
     "mixed": {
         "question": "ORD202610002 的物流到哪里了？如果收到货想申请七天无理由退货，快递外箱必须保留吗？",
         "expected_intent": None,  # Route must be verified before treating this as a mixed-path sample.
@@ -71,6 +76,10 @@ def one_request(base_url: str, name: str, user_id: str, timeout: float, index: i
         "success": False,
         "intent": None,
         "handler": None,
+        # Allowed anonymous quality signals: never persist question/answer/IDs.
+        "verdict": None,
+        "abstained": None,
+        "abstain_reason": None,
         "expected_intent": spec["expected_intent"],
         "intent_matches": None,
         "error_type": None,
@@ -86,6 +95,17 @@ def one_request(base_url: str, name: str, user_id: str, timeout: float, index: i
         result["success"] = status == 200
         result["intent"] = data.get("intent")
         result["handler"] = data.get("handler")
+        component = data.get("result")
+        if isinstance(component, dict) and data.get("handler") == "RAG":
+            verdict = component.get("verdict")
+            result["verdict"] = verdict if verdict in {"SUFFICIENT", "INSUFFICIENT"} else None
+            abstained = component.get("abstained")
+            result["abstained"] = abstained if isinstance(abstained, bool) else None
+            reason = component.get("abstain_reason")
+            allowed_reasons = {"evidence_insufficient", "retrieval_unavailable",
+                               "retrieval_empty", "verifier_unavailable",
+                               "composer_empty", "composer_unavailable"}
+            result["abstain_reason"] = reason if reason in allowed_reasons else None
         if spec["expected_intent"] is not None:
             result["intent_matches"] = data.get("intent") == spec["expected_intent"]
     except urllib.error.HTTPError as exc:
